@@ -27,7 +27,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${URI}api/Product/get/allProducts`, {
+    fetch(`${URI}api/Product/v1/get/allProducts`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -36,6 +36,7 @@ function App() {
       .then((data) => {
         const { success, products } = data;
         if (success) {
+          console.log(products);
           dispatch(
             getAllProducts({
               products: products,

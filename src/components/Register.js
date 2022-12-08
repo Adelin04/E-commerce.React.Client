@@ -31,7 +31,7 @@ const Register = () => {
 
     if (password === confirmPassword) {
       setMsgButton("Loading...");
-      await fetch(`${URI}api/Auth/register`, {
+      await fetch(`${URI}api/Auth/v1/register/newUser`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {

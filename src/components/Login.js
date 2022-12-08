@@ -30,7 +30,7 @@ const Login = () => {
     };
 
     setMsgButton("Loading");
-    await fetch(`${URI}api/Auth/login`, {
+    await fetch(`${URI}api/Auth/v1/login`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
