@@ -18,8 +18,10 @@ export const ProductSlice = createSlice({
 
     getProductsByCategory: (state, action) => {
       const currentState = current(state);
+      
       const productsByCategory = currentState.products.filter(
-        (product) => product.category === action.payload.category)
+        (product) => product.categoryProduct.name.toLowerCase() === action.payload.category.toLowerCase()
+      )
 
       state.filteredProducts = productsByCategory;
     },
@@ -49,16 +51,16 @@ export const ProductSlice = createSlice({
       let regexIdProduct_forAdmin = new RegExp(`${action.payload}`);
       let regexNameProduct = new RegExp(`${action.payload.toString().toLowerCase()}`);
 
-      const tmp_getProductById = currentState.products && currentState.products.filter((product) => regexIdProduct_forAdmin.exec(product._id))
+      const tmp_getProductById = currentState.products && currentState.products.filter((product) => regexIdProduct_forAdmin.exec(product.id))
       const tmp_getProductByName = currentState.products && currentState.products.filter((product) => regexNameProduct.exec(product.name.toString().toLowerCase()))
 
       if (tmp_getProductById !== null && tmp_getProductById !== undefined)
         state.filteredProducts = tmp_getProductById;
 
       if (tmp_getProductByName !== null && tmp_getProductByName !== undefined)
-      state.filteredProducts = tmp_getProductByName;
+        state.filteredProducts = tmp_getProductByName;
       else
-      state.filteredProducts = null;
+        state.filteredProducts = null;
 
     },
 

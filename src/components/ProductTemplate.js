@@ -28,9 +28,9 @@ const ProductTemplate = ({ product }) => {
             <div className="product-img-wraper">
               <img
                 onClick={handleClickProduct}
-                id={product._id}
+                id={product.id}
                 className="product-img"
-                src={product.productImagePath}
+                src={product.picturePath}
                 alt="product"
               />
             </div>

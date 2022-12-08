@@ -46,7 +46,7 @@ const ShoppingCartSlice = createSlice({
             currency: searchedProduct[0].currency,
             description: searchedProduct[0].description,
             name: searchedProduct[0].name,
-            productImagePath: searchedProduct[0].productImagePath,
+            picturePath: searchedProduct[0].picturePath,
             price: searchedProduct[0].price,
             quantityPerSize:
               existProductQtySize.size === productQtySize.size

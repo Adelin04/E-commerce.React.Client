@@ -29,8 +29,8 @@ const ProductDetails = () => {
   useEffect(() => {
     if (products) {
       let res = products.filter(
-        (product) => product._id.toString() === id.toString())
-      //set the productById 
+        (product) => product.id === parseInt(id))
+      //set the productById
       setProductById(res)
     } else return null
 
@@ -54,7 +54,6 @@ const ProductDetails = () => {
 
   // Function that handles the product that was clicked to add to shopping cart
   const handleAddToCart = () => {
-
     dispatch(
       addProductToShoppingCart({
         newPorduct: SerializeProduct(productById[0]),
@@ -96,9 +95,9 @@ const ProductDetails = () => {
             >
               <div className="product-img-wraper">
                 <img
-                  id={productById[0]._id}
+                  id={productById[0].id}
                   className="product-img"
-                  src={productById[0].productImagePath}
+                  src={productById[0].picturePath}
                   alt="product"
                 />
 

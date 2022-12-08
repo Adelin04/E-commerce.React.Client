@@ -40,7 +40,7 @@ const PopUp_ProfileUser = ({ user, toggle }) => {
 
         <div className={"wrapper-btns" + `${open ? " visible" : " hidden"}`}>
           <div className={"admin"}>
-            {user && user.role[0].includes("ROLE_ADMIN") ? (
+            {user && user.role[0].includes("ADMIN") ? (
               <Button
                 style={{ margin: "2px", width: "auto", height: "auto" }}
                 textBtn={"Dashboard Admin"}

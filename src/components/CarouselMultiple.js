@@ -82,9 +82,9 @@ class MultipleItems extends React.Component {
                   <div key={index} className="wrapper-img-carousel">
                     {product && (
                       <img
-                        id={product._id}
+                        id={product.id}
                         className="img-carousel"
-                        src={product.productImagePath}
+                        src={product.picturePath}
                         alt={"This image is not available"}
                         onClick={this.handleClicked}
                       />

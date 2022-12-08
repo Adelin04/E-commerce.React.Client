@@ -35,8 +35,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
+
         if (success) {
-          console.log(products);
           dispatch(
             getAllProducts({
               products: products,
@@ -64,7 +64,7 @@ function App() {
                 firstName: TMP_USER[0],
                 lastName: TMP_USER[1],
                 role: [TMP_USER[3]],
-                timeExpirationsToken: TMP_USER[5],
+                timeExpirationsToken: TMP_USER[4],
               },
             })
           );

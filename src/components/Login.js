@@ -50,12 +50,13 @@ const Login = () => {
             }
           }
 
+
           dispatch(
             login({
               user: {
-                email: TMP_USER[7],
+                email: TMP_USER[2],
                 firstName: TMP_USER[0],
-                lastName: TMP_USER[1] ,
+                lastName: TMP_USER[1],
                 role: [TMP_USER[3]],
                 timeExpirationsToken: TMP_USER[4],
               },
