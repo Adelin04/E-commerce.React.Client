@@ -7,7 +7,9 @@ export const ProductSlice = createSlice({
     filteredProducts: null,
     productById: null,
     productByName: null,
-    searchedValue: null
+    searchedValue: null,
+    categoriesProductAvailable: null,
+    sizesProductAvailable: null
   },
   reducers: {
 
@@ -18,7 +20,7 @@ export const ProductSlice = createSlice({
 
     getProductsByCategory: (state, action) => {
       const currentState = current(state);
-      
+
       const productsByCategory = currentState.products.filter(
         (product) => product.categoryProduct.name.toLowerCase() === action.payload.category.toLowerCase()
       )
@@ -43,9 +45,6 @@ export const ProductSlice = createSlice({
       state.productByName = productByName
     },
 
-
-
-
     getProductByValueSearched: (state, action) => {
       const currentState = current(state);
       let regexIdProduct_forAdmin = new RegExp(`${action.payload}`);
@@ -66,12 +65,20 @@ export const ProductSlice = createSlice({
 
     resetFilterCategory: (state, action) => {
       state.filteredProducts = action.payload.reset;
+    },
+
+    getAllCategoiesProductAvailable: (state, action) => {
+      state.categoriesProductAvailable = action.payload.allCategoriesProduct;
+    },
+
+    getAllSizesProductAvailable: (state, action) => {
+      state.sizesProductAvailable = action.payload.allSizesProduct;
     }
 
 
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable ,getAllSizesProductAvailable} = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

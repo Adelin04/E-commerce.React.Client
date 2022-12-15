@@ -4,12 +4,16 @@ import AddProducts from "./AddProducts";
 import logoIcon from '../icons/logoIcon.svg'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectProduct } from "../Features/ProductSlice";
+import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct } from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
 import UploadImage from "../components/UploadImage";
+import { useEffect } from "react";
+import { URI } from "../_Utils/Dependency";
 
 const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
+  const { categoriesProductAvailable } = useSelector(selectProduct);
+  const { sizesProductAvailable } = useSelector(selectProduct);
   const admin = useSelector(selectUser).user;
 
   const navigate = useNavigate();
@@ -19,7 +23,7 @@ const DashboardAdmin = () => {
   const [listOfProductAdded, setListOfProductAdded] = useState([]);
   const [disableButtonSave, setDisablebuttonSave] = useState(true)
 
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState('Create New Product')
   const [toggleMsg, setToggleMsg] = useState(false);
 
   const [nameProduct, setNameProduct] = useState('');
@@ -28,10 +32,31 @@ const DashboardAdmin = () => {
   const [priceProduct, setPriceProduct] = useState('');
   const [picturePath, setPicturePath] = useState('');
   const [selectedPicture, setSelectedPicture] = useState('');
-  const [stockProduct, setStockProduct] = useState('');
+  const [brandProduct, setBrandProduct] = useState('');
+  const [sizeProduct, setSizeProduct] = useState('');
   const [categoryProduct, setCategoryProduct] = useState('');
 
+  useEffect(() => {
+    fetch(`${URI}api/CategoryProduct/v1/get/allCategoriesProduct`)
+      .then(response => response.json())
+      .then(data => {
+        const { success, listOfCategories, count } = data;
 
+        if (success)
+          dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
+      })
+      .catch(err => setMsg(err.toString()))
+
+    fetch(`${URI}api/Size/v1/get/allSizes`)
+      .then(response => response.json())
+      .then(data => {
+        const { success, sizes, nrsizes } = data;
+
+        if (success)
+          dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
+      })
+      .catch(err => setMsg(err.toString()))
+  }, [])
 
 
   const resetFields = () => {
@@ -40,7 +65,8 @@ const DashboardAdmin = () => {
     setDescriptionProduct('');
     setPriceProduct('');
     setPicturePath('');
-    setStockProduct('');
+    setBrandProduct('');
+    setSizeProduct('');
     setCategoryProduct('');
   }
 
@@ -58,13 +84,13 @@ const DashboardAdmin = () => {
     e.preventDefault();
     resetFields();
     setGoToAddProduct(false)
-    setMsg('')
+    setMsg('Create New Product')
   }
 
   const handleClickSaveButton = (e) => {
     e.preventDefault();
 
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, stockProduct, categoryProduct)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct)) {
       const addNewProductToList = {
         id: ++listOfProductAdded.length,
         nameProduct: nameProduct,
@@ -72,13 +98,14 @@ const DashboardAdmin = () => {
         descriptionProduct: descriptionProduct,
         priceProduct: priceProduct,
         picturePath: picturePath,
-        stockProduct: stockProduct,
+        brandProduct: brandProduct,
+        sizeProduct: sizeProduct,
         categoryProduct: categoryProduct
       }
 
       listOfProductAdded.push(addNewProductToList);
       resetFields();
-      { setMsg('') }
+      { setMsg('Create New Product') }
     }
     else { setMsg('Empty field(s)') }
 
@@ -89,7 +116,7 @@ const DashboardAdmin = () => {
   const addNewProduct = () => {
     return (
       <div className="box-add-new-product">
-
+        {console.log('sizesProductAvailable ', sizesProductAvailable)}
         <div className="wrapper-btn-box-add-new-product">
           <button className="btn-save-add-new-product" onClick={handleClickSaveButton}>SAVE</button>
           <div className="msg">{msg}</div>
@@ -106,15 +133,30 @@ const DashboardAdmin = () => {
             <input type={'text'} value={descriptionProduct} id={'descriptionProduct'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
             <label>Price Product</label>
             <input type={'number'} value={priceProduct} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
-            <label>Stock Product</label>
-            <input type={'number'} value={stockProduct} id={'stockProduct'} onChange={(e) => { setStockProduct(e.target.value) }} />
+            <label>Brand Product</label>
+            <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
+            <label>Size Product</label>
+            <select className="select-size" value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
+              < option value={'None'} > None</option>
+              {
+                sizesProductAvailable && sizesProductAvailable.map((size, index) => {
+                  return (
+                    < option key={index} value={size.name} > {size.name}</option>
+                  )
+                })
+              }
+            </select>
+
             <label>Category Product</label>
             <select className="select-category" value={categoryProduct} onChange={(e) => setCategoryProduct(e.target.value)}>
-              <option value={'None'} >None</option>
-              <option value={'Pants'}>Pants</option>
-              <option value={'Blouses'} >Blouses</option>
-              <option value={'Dresses'}>Dresses</option>
-              <option value={'Accesories'}>Accesories</option>
+              < option value={'None'} > None</option>
+              {
+                categoriesProductAvailable && categoriesProductAvailable.map((category, index) => {
+                  return (
+                    < option key={index} value={category.name} > {category.name}</option>
+                  )
+                })
+              }
             </select>
           </div>
 
@@ -145,7 +187,7 @@ const DashboardAdmin = () => {
           </div>
         </div>
 
-      </div>
+      </div >
     )
   }
 
@@ -167,7 +209,7 @@ const DashboardAdmin = () => {
               <input defaultValue={product.descriptionProduct} />
               <label>Price Product</label>
               <input defaultValue={product.priceProduct} />
-              <label>Stock Product</label>
+              <label>Sizes Product</label>
               <input defaultValue={product.stockProduct} />
               <label>Category Product</label>
               <input defaultValue={product.categoryProduct} />
@@ -439,7 +481,7 @@ const Wrapper = styledComponents.div`
       width: 100%;
     }
 
-    .box-add-new-product input , .select-category{
+    .box-add-new-product input , .select-category, .select-size{
       width: 100%;
       height: 25px;
       margin: 2px;
