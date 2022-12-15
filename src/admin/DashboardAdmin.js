@@ -116,7 +116,6 @@ const DashboardAdmin = () => {
   const addNewProduct = () => {
     return (
       <div className="box-add-new-product">
-        {console.log('sizesProductAvailable ', sizesProductAvailable)}
         <div className="wrapper-btn-box-add-new-product">
           <button className="btn-save-add-new-product" onClick={handleClickSaveButton}>SAVE</button>
           <div className="msg">{msg}</div>
