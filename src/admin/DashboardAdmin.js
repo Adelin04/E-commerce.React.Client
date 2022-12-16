@@ -165,8 +165,8 @@ const DashboardAdmin = () => {
             <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} />
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
+              {/* <UploadImage imgsSelected={selectProduct} /> */}
               <AddProducts />
-              {/* <UploadImage selectedFiles={selectedPicture} /> */}
             </div>
 
             <div className="wrapper-imgs">
@@ -201,15 +201,17 @@ const DashboardAdmin = () => {
                 <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X</button>
               </div>
               <label>Name Product</label>
-              <input defaultValue={product.nameProduct} />
+              <input defaultValue={product.name} />
               <label>Color Product</label>
-              <input defaultValue={product.colorProduct} />
+              <input defaultValue={product.color} />
               <label>Description Product</label>
-              <input defaultValue={product.descriptionProduct} />
+              <input defaultValue={product.description} />
               <label>Price Product</label>
-              <input defaultValue={product.priceProduct} />
+              <input defaultValue={product.price} />
+              <label>Brand Product</label>
+              <input defaultValue={product.brand} />
               <label>Sizes Product</label>
-              <input defaultValue={product.stockProduct} />
+              <input defaultValue={product.sizeStock.size} />
               <label>Category Product</label>
               <input defaultValue={product.categoryProduct} />
               <label>Picture Link</label>

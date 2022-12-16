@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styledComponents from "styled-components";
 
 
-const UploadImage = () => {
+const UploadImage = ({ imgsSelected }) => {
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState();
@@ -19,13 +19,19 @@ const UploadImage = () => {
 
   const handleSelectedNewImages = (e) => {
     setLoading(true);
+
     const TMP_selectedFiles = e.target.files;
     setImages(TMP_selectedFiles);
+
     const selectedFileArray = Array.from(TMP_selectedFiles);
+
     const imagesArray = selectedFileArray.map((image) => {
       return URL.createObjectURL(image);
     });
+
+    console.log(imagesArray);
     setSelectedFiles(imagesArray);
+    imgsSelected = imagesArray
     setLoading(false);
   };
 
@@ -58,9 +64,9 @@ const UploadImage = () => {
           selectedFiles &&
           selectedFiles.map((image, index) => {
             return (
-              <div className="product-adeed" key={index}>
+              <div className="product-added" key={index}>
                 <h3>{images && images[index].name.toString().split(".")[0]}</h3>
-                <img style={{width: "200px", height: "auto" }} src={image} />
+                <img style={{ width: "200px", height: "auto" }} src={image} />
 
               </div>
             );
@@ -83,9 +89,8 @@ const UploadImage = () => {
                   width: "100%",
                   height: "20px",
                 }}
-              >{` ${
-                images[tmp_IdProductToSelected].name.toString().split(".")[0]
-              }`}</h3>
+              >{` ${images[tmp_IdProductToSelected].name.toString().split(".")[0]
+                }`}</h3>
               <textarea
                 value={contentTextArea}
                 onChange={(e) => {
@@ -161,7 +166,7 @@ const Wrapper = styledComponents.div`
     }
 
     
-    .product-adeed {
+    .product-added {
       display: flex;
       flex-direction: column;
       justify-content :center;
@@ -171,7 +176,7 @@ const Wrapper = styledComponents.div`
       border-radius: 10px;
     }
 
-    .product-adeed h3{
+    .product-added h3{
       margin: 5px;
       text-align: center;
     }
