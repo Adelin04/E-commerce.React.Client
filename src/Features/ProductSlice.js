@@ -9,7 +9,8 @@ export const ProductSlice = createSlice({
     productByName: null,
     searchedValue: null,
     categoriesProductAvailable: null,
-    sizesProductAvailable: null
+    sizesProductAvailable: null,
+    newProductsAdded: []
   },
   reducers: {
 
@@ -73,12 +74,22 @@ export const ProductSlice = createSlice({
 
     getAllSizesProductAvailable: (state, action) => {
       state.sizesProductAvailable = action.payload.allSizesProduct;
-    }
+    },
 
+    addNewProduct: (state, action) => {
+      state.newProductsAdded.push(action.payload.listOfNewProduct);
+    },
+
+    removeFromListOfNewProduct: (state, action) => {
+      const currentState = current(state);
+      let TMP_LIST = currentState.newProductsAdded.filter(product => parseInt(product.id) !== parseInt(action.payload.removeId))
+
+      state.newProductsAdded = TMP_LIST
+    }
 
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable ,getAllSizesProductAvailable} = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addNewProduct, removeFromListOfNewProduct } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

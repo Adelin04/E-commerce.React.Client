@@ -4,7 +4,7 @@ import AddProducts from "./AddProducts";
 import logoIcon from '../icons/logoIcon.svg'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct } from "../Features/ProductSlice";
+import { addNewProduct, getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
 import UploadImage from "../components/UploadImage";
 import { useEffect } from "react";
@@ -12,29 +12,14 @@ import { URI } from "../_Utils/Dependency";
 
 const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
-  const { categoriesProductAvailable } = useSelector(selectProduct);
-  const { sizesProductAvailable } = useSelector(selectProduct);
   const admin = useSelector(selectUser).user;
+  const { newProductsAdded } = useSelector(selectProduct);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [goToAddProduct, setGoToAddProduct] = useState(false)
-  const [listOfProductAdded, setListOfProductAdded] = useState([]);
-  const [disableButtonSave, setDisablebuttonSave] = useState(true)
-
   const [msg, setMsg] = useState('Create New Product')
-  const [toggleMsg, setToggleMsg] = useState(false);
-
-  const [nameProduct, setNameProduct] = useState('');
-  const [colorProduct, setColorProduct] = useState('');
-  const [descriptionProduct, setDescriptionProduct] = useState('');
-  const [priceProduct, setPriceProduct] = useState('');
-  const [picturePath, setPicturePath] = useState('');
-  const [selectedPicture, setSelectedPicture] = useState('');
-  const [brandProduct, setBrandProduct] = useState('');
-  const [sizeProduct, setSizeProduct] = useState('');
-  const [categoryProduct, setCategoryProduct] = useState('');
 
   useEffect(() => {
     fetch(`${URI}api/CategoryProduct/v1/get/allCategoriesProduct`)
@@ -58,169 +43,44 @@ const DashboardAdmin = () => {
       .catch(err => setMsg(err.toString()))
   }, [])
 
-
-  const resetFields = () => {
-    setNameProduct('');
-    setColorProduct('');
-    setDescriptionProduct('');
-    setPriceProduct('');
-    setPicturePath('');
-    setBrandProduct('');
-    setSizeProduct('');
-    setCategoryProduct('');
-  }
-
-  const existEmptyFields = (...fields) => {
-    let emptyField = false;
-    fields.map(element => {
-      if (element === '') {
-        emptyField = true;
-      }
-    })
-    return emptyField;
-  }
-
-  const handleClickCloseButton = (e) => {
-    e.preventDefault();
-    resetFields();
-    setGoToAddProduct(false)
-    setMsg('Create New Product')
-  }
-
-  const handleClickSaveButton = (e) => {
-    e.preventDefault();
-
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct)) {
-      const addNewProductToList = {
-        id: ++listOfProductAdded.length,
-        nameProduct: nameProduct,
-        colorProduct: colorProduct,
-        descriptionProduct: descriptionProduct,
-        priceProduct: priceProduct,
-        picturePath: picturePath,
-        brandProduct: brandProduct,
-        sizeProduct: sizeProduct,
-        categoryProduct: categoryProduct
-      }
-
-      listOfProductAdded.push(addNewProductToList);
-      resetFields();
-      { setMsg('Create New Product') }
-    }
-    else { setMsg('Empty field(s)') }
-
-  }
-
-
-
-  const addNewProduct = () => {
+  const showAllNewProductAdded = (products = Array) => {
     return (
-      <div className="box-add-new-product">
-        <div className="wrapper-btn-box-add-new-product">
-          <button className="btn-save-add-new-product" onClick={handleClickSaveButton}>SAVE</button>
-          <div className="msg">{msg}</div>
-          <button className="btn-close-add-new-product" onClick={handleClickCloseButton}>X</button>
+      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+        <div style={{ position: 'fixed', top: 10, left: '25%' }}>
+          <button className="btn-done" style={{}}>Done</button>
         </div>
 
-        <div className="wrapper-form">
-          <div className="left-side">
-            <label>Name Product</label>
-            <input type={'text'} autoFocus={true} value={nameProduct} id={'nameProduct'} onChange={(e) => { setNameProduct(e.target.value) }} />
-            <label>Color Product</label>
-            <input type={'text'} value={colorProduct} id={'colorProduct'} onChange={(e) => { setColorProduct(e.target.value) }} />
-            <label>Description Product</label>
-            <input type={'text'} value={descriptionProduct} id={'descriptionProduct'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
-            <label>Price Product</label>
-            <input type={'number'} value={priceProduct} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
-            <label>Brand Product</label>
-            <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
-            <label>Size Product</label>
-            <select className="select-size" value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
-              < option value={'None'} > None</option>
-              {
-                sizesProductAvailable && sizesProductAvailable.map((size, index) => {
-                  return (
-                    < option key={index} value={size.name} > {size.name}</option>
-                  )
-                })
-              }
-            </select>
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '20px auto' }}>
 
-            <label>Category Product</label>
-            <select className="select-category" value={categoryProduct} onChange={(e) => setCategoryProduct(e.target.value)}>
-              < option value={'None'} > None</option>
-              {
-                categoriesProductAvailable && categoriesProductAvailable.map((category, index) => {
-                  return (
-                    < option key={index} value={category.name} > {category.name}</option>
-                  )
-                })
-              }
-            </select>
-          </div>
-
-
-          <div className="right-side">
-            <label>Picture Link</label>
-            <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} />
-            <label>Picture Product</label>
-            <div className="box-add-new-procudct-component">
-              {/* <UploadImage imgsSelected={selectProduct} /> */}
-              <AddProducts />
-            </div>
-
-            <div className="wrapper-imgs">
-
-              <div className="up-side-imgs">
-                <div className="img-1"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 1" /></div>
-                <div className="img-2"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 2" /></div>
+          {products.length > 0 && products.map((product, index) => {
+            return (
+              <div className="box-added-new-product" id={product.id} key={index}>
+                <div className="wrapper-btns-product-added">
+                  <button id={product.id} className="btn-edit-product-added">Edit</button>
+                  <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X</button>
+                </div>
+                <label>Name Product</label>
+                <input defaultValue={product.nameProduct} />
+                <label>Color Product</label>
+                <input defaultValue={product.colorProduct} />
+                <label>Description Product</label>
+                <input defaultValue={product.descriptionProduct} />
+                <label>Price Product</label>
+                <input defaultValue={product.priceProduct} />
+                <label>Brand Product</label>
+                <input defaultValue={product.brandProduct} />
+                <label>Sizes Product</label>
+                <input defaultValue={product.sizeProduct} />
+                <label>Category Product</label>
+                <input defaultValue={product.categoryProduct} />
+                <label>Picture Link</label>
+                <input defaultValue={product.picturePath} />
+                <label>Picture Product</label>
               </div>
+            )
+          })}
 
-              <div className="down-side-imgs">
-                <div className="img-3"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 3" /></div>
-                <div className="img-4"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 4" /></div>
-              </div>
-
-            </div>
-
-          </div>
         </div>
-
-      </div >
-    )
-  }
-
-  const showAllNewProductAdded = () => {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
-        {listOfProductAdded.map((product, index) => {
-          return (
-            <div className="box-added-new-product" id={product.id} key={index}>
-              <div className="wrapper-btns-product-added">
-                <button id={product.id} className="btn-edit-product-added">Edit</button>
-                <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X</button>
-              </div>
-              <label>Name Product</label>
-              <input defaultValue={product.name} />
-              <label>Color Product</label>
-              <input defaultValue={product.color} />
-              <label>Description Product</label>
-              <input defaultValue={product.description} />
-              <label>Price Product</label>
-              <input defaultValue={product.price} />
-              <label>Brand Product</label>
-              <input defaultValue={product.brand} />
-              <label>Sizes Product</label>
-              <input defaultValue={product.sizeStock.size} />
-              <label>Category Product</label>
-              <input defaultValue={product.categoryProduct} />
-              <label>Picture Link</label>
-              <input defaultValue={product.picturePath} />
-              <label>Picture Product</label>
-            </div>
-          )
-        })}
-
       </div>
     )
   }
@@ -228,10 +88,10 @@ const DashboardAdmin = () => {
   const handleClickCloseBtnProductAdded = (e) => {
     e.preventDefault();
     let idTarget = e.target.id;
-    let TMP_LIST = listOfProductAdded.filter(product => Number(product.id) !== Number(idTarget));
 
-    setListOfProductAdded(TMP_LIST);
-  }
+    dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
+  };
+
 
   return (
     <Wrapper>
@@ -265,15 +125,16 @@ const DashboardAdmin = () => {
         </div>
       </div>
 
-      <div className="main-page">
+      <div className="main-page" onClick={() => setGoToAddProduct(false)}>
         {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
         <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
-          {listOfProductAdded.length > 0 && showAllNewProductAdded()}
+
+          {newProductsAdded && showAllNewProductAdded(newProductsAdded)}
         </div>
       </div>
 
       <div style={{ zIndex: '2' }}>
-        {goToAddProduct && addNewProduct()}
+        {goToAddProduct && <AddProducts close={() => setGoToAddProduct(false)} />}
       </div>
     </Wrapper>
   );
@@ -290,8 +151,6 @@ const Wrapper = styledComponents.div`
     height: 100%;
     overflow: hidden;
 
-
-    
     .menu {
       display: flex;
       flex-direction:column;
@@ -366,7 +225,6 @@ const Wrapper = styledComponents.div`
       margin: 0px auto;
     }
     
-
     .main-page {
       position: relative;
       display: flex;
@@ -378,15 +236,14 @@ const Wrapper = styledComponents.div`
       height: 100%;
     }
 
-    .msg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
+    .btn-done{
+      color: var(--baseColor);
+      outline: none;
+      border: none;
+      cursor: pointer;
+      width: 100px;
       height: 25px;
-      font-size: 15px;
-      font-weight: bold;
-      color: red;
+      background: var(--buttonColor); 
     }
 
     .box-add-new-product {
@@ -412,6 +269,19 @@ const Wrapper = styledComponents.div`
       justify-content: space-between;
       width: 100%;
     }
+
+    .msg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 25px;
+      font-size: 15px;
+      font-weight: bold;
+      color: red;
+    }
+
+
     
 
     .btn-save-add-new-product,
@@ -423,83 +293,16 @@ const Wrapper = styledComponents.div`
     .btn-close-add-new-product:hover {
       color: red;
     }
-
+    
+    .btn-done:hover,
+    .btn-save-add-new-product:hover,
+    .btn-close-add-new-product:hover,
+    .btn-edit-product-added:hover,
+    .btn-close-product-added:hover, 
     .btn-save-add-new-product:hover {
       color: white;
     }
 
-    .wrapper-form {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      margin: 10px;
-      width: 90%;
-      height: 100%;
-    }
-    
-    .left-side {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 10px;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .right-side {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 10px;
-      width: 100%;
-      height: auto;
-    }
-
-    .wrapper-imgs {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      min-height: 200px;
-    }
-
-    .up-side-imgs {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-    }
-
-    .down-side-imgs {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-    }
-
-    .box-add-new-product input , .select-category, .select-size{
-      width: 100%;
-      height: 25px;
-      margin: 2px;
-      text-align: center;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      background: var(--buttonColor);
-    }
-    
-    .box-add-new-procudct-component {
-      display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       width: 90%;
-      }
       
       .wrapper-btns-product-added {
         display: flex;
@@ -520,6 +323,7 @@ const Wrapper = styledComponents.div`
         margin: 5px;
         outline: none;
         cursor: pointer;
+        color: var(--baseColor);
         background: var(--buttonColor);
       }
       
