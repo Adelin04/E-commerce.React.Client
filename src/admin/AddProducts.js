@@ -151,19 +151,18 @@ const AddProducts = ({ close }) => {
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
               <UploadImage imgsSelected={(imgs) => setSelectedPicture(imgs)} />
-              {console.log(selectedPicture[0])}
             </div>
 
             <div className="wrapper-imgs">
 
               <div className="up-side-imgs">
-                <div className="img-1"><img width={'50px'} height={'auto'} src={selectProduct[0] && selectProduct[0] || logoIcon} alt="img 1" /></div>
-                <div className="img-2"><img width={'50px'} height={'auto'} src={selectProduct[1] && selectProduct[1] || logoIcon} alt="img 2" /></div>
+                <div className="img-1"><img width={'100px'} height={'auto'} src={selectedPicture[0] && selectedPicture[0] || logoIcon} alt="img 1" /></div>
+                <div className="img-2"><img width={'100px'} height={'auto'} src={selectedPicture[1] && selectedPicture[1] || logoIcon} alt="img 2" /></div>
               </div>
 
               <div className="down-side-imgs">
-                <div className="img-3"><img width={'50px'} height={'auto'} src={selectProduct[2] && selectProduct[2] || logoIcon} alt="img 3" /></div>
-                <div className="img-4"><img width={'50px'} height={'auto'} src={selectProduct[3] && selectProduct[3] || logoIcon} alt="img 4" /></div>
+                <div className="img-3"><img width={'100px'} height={'auto'} src={selectedPicture[2] && selectedPicture[2] || logoIcon} alt="img 3" /></div>
+                <div className="img-4"><img width={'100px'} height={'auto'} src={selectedPicture[3] && selectedPicture[3] || logoIcon} alt="img 4" /></div>
               </div>
 
             </div>
@@ -323,6 +322,7 @@ const Wrapper = styledComponents.div`
       align-items: center;
       width: 100%;
       height: 100%;
+      padding: 10px;
       min-height: 200px;
     }
 
@@ -331,13 +331,15 @@ const Wrapper = styledComponents.div`
       justify-content: space-around;
       align-items: center;
       width: 100%;
+      margin: 5px;
     }
-
+    
     .down-side-imgs {
       display: flex;
       justify-content: space-around;
       align-items: center;
       width: 100%;
+      margin: 5px;
     }
 
     .box-add-new-product input , .select-category, .select-size{
