@@ -135,7 +135,6 @@ const DashboardAdmin = () => {
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
           <p className="nr-prod-online"> <span>Nr. products online </span>{`  ${products && products.length}`}</p>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
-          {/* <p>{`Subscribers :  ${subscribers}`}</p> */}
         </div>
       </div>
 

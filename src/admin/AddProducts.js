@@ -8,27 +8,26 @@ import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
 import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addNewProduct } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
+import UploadImage from "../components/UploadImage";
 
 const AddProducts = ({ close }) => {
-  const { categoriesProductAvailable } = useSelector(selectProduct);
-  const { sizesProductAvailable } = useSelector(selectProduct);
-
-  // const [goToAddProduct, setGoToAddProduct] = useState(false)
-  const [listOfProductAdded, setListOfProductAdded] = useState([]);
-  const [disableButtonSave, setDisablebuttonSave] = useState(true)
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { categoriesProductAvailable } = useSelector(selectProduct);
+  const { sizesProductAvailable } = useSelector(selectProduct);
+  const [listOfProductAdded, setListOfProductAdded] = useState([]);
+
+
+
   const [msg, setMsg] = useState('Create New Product')
-  const [toggleMsg, setToggleMsg] = useState(false);
 
   const [nameProduct, setNameProduct] = useState('');
   const [colorProduct, setColorProduct] = useState('');
   const [descriptionProduct, setDescriptionProduct] = useState('');
   const [priceProduct, setPriceProduct] = useState('');
   const [picturePath, setPicturePath] = useState('');
-  const [selectedPicture, setSelectedPicture] = useState('');
+  const [selectedPicture, setSelectedPicture] = useState([]);
   const [brandProduct, setBrandProduct] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
   const [categoryProduct, setCategoryProduct] = useState('');
@@ -151,20 +150,20 @@ const AddProducts = ({ close }) => {
             <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} />
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
-              {/* <UploadImage imgsSelected={selectProduct} /> */}
-              {/* <AddProducts /> */}
+              <UploadImage imgsSelected={(imgs) => setSelectedPicture(imgs)} />
+              {console.log(selectedPicture[0])}
             </div>
 
             <div className="wrapper-imgs">
 
               <div className="up-side-imgs">
-                <div className="img-1"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 1" /></div>
-                <div className="img-2"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 2" /></div>
+                <div className="img-1"><img width={'50px'} height={'auto'} src={selectProduct[0] && selectProduct[0] || logoIcon} alt="img 1" /></div>
+                <div className="img-2"><img width={'50px'} height={'auto'} src={selectProduct[1] && selectProduct[1] || logoIcon} alt="img 2" /></div>
               </div>
 
               <div className="down-side-imgs">
-                <div className="img-3"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 3" /></div>
-                <div className="img-4"><img width={'50px'} height={'auto'} src={logoIcon} alt="img 4" /></div>
+                <div className="img-3"><img width={'50px'} height={'auto'} src={selectProduct[2] && selectProduct[2] || logoIcon} alt="img 3" /></div>
+                <div className="img-4"><img width={'50px'} height={'auto'} src={selectProduct[3] && selectProduct[3] || logoIcon} alt="img 4" /></div>
               </div>
 
             </div>

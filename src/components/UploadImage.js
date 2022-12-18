@@ -30,6 +30,7 @@ const UploadImage = ({ imgsSelected }) => {
     });
 
     console.log(imagesArray);
+    imgsSelected(imagesArray)
     setSelectedFiles(imagesArray);
     imgsSelected = imagesArray
     setLoading(false);
