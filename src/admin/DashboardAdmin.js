@@ -3,7 +3,7 @@ import styledComponents from "styled-components";
 import AddProducts from "./AddProducts";
 import logoIcon from '../icons/logoIcon.svg'
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addNewProduct, getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
 import UploadImage from "../components/UploadImage";
@@ -53,7 +53,7 @@ const DashboardAdmin = () => {
           </div>
         </nav>
 
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '20px auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '40px auto' }}>
 
           {products.length > 0 && products.map((product, index) => {
             return (
@@ -99,6 +99,17 @@ const DashboardAdmin = () => {
   return (
     <Wrapper>
       <div className="menu">
+
+        <div className="wrapper-title">
+          <Link
+            className="title"
+            to={"/"}
+            style={{ textDecoration: "none", color: "black", width: "170px" }}
+          >
+            <img style={{ width: "40px", height: "auto" }} src={logoIcon} />
+            <span style={{ margin: "0px 5px" }}>BOUTIQUE</span>
+          </Link>
+        </div>
 
         <div className="container-btns">
           <button
@@ -170,6 +181,21 @@ const Wrapper = styledComponents.div`
       width: 78.5%;
       background: var(--baseColor);
     }
+
+    .wrapper-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      width :auto;
+    }
+
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding:5px;
+    }
     
     .container-btns {
       display: flex;
@@ -178,6 +204,7 @@ const Wrapper = styledComponents.div`
       align-items: center;
       width: auto;
       height: 100%;
+      margin: 15px;
     }
     
     .menu-btn-add-new-project,
