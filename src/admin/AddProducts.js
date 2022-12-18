@@ -93,11 +93,20 @@ const AddProducts = ({ close }) => {
   return (
     <Wrapper>
       <div className="box-add-new-product">
-        <div className="wrapper-btn-box-add-new-product">
-          <button className="btn-save-add-new-product" onClick={handleClickSaveButton}>SAVE</button>
-          <div className="msg">{msg}</div>
-          <button className="btn-close-add-new-product" onClick={handleClickCloseButton}>X</button>
+
+        <div className="container-btn-box-add-new-product">
+
+          <div className="wrapper-btn-save-create">
+            <button className="btn-save-add-new-product" onClick={handleClickSaveButton}> Save </button>
+            <button className="btn-create-add-new-product" onClick={handleClickSaveButton}> Create </button>
+          </div>
+
+          <div className="wrapper-btn-close-add-new-product">
+            <button className="btn-close-add-new-product" onClick={handleClickCloseButton}>X</button>
+          </div>
+
         </div>
+        <div className="msg">{msg}</div>
 
         <div className="wrapper-form">
           <div className="left-side">
@@ -190,6 +199,49 @@ const Wrapper = styledComponents.div`
       height: 100%;
     }
 
+    .box-add-new-product {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      left: 50%;
+      right: 50%;
+      transform: translate(-20%);
+      position: absolute;
+      min-width: 500px;
+      width: auto;
+      height: auto;
+      margin: 50px auto;
+      padding: 5px;
+      background: var(--baseColor);
+    }
+
+    .btn-create-add-new-product,
+    .btn-save-add-new-product,
+    .btn-close-add-new-product {
+      font-size: 15px;
+      color: var(--baseColor);
+    }
+
+    
+    .btn-done:hover,
+    .btn-save-add-new-product:hover,
+    .btn-close-add-new-product:hover,
+    .btn-create-add-new-product:hover {
+      color: white;
+    }
+
+    .btn-close-add-new-product:hover{
+      background: red;
+    }
+
+    .container-btn-box-add-new-product {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
     .msg {
       display: flex;
       justify-content: center;
@@ -199,7 +251,41 @@ const Wrapper = styledComponents.div`
       font-size: 15px;
       font-weight: bold;
       color: red;
-    }  
+    }
+
+    .wrapper-btn-close-add-new-product {
+      display: flex;
+      justify-content: flex-end;
+      margin: 5px;
+      padding: 5px;
+      float: left;
+      width: 50%;  
+    }
+
+    .wrapper-btn-save-create {
+      display: flex;
+      justify-content: flex-start;
+      margin: 5px;
+      padding: 5px;
+      float: left;
+      width: 50%;
+    }
+
+    .btn-create-add-new-product,
+    .btn-save-add-new-product,
+    .btn-close-add-new-product {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 25px;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      outline: none;
+      cursor: pointer;
+      background: var(--buttonColor);
+    }
 
     .wrapper-form {
       display: flex;
@@ -266,77 +352,8 @@ const Wrapper = styledComponents.div`
       background: var(--buttonColor);
     }
     
-    .box-add-new-procudct-component {
-      display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       width: 90%;
-      }
       
-      .wrapper-btns-product-added {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        padding: 5px;
-      }
-      
-      .btn-save-add-new-product,
-      .btn-close-add-new-product,
-      .btn-edit-product-added,
-      .btn-close-product-added {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        border-radius: 5px;
-        margin: 5px;
-        outline: none;
-        cursor: pointer;
-        background: var(--buttonColor);
-      }
-      
-      .btn-edit-product-added {
-        width: 50px;
-      }
-      
-      .btn-close-product-added {
-        width: 20px;
-      }
 
-     .wrapper-box-added-new-product {
-       display: flex;
-       flex-direction: row;
-       justify-content: center;
-       align-items: flex-start;
-       width: 100%;
-       height: 100%;
-       overflow: auto;
-     }
-
-     .box-added-new-product {
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       //  width: auto;
-       width: 300px;
-        height: auto;
-        margin: 30px;
-        padding: 5px;
-        background: var(--baseColor);
-    }
-    
-    .box-added-new-product input{
-      width: 100%;
-      height: 25px;
-      margin: 2px;
-      text-align: center;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      background: var(--buttonColor);
-    }
      
 //************************ 2000px ******************************
     @media only screen and (min-width:2000px) {

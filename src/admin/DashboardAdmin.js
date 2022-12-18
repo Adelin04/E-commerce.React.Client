@@ -46,9 +46,12 @@ const DashboardAdmin = () => {
   const showAllNewProductAdded = (products = Array) => {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-        <div style={{ position: 'fixed', top: 10, left: '25%' }}>
-          <button className="btn-done" style={{}}>Done</button>
-        </div>
+
+        <nav className="header-menu-admin-dashboard">
+          <div style={{ position: 'fixed', top: 10, left: '25%' }}>
+            <button className="btn-done-product-added" > Create </button>
+          </div>
+        </nav>
 
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '20px auto' }}>
 
@@ -129,7 +132,7 @@ const DashboardAdmin = () => {
         {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
         <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
 
-          {newProductsAdded && showAllNewProductAdded(newProductsAdded)}
+          {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
         </div>
       </div>
 
@@ -156,6 +159,15 @@ const Wrapper = styledComponents.div`
       flex-direction:column;
       width: 20%;
       height: 100%;
+      background: var(--baseColor);
+    }
+
+    .header-menu-admin-dashboard {
+      position: fixed;
+      top: 0;
+      right: 1.5%;
+      height: 50px;
+      width: 78.5%;
       background: var(--baseColor);
     }
     
@@ -236,7 +248,7 @@ const Wrapper = styledComponents.div`
       height: 100%;
     }
 
-    .btn-done{
+    .btn-done-product-added{
       color: var(--baseColor);
       outline: none;
       border: none;
@@ -246,69 +258,19 @@ const Wrapper = styledComponents.div`
       background: var(--buttonColor); 
     }
 
-    .box-add-new-product {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      left: 50%;
-      right: 50%;
-      transform: translate(-20%);
-      position: absolute;
-      min-width: 500px;
-      width: auto;
-      height: auto;
-      margin: 50px auto;
-      padding: 5px;
-      background: var(--baseColor);
-    }
-    
-    .wrapper-btn-box-add-new-product {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    .msg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 25px;
-      font-size: 15px;
-      font-weight: bold;
-      color: red;
-    }
 
 
-    
-
-    .btn-save-add-new-product,
-    .btn-close-add-new-product {
-      font-size: 15px;
-      color: var(--baseColor);
+    .btn-close-product-added:hover {
+      background: red;
     }
-
-    .btn-close-add-new-product:hover {
-      color: red;
-    }
-    
-    .btn-done:hover,
-    .btn-save-add-new-product:hover,
-    .btn-close-add-new-product:hover,
-    .btn-edit-product-added:hover,
-    .btn-close-product-added:hover, 
-    .btn-save-add-new-product:hover {
-      color: white;
-    }
-
       
       .wrapper-btns-product-added {
         display: flex;
         justify-content: flex-end;
-        width: 100%;
+        margin: 5px;
         padding: 5px;
+        float: left;
+        width: 90%;
       }
       
       .btn-save-add-new-product,
@@ -329,10 +291,17 @@ const Wrapper = styledComponents.div`
       
       .btn-edit-product-added {
         width: 50px;
+        height: 25px;
       }
       
       .btn-close-product-added {
         width: 20px;
+      }
+
+      .btn-done-product-added:hover,
+      .btn-edit-product-added:hover,
+      .btn-close-product-added:hover {
+        color: white;
       }
 
      .wrapper-box-added-new-product {
