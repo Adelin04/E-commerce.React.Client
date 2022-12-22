@@ -27,7 +27,7 @@ const AddProducts = ({ close }) => {
   const [descriptionProduct, setDescriptionProduct] = useState('');
   const [priceProduct, setPriceProduct] = useState('');
   const [picturePath, setPicturePath] = useState('');
-  const [selectedPicture, setSelectedPicture] = useState([]);
+  const [selectedPictures, setSelectedPictures] = useState([]);
   const [brandProduct, setBrandProduct] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
   const [categoryProduct, setCategoryProduct] = useState('');
@@ -89,6 +89,36 @@ const AddProducts = ({ close }) => {
   }
 
 
+  const handleClickCreateButton = () => {
+
+
+
+    if (selectedPictures !== null) {
+      const formData = new FormData();
+      for (var index = 0; index < selectedPictures.length; index++) {
+        var element = selectedPictures[index];
+        console.log('element', element);
+        formData.append('image', element);
+      }
+      // formData.append('file', selectedPictures[0])
+
+      console.log('formData -> ', formData);
+
+      fetch(`${URI}api/AWS/v1/uploadFile`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          Accept: "multipart/form-data",
+        },
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => console.log('data', data))
+        .catch(error => console.log(error.message))
+
+    }
+  }
+
   return (
     <Wrapper>
       <div className="box-add-new-product">
@@ -97,7 +127,7 @@ const AddProducts = ({ close }) => {
 
           <div className="wrapper-btn-save-create">
             <button className="btn-save-add-new-product" onClick={handleClickSaveButton}> Save </button>
-            <button className="btn-create-add-new-product" onClick={handleClickSaveButton}> Create </button>
+            <button className="btn-create-add-new-product" onClick={handleClickCreateButton}> Create </button>
           </div>
 
           <div className="wrapper-btn-close-add-new-product">
@@ -150,19 +180,18 @@ const AddProducts = ({ close }) => {
             <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} />
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
-              <UploadImage imgsSelected={(imgs) => setSelectedPicture(imgs)} />
+              <UploadImage imgsSelected={(imgs) => setSelectedPictures(imgs)} />
             </div>
 
             <div className="wrapper-imgs">
-
               <div className="up-side-imgs">
-                <div className="img-1"><img width={'100px'} height={'auto'} src={selectedPicture[0] && selectedPicture[0] || logoIcon} alt="img 1" /></div>
-                <div className="img-2"><img width={'100px'} height={'auto'} src={selectedPicture[1] && selectedPicture[1] || logoIcon} alt="img 2" /></div>
+                <div className="img-1"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[0] || logoIcon} alt="img 1" /></div>
+                <div className="img-2"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[1] || logoIcon} alt="img 2" /></div>
               </div>
 
               <div className="down-side-imgs">
-                <div className="img-3"><img width={'100px'} height={'auto'} src={selectedPicture[2] && selectedPicture[2] || logoIcon} alt="img 3" /></div>
-                <div className="img-4"><img width={'100px'} height={'auto'} src={selectedPicture[3] && selectedPicture[3] || logoIcon} alt="img 4" /></div>
+                <div className="img-3"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[2] || logoIcon} alt="img 3" /></div>
+                <div className="img-4"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[3] || logoIcon} alt="img 4" /></div>
               </div>
 
             </div>

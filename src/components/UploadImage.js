@@ -12,8 +12,20 @@ const UploadImage = ({ imgsSelected }) => {
     const imagesArray = selectedFileArray.map((image) => {
       return URL.createObjectURL(image);
     });
+    console.log(imagesArray);
 
-    imgsSelected(imagesArray)
+
+    // let form = new FormData();
+
+    // for (var index = 0; index < e.target.files.length; index++) {
+    //   var element = e.target.files[index];
+    //   form.append('image', element);
+    // }
+    // form.append('fileName', "Img");
+    // imgsSelected(form);
+
+    imgsSelected(e.target.files)
+
   };
 
 
