@@ -30,10 +30,8 @@ const AddProducts = ({ close }) => {
   const [selectedPictures, setSelectedPictures] = useState([]);
   const [brandProduct, setBrandProduct] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
+  const [stockProduct, setStockProduct] = useState('');
   const [categoryProduct, setCategoryProduct] = useState('');
-
-
-
 
   const resetFields = () => {
     setNameProduct('');
@@ -66,9 +64,9 @@ const AddProducts = ({ close }) => {
   const handleClickSaveButton = (e) => {
     e.preventDefault();
 
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct)) {
       const addNewProductToList = {
-        id: ++listOfProductAdded.length,
+        // id: ++listOfProductAdded.length,
         nameProduct: nameProduct,
         colorProduct: colorProduct,
         descriptionProduct: descriptionProduct,
@@ -76,6 +74,7 @@ const AddProducts = ({ close }) => {
         picturePath: picturePath,
         brandProduct: brandProduct,
         sizeProduct: sizeProduct,
+        stockProduct: stockProduct,
         categoryProduct: categoryProduct
       }
 
@@ -89,34 +88,39 @@ const AddProducts = ({ close }) => {
   }
 
 
-  const handleClickCreateButton = () => {
+  const handleClickCreateButton = async (e) => {
 
-
-
-    if (selectedPictures !== null) {
-      const formData = new FormData();
-      for (var index = 0; index < selectedPictures.length; index++) {
-        var element = selectedPictures[index];
-        console.log('element', element);
-        formData.append('image', element);
-      }
-      // formData.append('file', selectedPictures[0])
-
-      console.log('formData -> ', formData);
-
-      fetch(`${URI}api/AWS/v1/uploadFile`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: "multipart/form-data",
-        },
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => console.log('data', data))
-        .catch(error => console.log(error.message))
-
+    const formData = new FormData();
+    for (var index = 0; index < selectedPictures.length; index++) {
+      var element = selectedPictures[index];
+      formData.append(`image ${index}`, element, element.name);
     }
+
+    await fetch(`${URI}api/Product/v1/create/newProduct`, {
+      method: "POST",
+      body: JSON.stringify(
+        {
+          "name": nameProduct,
+          "brand": brandProduct,
+          "color": colorProduct,
+          "description": descriptionProduct,
+          "price": priceProduct,
+          "picturePath": picturePath,
+          "sizes": [
+            {
+              "stock": stockProduct,
+              "size": sizeProduct
+            }
+          ],
+          "categoryName": categoryProduct,
+        }),
+      headers: {
+        Accept: "multipart/form-data",
+      },
+    })
+      .then(response => response.json())
+      .then(data => console.log('data', data))
+      .catch(error => console.log(error))
   }
 
   return (
@@ -149,6 +153,8 @@ const AddProducts = ({ close }) => {
             <input type={'number'} value={priceProduct} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
             <label>Brand Product</label>
             <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
+            <label>Stock Product</label>
+            <input type={'number'} value={stockProduct} id={'stockProduct'} onChange={(e) => { setStockProduct(e.target.value) }} />
             <label>Size Product</label>
             <select className="select-size" value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
               < option value={'None'} > None</option>
