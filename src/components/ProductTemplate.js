@@ -30,7 +30,7 @@ const ProductTemplate = ({ product }) => {
                 onClick={handleClickProduct}
                 id={product.id}
                 className="product-img"
-                src={product.picturePath}
+                src={product.productImages[0].path}
                 alt="product"
               />
             </div>

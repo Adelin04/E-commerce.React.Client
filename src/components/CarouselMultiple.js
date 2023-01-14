@@ -84,7 +84,7 @@ class MultipleItems extends React.Component {
                       <img
                         id={product.id}
                         className="img-carousel"
-                        src={product.picturePath}
+                        src={product.productImages[0].path}
                         alt={"This image is not available"}
                         onClick={this.handleClicked}
                       />

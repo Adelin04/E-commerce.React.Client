@@ -97,7 +97,7 @@ const ProductDetails = () => {
                 <img
                   id={productById[0].id}
                   className="product-img"
-                  src={productById[0].picturePath}
+                  src={productById[0].productImages[0].path}
                   alt="product"
                 />
 

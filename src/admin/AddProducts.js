@@ -9,6 +9,7 @@ import styledComponents from "styled-components";
 import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addNewProduct } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
+import axios from "axios";
 
 const AddProducts = ({ close }) => {
   const navigate = useNavigate();
@@ -26,8 +27,7 @@ const AddProducts = ({ close }) => {
   const [colorProduct, setColorProduct] = useState('');
   const [descriptionProduct, setDescriptionProduct] = useState('');
   const [priceProduct, setPriceProduct] = useState('');
-  const [picturePath, setPicturePath] = useState('');
-  const [selectedPictures, setSelectedPictures] = useState([]);
+  const [selectedPictures, setSelectedPictures] = useState(null);
   const [brandProduct, setBrandProduct] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
   const [stockProduct, setStockProduct] = useState('');
@@ -38,7 +38,6 @@ const AddProducts = ({ close }) => {
     setColorProduct('');
     setDescriptionProduct('');
     setPriceProduct('');
-    setPicturePath('');
     setBrandProduct('');
     setSizeProduct('');
     setCategoryProduct('');
@@ -71,7 +70,6 @@ const AddProducts = ({ close }) => {
         colorProduct: colorProduct,
         descriptionProduct: descriptionProduct,
         priceProduct: priceProduct,
-        picturePath: picturePath,
         brandProduct: brandProduct,
         sizeProduct: sizeProduct,
         stockProduct: stockProduct,
@@ -90,37 +88,42 @@ const AddProducts = ({ close }) => {
 
   const handleClickCreateButton = async (e) => {
 
-    const formData = new FormData();
-    for (var index = 0; index < selectedPictures.length; index++) {
-      var element = selectedPictures[index];
-      formData.append(`image ${index}`, element, element.name);
+    let formData = new FormData();
+
+    formData.append("name", nameProduct)
+    formData.append("brand", brandProduct)
+    formData.append("color", colorProduct)
+    formData.append("description", descriptionProduct)
+    formData.append("price", priceProduct)
+    formData.append("sizes", [
+      {
+        "stock": stockProduct,
+        "size": sizeProduct
+      }
+    ])
+    formData.append("categoryName", categoryProduct)
+
+    // append all images to formData
+    for (let index = 0; index < selectedPictures.files.length; index++) {
+      let image = selectedPictures.files[index];
+      formData.append(`files`, image);
     }
 
     await fetch(`${URI}api/Product/v1/create/newProduct`, {
       method: "POST",
-      body: JSON.stringify(
-        {
-          "name": nameProduct,
-          "brand": brandProduct,
-          "color": colorProduct,
-          "description": descriptionProduct,
-          "price": priceProduct,
-          "picturePath": picturePath,
-          "sizes": [
-            {
-              "stock": stockProduct,
-              "size": sizeProduct
-            }
-          ],
-          "categoryName": categoryProduct,
-        }),
-      headers: {
-        Accept: "multipart/form-data",
-      },
+      body: formData,
     })
       .then(response => response.json())
       .then(data => console.log('data', data))
       .catch(error => console.log(error))
+
+    // axios alternative
+    /*     try {
+          const res = await axios.post(`${URI}api/Product/v1/create/newProduct`, formData);
+          console.log(res);
+        } catch (ex) {
+          console.log(ex);
+        } */
   }
 
   return (
@@ -143,6 +146,7 @@ const AddProducts = ({ close }) => {
 
         <div className="wrapper-form">
           <div className="left-side">
+
             <label>Name Product</label>
             <input type={'text'} autoFocus={true} value={nameProduct} id={'nameProduct'} onChange={(e) => { setNameProduct(e.target.value) }} />
             <label>Color Product</label>
@@ -178,12 +182,13 @@ const AddProducts = ({ close }) => {
                 })
               }
             </select>
+
           </div>
 
 
           <div className="right-side">
-            <label>Picture Link</label>
-            <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} />
+            {/*             <label>Picture Link</label>
+            <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} /> */}
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
               <UploadImage imgsSelected={(imgs) => setSelectedPictures(imgs)} />
@@ -191,13 +196,13 @@ const AddProducts = ({ close }) => {
 
             <div className="wrapper-imgs">
               <div className="up-side-imgs">
-                <div className="img-1"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[0] || logoIcon} alt="img 1" /></div>
-                <div className="img-2"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[1] || logoIcon} alt="img 2" /></div>
+                <div className="img-1"><img width={'100px'} height={'auto'} src={selectedPictures !== null && selectedPictures.blobs[0] || logoIcon} alt="img 1" /></div>
+                <div className="img-2"><img width={'100px'} height={'auto'} src={selectedPictures !== null && selectedPictures.blobs[1] || logoIcon} alt="img 2" /></div>
               </div>
 
               <div className="down-side-imgs">
-                <div className="img-3"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[2] || logoIcon} alt="img 3" /></div>
-                <div className="img-4"><img width={'100px'} height={'auto'} src={selectedPictures && selectedPictures[3] || logoIcon} alt="img 4" /></div>
+                <div className="img-3"><img width={'100px'} height={'auto'} src={selectedPictures !== null && selectedPictures.blobs[2] || logoIcon} alt="img 3" /></div>
+                <div className="img-4"><img width={'100px'} height={'auto'} src={selectedPictures !== null && selectedPictures.blobs[3] || logoIcon} alt="img 4" /></div>
               </div>
 
             </div>
@@ -477,3 +482,21 @@ const Wrapper = styledComponents.div`
     height: 100%;
     // background:green;
 `; */
+
+
+/* {
+  "name": nameProduct,
+  "brand": brandProduct,
+  "color": colorProduct,
+  "description": descriptionProduct,
+  "price": priceProduct,
+  "picturePath": picturePath,
+  "sizes": [
+    {
+      "stock": stockProduct,
+      "size": sizeProduct
+    }
+  ],
+  "categoryName": categoryProduct,
+  "files": JSON.stringify(formData[0])
+} */
