@@ -14,7 +14,7 @@ const AccesoryPage = () => {
       <Header />
 
       <div className="wrapper-products-list">
-        {state && state.filteredProducts === null && <ProductsList products={state.products && state.products.products} />}
+        {state && state.filteredProducts === null && <ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name === "BROOCHES" || product.categoryProduct.name === 'BAG')} />}
         {state && <ProductsList products={state.filteredProducts} />}
       </div>
 

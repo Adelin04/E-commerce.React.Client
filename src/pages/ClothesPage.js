@@ -14,9 +14,9 @@ const ClothesPage = () => {
     <Wrapper>
 
       <Header />
-      
+
       <div className="wrapper-products-list">
-        {state && state.filteredProducts === null ? < ProductsList products={state.products} /> : <ProductsList products={state.filteredProducts} />}
+        {state && state.filteredProducts === null ? < ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name !== 'BROOCHES' && product.categoryProduct.name !== 'BAG')} /> : <ProductsList products={state.filteredProducts} />}
       </div>
 
       <Footer />

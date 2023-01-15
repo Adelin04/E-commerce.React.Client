@@ -16,7 +16,7 @@ const PopUp_MainMenu = ({
 
   const handleDispatch_ProductByCategory = (category) => {
     dispatch(
-      getProductsByCategory({ category})
+      getProductsByCategory({ category })
     )
   }
 
@@ -51,8 +51,8 @@ const PopUp_MainMenu = ({
                 ? linksSlide[indexOfLinkTouched].subLinks.map(
                   (subLink, index) => {
                     return (
-                      <div key={index} className="wrapper-link">
-                        <NavLink className="link-popUp" to={linksSlide[indexOfLinkTouched].to} onClick={() => handleDispatch_ProductByCategory(subLink.name)}> {subLink.name} </NavLink>
+                      <div key={index} className="wrapper-link" >
+                        <NavLink className="link-popUp" to={linksSlide[indexOfLinkTouched].to} onClick={() => handleDispatch_ProductByCategory(subLink.name)}>{subLink.name} </NavLink>
                       </div>
                     );
                   }

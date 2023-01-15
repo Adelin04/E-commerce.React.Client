@@ -48,7 +48,8 @@ function App() {
         if ("TOKEN_ACCES" in localStorage) {
           const token = localStorage.getItem("TOKEN_ACCES");
           let TMP_USER = [];
-          const decoded_user = jwt_decode(token); // decode your token here
+          
+          const decoded_user = jwt_decode(token); // decode token
 
           for (const claim in decoded_user) {
             if (Object.hasOwnProperty.call(decoded_user, claim)) {

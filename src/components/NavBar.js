@@ -46,7 +46,7 @@ const NavBar = ({ links }) => {
             style={{ textDecoration: "none" }}
             onClick={handleDispatchReset}
           >
-             {link.name}
+            {link.name}
           </NavLink>
         );
       })}
