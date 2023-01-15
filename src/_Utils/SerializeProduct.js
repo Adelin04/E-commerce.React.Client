@@ -1,6 +1,6 @@
 export const SerializeProduct = (product ) => {
     let newProduct = {
-        category: product.category,
+        category: product.categoryProduct,
         color: product.color,
         createdAt: product.createdAt,
         currency: product.currency,
@@ -8,7 +8,7 @@ export const SerializeProduct = (product ) => {
         id: product.id,
         name: product.name,
         price: product.price,
-        picturePath: product.picturePath,
+        productImages: product.productImages,
         stock: product.stock,
         updatedAt: product.updatedAt
     }

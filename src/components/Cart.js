@@ -34,7 +34,7 @@ const Cart = () => {
                     <div className="product-details">
 
                       <div className="img-product-details-cart">
-                        <img src={product.picturePath} />
+                        <img src={product.productImages[0].path} />
                       </div>
 
 
