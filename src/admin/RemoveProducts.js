@@ -98,22 +98,26 @@ const AddProducts = ({ close }) => {
                     <div className="container-product-to-remove">
 
                         <div className="container-product-to-remove-left-side">
-                            <label>Name </label>
-                            <p>{productToRemove[0].name}</p>
-                            <label>Color </label>
-                            <p>{productToRemove[0].color}</p>
-                            <label>Description </label>
-                            <p>{productToRemove[0].description}</p>
-                            <label>Price </label>
-                            <p>{productToRemove[0].price} {productToRemove[0].currency}</p>
-                            <label>Brand</label>
-                            <p>{productToRemove[0].brand}</p>
-                            <label>Size </label>
-                            <p>{productToRemove[0].size}</p>
-                            <label>Stock</label>
-                            <p>{productToRemove[0].stock}</p>
-                            <label>Category </label>
-                            <p>{productToRemove[0].categoryProduct.name}</p>
+                            
+                            <div className="wrapper-product-to-remove-left-side">
+                                <label>Name </label>
+                                <p>{productToRemove[0].name}</p>
+                                <label>Color </label>
+                                <p>{productToRemove[0].color}</p>
+                                <label>Description </label>
+                                <p>{productToRemove[0].description}</p>
+                                <label>Price </label>
+                                <p>{productToRemove[0].price} {productToRemove[0].currency}</p>
+                                <label>Brand</label>
+                                <p>{productToRemove[0].brand}</p>
+                                <label>Size </label>
+                                <p>{productToRemove[0].size}</p>
+                                <label>Stock</label>
+                                <p>{productToRemove[0].stock}</p>
+                                <label>Category </label>
+                                <p>{productToRemove[0].categoryProduct.name}</p>
+                            </div>
+
                         </div>
 
                         <div className="wrapper-imgs">
@@ -274,7 +278,7 @@ const Wrapper = styledComponents.div`
 
 
     .container-product-to-remove-left-side {
-         display: flex;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -283,6 +287,15 @@ const Wrapper = styledComponents.div`
         width: 100%;
         height: 300px;
         overflow: auto;
+    }
+    
+    .wrapper-product-to-remove-left-side {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: inherit;
     }
 
       .container-product-to-remove-right-side {
