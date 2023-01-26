@@ -171,7 +171,7 @@ const Wrapper = styledComponents.div`
     .menu {
       display: flex;
       flex-direction:column;
-      width: 230px;
+      width: 20%;
       height: 100%;
       background: var(--baseColor);
     }
