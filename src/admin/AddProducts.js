@@ -252,6 +252,7 @@ const Wrapper = styledComponents.div`
       height: auto;
       margin: 50px auto;
       padding: 5px;
+      border-radius: 10px;
       background: var(--baseColor);
     }
 
@@ -332,7 +333,8 @@ const Wrapper = styledComponents.div`
       align-items: center;
       margin: 10px;
       width: 90%;
-      height: 100%;
+      max-height: 450px;
+      overflow: auto;
     }
     
     .left-side {
@@ -471,32 +473,4 @@ const Wrapper = styledComponents.div`
 
     }
     
-      `;
-
-
-/* const Wrapper = styledComponents.div`
-    display: flex;
-    justify-content : space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    // background:green;
-`; */
-
-
-/* {
-  "name": nameProduct,
-  "brand": brandProduct,
-  "color": colorProduct,
-  "description": descriptionProduct,
-  "price": priceProduct,
-  "picturePath": picturePath,
-  "sizes": [
-    {
-      "stock": stockProduct,
-      "size": sizeProduct
-    }
-  ],
-  "categoryName": categoryProduct,
-  "files": JSON.stringify(formData[0])
-} */
+`;

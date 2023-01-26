@@ -9,6 +9,7 @@ import { selectUser } from "../Features/UserSlice";
 import UploadImage from "../components/UploadImage";
 import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
+import RemoveProducts from "./RemoveProducts";
 
 const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
@@ -19,6 +20,7 @@ const DashboardAdmin = () => {
   const dispatch = useDispatch();
 
   const [goToAddProduct, setGoToAddProduct] = useState(false)
+  const [goToRemoveProduct, setGoToRemoveProduct] = useState(false)
   const [msg, setMsg] = useState('Create New Product')
 
   useEffect(() => {
@@ -114,11 +116,11 @@ const DashboardAdmin = () => {
         <div className="container-btns">
           <button
             className="menu-btn-add-new-project"
-            onClick={() => { setGoToAddProduct(true) }}
+            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false) }}
           >Add new product</button>
           <button
             className="menu-btn-remove-project"
-            onClick={() => navigate("/admin/dashboard/remove/")}
+            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false) }}
           >Remove product</button>
         </div>
         <div className="dashboard-admin-info">
@@ -140,6 +142,7 @@ const DashboardAdmin = () => {
 
       <div className="main-page" onClick={() => setGoToAddProduct(false)}>
         {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
+        {goToRemoveProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
         <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
 
           {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
@@ -147,7 +150,8 @@ const DashboardAdmin = () => {
       </div>
 
       <div style={{ zIndex: '2' }}>
-        {goToAddProduct && <AddProducts close={() => setGoToAddProduct(false)} />}
+        {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
+        {goToRemoveProduct && <RemoveProducts  close={() => { setGoToRemoveProduct(false) }}/>}
       </div>
     </Wrapper>
   );
@@ -167,7 +171,7 @@ const Wrapper = styledComponents.div`
     .menu {
       display: flex;
       flex-direction:column;
-      width: 20%;
+      width: 230px;
       height: 100%;
       background: var(--baseColor);
     }
@@ -400,43 +404,4 @@ const Wrapper = styledComponents.div`
       }
   }
 
-
-
-      //************************ 600px ******************************
-    @media only screen and (max-width:600px) {
-      
-      .menu-btn-add-new-project,
-      .menu-btn-remove-project {
-        font-size: 13px;
-        font-weight: bolder;
-      }
-
-      .dashboard-admin-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 13px;
-      }
-
-      .dashboard-admin-info p {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 13px;
-      }
-      
-      .dashboard-admin-info p span{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 13px;
-     }
-
-
-    }
-    
-      `;
+}`;
