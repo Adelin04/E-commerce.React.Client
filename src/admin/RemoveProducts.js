@@ -22,16 +22,6 @@ const AddProducts = ({ close }) => {
     //Local variable
     const [idToRemove, setIdToRemove] = useState();
     const [productToRemove, setProductToRemove] = useState();
-
-    const [nameProduct, setNameProduct] = useState('');
-    const [colorProduct, setColorProduct] = useState('');
-    const [descriptionProduct, setDescriptionProduct] = useState('');
-    const [priceProduct, setPriceProduct] = useState('');
-    const [selectedPictures, setSelectedPictures] = useState(null);
-    const [brandProduct, setBrandProduct] = useState('');
-    const [sizeProduct, setSizeProduct] = useState('');
-    const [stockProduct, setStockProduct] = useState('');
-    const [categoryProduct, setCategoryProduct] = useState('');
     const [msg, setMsg] = useState('Remove Product By Id')
 
 
@@ -64,6 +54,14 @@ const AddProducts = ({ close }) => {
         setProductToRemove(TMP_productToRemove);
     }
 
+    const handleClickAddToDeleteListButton = () => {
+
+    }
+
+    const handleClickDeleteButton = () => {
+
+    }
+
 
     return (
         <Wrapper>
@@ -71,6 +69,8 @@ const AddProducts = ({ close }) => {
                 <div className="container-btn-box-remove-product">
 
                     <div className="wrapper-btn-close-remove-product">
+                        <button className="btn-delete" onClick={handleClickAddToDeleteListButton}>Add to delete list</button>
+                        <button className="btn-add-remove-list" onClick={handleClickDeleteButton}>Delete</button>
                         <button className="btn-close-remove-product" onClick={handleClickCloseButton}>X</button>
                     </div>
 
@@ -98,7 +98,7 @@ const AddProducts = ({ close }) => {
                     <div className="container-product-to-remove">
 
                         <div className="container-product-to-remove-left-side">
-                            
+
                             <div className="wrapper-product-to-remove-left-side">
                                 <label>Name </label>
                                 <p>{productToRemove[0].name}</p>
@@ -214,30 +214,33 @@ const Wrapper = styledComponents.div`
         width: 90%;
     }
     
+    .btn-delete,
+    .btn-add-remove-list,
     .btn-close-remove-product {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 80px;
-        height: 25px;
+        width: auto;
+        min-height: 30px;
         border: none;
         border-radius: 5px;
         margin: 5px;
         outline: none;
         cursor: pointer;
+        color: var(--baseColor);
         background: var(--buttonColor);
     }
 
     .wrapper-btn-close-remove-product {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         margin: 5px;
         padding: 5px;
         float: left;
         width: 100%;  
   }
 
-    .btn-close-add-new-product:hover{
+    .btn-close-remove-product:hover{
         background: red;
     }
 

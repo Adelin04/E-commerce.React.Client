@@ -62,7 +62,7 @@ const DashboardAdmin = () => {
               <div className="box-added-new-product" id={product.id} key={index}>
                 <div className="wrapper-btns-product-added">
                   <button id={product.id} className="btn-edit-product-added">Edit</button>
-                  <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X</button>
+                  <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X </button>
                 </div>
                 <label>Name Product</label>
                 <input defaultValue={product.nameProduct} />
@@ -78,9 +78,7 @@ const DashboardAdmin = () => {
                 <input defaultValue={product.sizeProduct} />
                 <label>Category Product</label>
                 <input defaultValue={product.categoryProduct} />
-                <label>Picture Link</label>
-                <input defaultValue={product.picturePath} />
-                <label>Picture Product</label>
+
               </div>
             )
           })}
@@ -151,7 +149,7 @@ const DashboardAdmin = () => {
 
       <div style={{ zIndex: '2' }}>
         {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
-        {goToRemoveProduct && <RemoveProducts  close={() => { setGoToRemoveProduct(false) }}/>}
+        {goToRemoveProduct && <RemoveProducts close={() => { setGoToRemoveProduct(false) }} />}
       </div>
     </Wrapper>
   );
@@ -172,6 +170,7 @@ const Wrapper = styledComponents.div`
       display: flex;
       flex-direction:column;
       width: 20%;
+      min-width: 250px;
       height: 100%;
       background: var(--baseColor);
     }
@@ -310,19 +309,22 @@ const Wrapper = styledComponents.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        width: auto;
+        min-height: 30px;
         border: none;
         border-radius: 5px;
         margin: 5px;
         outline: none;
         cursor: pointer;
-        color: var(--baseColor);
         background: var(--buttonColor);
+        color: var(--baseColor);
+        font-size: 17px;
       }
       
-      .btn-edit-product-added {
+/*       .btn-edit-product-added {
         width: 50px;
         height: 25px;
-      }
+      } */
       
       .btn-close-product-added {
         width: 20px;
