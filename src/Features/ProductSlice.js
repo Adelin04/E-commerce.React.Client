@@ -53,7 +53,7 @@ export const ProductSlice = createSlice({
 
       const tmp_getProductById = currentState.products && currentState.products.filter((product) => regexIdProduct_forAdmin.exec(product.id))
       const tmp_getProductByName = currentState.products && currentState.products.filter((product) => regexNameProduct.exec(product.name.toString().toLowerCase()))
-      
+
       if (tmp_getProductById !== null && tmp_getProductById !== undefined)
         state.filteredProducts = tmp_getProductById;
 
@@ -76,8 +76,21 @@ export const ProductSlice = createSlice({
       state.sizesProductAvailable = action.payload.allSizesProduct;
     },
 
-    addNewProduct: (state, action) => {
+    addListOfNewProduct: (state, action) => {
       state.newProductsAdded.push(action.payload.listOfNewProduct);
+    },
+
+    addNewProduct: (state, action) => {
+      const currentState = current(state);
+
+      state.products = [...action.payload.newProduct]
+    },
+
+    deleteProductById: (state, action) => {
+      const currentState = current(state);
+      const filteredProduct = currentState.products.filter(product => product.id.toString() !== action.payload.idTarget.toString());
+
+      state.products = filteredProduct;
     },
 
     removeFromListOfNewProduct: (state, action) => {
@@ -90,6 +103,6 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addNewProduct, removeFromListOfNewProduct } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

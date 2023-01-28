@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 // import UploadImage from "../components/UploadImage";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addNewProduct } from "../Features/ProductSlice";
+import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addListOfNewProduct, addNewProduct } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
+import LoadingSpin from "react-loading-spin";
 import axios from "axios";
 
 const AddProducts = ({ close }) => {
@@ -22,6 +23,7 @@ const AddProducts = ({ close }) => {
 
 
   const [msg, setMsg] = useState('Create New Product')
+  const [loading, setLoadind] = useState(false)
 
   const [nameProduct, setNameProduct] = useState('');
   const [colorProduct, setColorProduct] = useState('');
@@ -30,7 +32,7 @@ const AddProducts = ({ close }) => {
   const [selectedPictures, setSelectedPictures] = useState(null);
   const [brandProduct, setBrandProduct] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
-  const [stockProduct, setStockProduct] = useState('');
+  const [stockProduct, setStockProduct] = useState(1);
   const [categoryProduct, setCategoryProduct] = useState('');
 
   const resetFields = () => {
@@ -39,14 +41,16 @@ const AddProducts = ({ close }) => {
     setDescriptionProduct('');
     setPriceProduct('');
     setBrandProduct('');
+    setStockProduct(1);
     setSizeProduct('');
     setCategoryProduct('');
+    setSelectedPictures(null)
   }
 
   const existEmptyFields = (...fields) => {
     let emptyField = false;
     fields.map(element => {
-      if (element === '') {
+      if (element === '' || element === null) {
         emptyField = true;
       }
     })
@@ -62,10 +66,11 @@ const AddProducts = ({ close }) => {
 
   const handleClickSaveButton = (e) => {
     e.preventDefault();
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures)) {
 
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct)) {
+      let linksToSelectedImages = selectedPictures.blobs;
       const addNewProductToList = {
-        // id: ++listOfProductAdded.length,
+        id: ++listOfProductAdded.length,
         nameProduct: nameProduct,
         colorProduct: colorProduct,
         descriptionProduct: descriptionProduct,
@@ -73,10 +78,12 @@ const AddProducts = ({ close }) => {
         brandProduct: brandProduct,
         sizeProduct: sizeProduct,
         stockProduct: stockProduct,
-        categoryProduct: categoryProduct
+        categoryProduct: categoryProduct,
+        selectedPictures: linksToSelectedImages
       }
 
-      dispatch(addNewProduct({ listOfNewProduct: addNewProductToList }))
+
+      dispatch(addListOfNewProduct({ listOfNewProduct: addNewProductToList }))
 
       resetFields();
       { setMsg('Create New Product') }
@@ -87,53 +94,88 @@ const AddProducts = ({ close }) => {
 
 
   const handleClickCreateButton = async (e) => {
-
+    setLoadind(true)
     let formData = new FormData();
 
-    formData.append("name", nameProduct)
-    formData.append("brand", brandProduct)
-    formData.append("color", colorProduct)
-    formData.append("description", descriptionProduct)
-    formData.append("price", priceProduct)
-    formData.append("sizes", [
-      {
-        "stock": stockProduct,
-        "size": sizeProduct
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures)) {
+
+      formData.append("name", nameProduct)
+      formData.append("brand", brandProduct)
+      formData.append("color", colorProduct)
+      formData.append("description", descriptionProduct)
+      formData.append("price", priceProduct)
+      formData.append("sizes", [
+        {
+          "stock": stockProduct,
+          "size": sizeProduct
+        }
+      ])
+      formData.append("categoryName", categoryProduct)
+
+      // append all images to formData
+      for (let index = 0; index < selectedPictures.files.length; index++) {
+        let image = selectedPictures.files[index];
+        formData.append(`files`, image);
       }
-    ])
-    formData.append("categoryName", categoryProduct)
 
-    // append all images to formData
-    for (let index = 0; index < selectedPictures.files.length; index++) {
-      let image = selectedPictures.files[index];
-      formData.append(`files`, image);
-    }
-
-    await fetch(`${URI}api/Product/v1/create/newProduct`, {
-      method: "POST",
-      body: formData,
-    })
-      .then(response => response.json())
-      .then(data => console.log('data', data))
-      .catch(error => console.log(error))
-
-    // axios alternative
-    /*     try {
-          const res = await axios.post(`${URI}api/Product/v1/create/newProduct`, formData);
-          console.log(res);
-        } catch (ex) {
-          console.log(ex);
-        } */
+      await fetch(`${URI}api/Product/v1/create/newProduct`, {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          const { success, newProductCreated } = data
+          console.log(data);
+          if (success) {
+/*             dispatch(addNewProduct({
+              newProduct: {
+                id: newProductCreated,
+                nameProduct: newProductCreated.name,
+                colorProduct: newProductCreated.color,
+                descriptionProduct: newProductCreated.description,
+                priceProduct: newProductCreated.price,
+                brandProduct: newProductCreated.brand,
+                sizeProduct: newProductCreated.sizeStock,
+                stockProduct: newProductCreated.stock,
+                categoryProduct: newProductCreated.categoryProduct.name,
+                selectedPictures: newProductCreated.productImages
+              }
+            })) */
+            setLoadind(false)
+            setMsg('The product was successfully created')
+          }
+        })
+        .catch(error => setMsg(error.toString()))
+      resetFields()
+      // axios alternative
+      /*     try {
+        const res = await axios.post(`${URI}api/Product/v1/create/newProduct`, formData);
+        console.log(res);
+      } catch (ex) {
+        console.log(ex);
+      } */
+    } else { setMsg('Empty field(s)') }
   }
+
+  setTimeout(() => {
+    setMsg('Create New Product')
+  }, 5000);
+
+
 
   return (
     <Wrapper>
+
       <div className="box-add-new-product">
+
+        <div className="loading-spiner" style={{ position: 'absolute' }}>
+          {loading && <LoadingSpin />}
+        </div>
 
         <div className="container-btn-box-add-new-product">
 
           <div className="wrapper-btn-save-create">
-            <button className="btn-save-add-new-product" onClick={handleClickSaveButton}> Save </button>
+            <button className="btn-save-add-new-product" onClick={handleClickSaveButton}> Save Multiple Products </button>
             <button className="btn-create-add-new-product" onClick={handleClickCreateButton}> Create </button>
           </div>
 
@@ -256,12 +298,7 @@ const Wrapper = styledComponents.div`
       background: var(--baseColor);
     }
 
-    .btn-create-add-new-product,
-    .btn-save-add-new-product,
-    .btn-close-add-new-product {
-      font-size: 15px;
-      color: var(--baseColor);
-    }
+s
 
     
     .btn-done:hover,
@@ -316,13 +353,15 @@ const Wrapper = styledComponents.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 80px;
-      height: 25px;
+      width: auto;
+      height: auto;
       border: none;
       border-radius: 5px;
       margin: 5px;
+      font-size: 15px;
       outline: none;
       cursor: pointer;
+      color: var(--baseColor);
       background: var(--buttonColor);
     }
 

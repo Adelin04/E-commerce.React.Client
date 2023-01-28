@@ -45,13 +45,55 @@ const DashboardAdmin = () => {
       .catch(err => setMsg(err.toString()))
   }, [])
 
+  const handleClickCreateButton = async (e) => {
+    console.log('create');
+    let formData = new FormData();
+
+    //   formData.append("name", nameProduct)
+    //   formData.append("brand", brandProduct)
+    //   formData.append("color", colorProduct)
+    //   formData.append("description", descriptionProduct)
+    //   formData.append("price", priceProduct)
+    //   formData.append("sizes", [
+    //     {
+    //       "stock": stockProduct,
+    //       "size": sizeProduct
+    //     }
+    //   ])
+    //   formData.append("categoryName", categoryProduct)
+
+    //   // append all images to formData
+    //   for (let index = 0; index < selectedPictures.files.length; index++) {
+    //     let image = selectedPictures.files[index];
+    //     formData.append(`files`, image);
+    //   }
+
+    //   await fetch(`${URI}api/Product/v1/create/newProduct`, {
+    //     method: "POST",
+    //     body: formData,
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => console.log('data', data))
+    //     .catch(error => console.log(error))
+
+  }
+
+
+  const handleClickCloseBtnProductAdded = (e) => {
+    e.preventDefault();
+    let idTarget = e.target.id;
+    console.log(idTarget);
+
+    dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
+  };
+
   const showAllNewProductAdded = (products = Array) => {
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', width: '100%', margin: '0px' }}>
 
         <nav className="header-menu-admin-dashboard">
-          <div style={{ position: 'fixed', top: 10, left: '25%' }}>
-            <button className="btn-done-product-added" > Create </button>
+          <div className="wrapper-btn-create">
+            <button className="btn-create" onClick={handleClickCreateButton}> Create </button>
           </div>
         </nav>
 
@@ -79,6 +121,18 @@ const DashboardAdmin = () => {
                 <label>Category Product</label>
                 <input defaultValue={product.categoryProduct} />
 
+                <div className="wrapper-imgs">
+                  <div className="up-side-imgs">
+                    <div className="img-1"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[0] || logoIcon} alt="img 1" /></div>
+                    <div className="img-2"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[1] || logoIcon} alt="img 2" /></div>
+                  </div>
+
+                  <div className="down-side-imgs">
+                    <div className="img-3"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[2] || logoIcon} alt="img 3" /></div>
+                    <div className="img-4"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[3] || logoIcon} alt="img 4" /></div>
+                  </div>
+
+                </div>
               </div>
             )
           })}
@@ -88,12 +142,7 @@ const DashboardAdmin = () => {
     )
   }
 
-  const handleClickCloseBtnProductAdded = (e) => {
-    e.preventDefault();
-    let idTarget = e.target.id;
 
-    dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
-  };
 
 
   return (
@@ -141,8 +190,8 @@ const DashboardAdmin = () => {
       <div className="main-page" onClick={() => setGoToAddProduct(false)}>
         {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
         {goToRemoveProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
-        <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
 
+        <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
           {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
         </div>
       </div>
@@ -165,7 +214,7 @@ const Wrapper = styledComponents.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-
+    
     .menu {
       display: flex;
       flex-direction:column;
@@ -174,13 +223,11 @@ const Wrapper = styledComponents.div`
       height: 100%;
       background: var(--baseColor);
     }
-
+    
     .header-menu-admin-dashboard {
-      position: fixed;
-      top: 0;
-      right: 1.5%;
+      display: flex;
       height: 50px;
-      width: 78.5%;
+      width: 100%;
       background: var(--baseColor);
     }
 
@@ -277,7 +324,14 @@ const Wrapper = styledComponents.div`
       height: 100%;
     }
 
-    .btn-done-product-added{
+    .wrapper-btn-create {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+    }
+
+    .btn-create{
       color: var(--baseColor);
       outline: none;
       border: none;
@@ -302,7 +356,8 @@ const Wrapper = styledComponents.div`
         width: 90%;
       }
       
-      .btn-save-add-new-product,
+      // .btn-save-add-new-product,
+      .btn-create,
       .btn-close-add-new-product,
       .btn-edit-product-added,
       .btn-close-product-added {
@@ -310,7 +365,7 @@ const Wrapper = styledComponents.div`
         justify-content: center;
         align-items: center;
         width: auto;
-        min-height: 30px;
+        height: 25px;
         border: none;
         border-radius: 5px;
         margin: 5px;
@@ -330,6 +385,7 @@ const Wrapper = styledComponents.div`
         width: 20px;
       }
 
+      .btn-create:hover,
       .btn-done-product-added:hover,
       .btn-edit-product-added:hover,
       .btn-close-product-added:hover {
@@ -369,6 +425,34 @@ const Wrapper = styledComponents.div`
       outline: none;
       background: var(--buttonColor);
     }
+
+
+    .wrapper-imgs {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      min-height: 200px;
+    }
+
+    .up-side-imgs {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 5px;
+    }
+    
+    .down-side-imgs {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 5px;
+    }
      
 //************************ 2000px ******************************
     @media only screen and (min-width:2000px) {
@@ -390,7 +474,7 @@ const Wrapper = styledComponents.div`
   //************************ 1000px ******************************
     @media only screen and (max-width:1000px) {
         
-      .admin {
+     /*  .admin {
         flex-direction: column;
       }
       
@@ -404,6 +488,6 @@ const Wrapper = styledComponents.div`
         font-size: 10px;
         font-weight: bolder;
       }
-  }
+  } */
 
 }`;

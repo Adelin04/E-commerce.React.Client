@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // import UploadImage from "../components/UploadImage";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addNewProduct } from "../Features/ProductSlice";
+import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addNewProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
 import axios from "axios";
@@ -25,21 +25,6 @@ const AddProducts = ({ close }) => {
     const [msg, setMsg] = useState('Remove Product By Id')
 
 
-
-
-
-
-
-    const existEmptyFields = (...fields) => {
-        let emptyField = false;
-        fields.map(element => {
-            if (element === '') {
-                emptyField = true;
-            }
-        })
-        return emptyField;
-    }
-
     const handleClickCloseButton = (e) => {
         e.preventDefault();
         // resetFields();
@@ -55,22 +40,48 @@ const AddProducts = ({ close }) => {
     }
 
     const handleClickAddToDeleteListButton = () => {
+        // logic
 
     }
 
-    const handleClickDeleteButton = () => {
+    const handleClickDeleteButton = async () => {
+
+        console.log(idToRemove);
+        //logic delete button
+        await fetch(`${URI}api/Product/v1/delete/productById/${idToRemove}`, {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('data', data);
+                const { success } = data
+                if (success) {
+                    dispatch(deleteProductById({ idTarget: idToRemove }))
+                    setMsg(`The product with id ${idToRemove} has been removed successfully`)
+                }
+            })
+            .catch(error => {
+                console.log(error.toString())
+                setMsg(error.toString())
+            })
 
     }
 
+    setTimeout(() => {
+        setMsg('Remove Product By Id')
+    }, 4000);
 
     return (
         <Wrapper>
             <div className="box-remove-product">
                 <div className="container-btn-box-remove-product">
 
-                    <div className="wrapper-btn-close-remove-product">
-                        <button className="btn-delete" onClick={handleClickAddToDeleteListButton}>Add to delete list</button>
-                        <button className="btn-add-remove-list" onClick={handleClickDeleteButton}>Delete</button>
+                    <div className="container-btn-close-remove-product">
+                        <div className="wrapper-btn-add-remove-list-delete">
+                            <button className="btn-add-remove-list" onClick={handleClickAddToDeleteListButton}>Add to delete list</button>
+                            <button className="btn-delete" onClick={handleClickDeleteButton}>Delete</button>
+                        </div>
+
                         <button className="btn-close-remove-product" onClick={handleClickCloseButton}>X</button>
                     </div>
 
@@ -225,13 +236,14 @@ const Wrapper = styledComponents.div`
         border: none;
         border-radius: 5px;
         margin: 5px;
+        font-size: 15px;
         outline: none;
         cursor: pointer;
         color: var(--baseColor);
         background: var(--buttonColor);
     }
 
-    .wrapper-btn-close-remove-product {
+    .container-btn-close-remove-product {
         display: flex;
         justify-content: space-between;
         margin: 5px;
@@ -240,8 +252,20 @@ const Wrapper = styledComponents.div`
         width: 100%;  
   }
 
+  
+    .btn-delete:hover,
+    .btn-add-remove-list:hover {
+        color: white;
+    }
+    
+    .btn-delete:hover,
     .btn-close-remove-product:hover{
         background: red;
+    }
+
+    .wrapper-btn-add-remove-list-delete {
+        display: flex;
+        // padding: 5px;
     }
 
 
