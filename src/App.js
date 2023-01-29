@@ -26,8 +26,8 @@ function App() {
   let userLogged = useSelector(selectUser).user;
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`${URI}api/Product/v1/get/allProducts`, {
+  useEffect(async () => {
+    await fetch(`${URI}api/Product/v1/get/allProducts`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -35,6 +35,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
+        console.log('--> ', products);
         if (success) {
           dispatch(
             getAllProducts({
@@ -48,7 +49,7 @@ function App() {
         if ("TOKEN_ACCES" in localStorage) {
           const token = localStorage.getItem("TOKEN_ACCES");
           let TMP_USER = [];
-          
+
           const decoded_user = jwt_decode(token); // decode token
 
           for (const claim in decoded_user) {

@@ -3,7 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const ProductSlice = createSlice({
   name: "products",
   initialState: {
-    products: null,
+    products: [],
     filteredProducts: null,
     productById: null,
     productByName: null,
@@ -81,9 +81,7 @@ export const ProductSlice = createSlice({
     },
 
     addNewProduct: (state, action) => {
-      const currentState = current(state);
-
-      state.products = [...action.payload.newProduct]
+      return { ...state, products: [...state.products, action.payload.newProduct] }
     },
 
     deleteProductById: (state, action) => {

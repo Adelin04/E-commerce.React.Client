@@ -127,25 +127,26 @@ const AddProducts = ({ close }) => {
           const { success, newProductCreated } = data
           console.log(data);
           if (success) {
-/*             dispatch(addNewProduct({
+            dispatch(addNewProduct({
               newProduct: {
-                id: newProductCreated,
-                nameProduct: newProductCreated.name,
-                colorProduct: newProductCreated.color,
-                descriptionProduct: newProductCreated.description,
-                priceProduct: newProductCreated.price,
-                brandProduct: newProductCreated.brand,
-                sizeProduct: newProductCreated.sizeStock,
-                stockProduct: newProductCreated.stock,
-                categoryProduct: newProductCreated.categoryProduct.name,
-                selectedPictures: newProductCreated.productImages
+                id: newProductCreated.id,
+                name: newProductCreated.name,
+                color: newProductCreated.color,
+                description: newProductCreated.description,
+                price: newProductCreated.price,
+                brand: newProductCreated.brand,
+                sizeStock: newProductCreated.sizeStock,
+                stock: newProductCreated.stock,
+                categoryProduct: newProductCreated.categoryProduct,
+                productImages: newProductCreated.productImages
               }
-            })) */
-            setLoadind(false)
-            setMsg('The product was successfully created')
+            }))
           }
         })
         .catch(error => setMsg(error.toString()))
+
+      setLoadind(false)
+      setMsg('The product was successfully created')
       resetFields()
       // axios alternative
       /*     try {

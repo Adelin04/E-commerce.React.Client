@@ -12,6 +12,8 @@ import Button from "./Button";
 import Footer from "./Footer";
 import Header from "./Header";
 import PriceFormated from "./PriceFormated";
+import CarouselMultiple from "../components/CarouselMultiple";
+import CarouselProductImages from "./CarouselProductImages";
 
 //  The ProductDetails component used when you clicked on a product
 const ProductDetails = () => {
@@ -91,15 +93,28 @@ const ProductDetails = () => {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
+                width: "90%",
               }}
             >
               <div className="product-img-wraper">
-                <img
-                  id={productById[0].id}
-                  className="product-img"
-                  src={productById[0].productImages[0].path}
-                  alt="product"
-                />
+                {productById && <div
+                  className="multipleCarousel"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "start",
+                    alignItems: "center",
+                    width: "50%",
+                    height: "auto",
+                    margin: "50px",
+                  }}
+                >
+                  <CarouselProductImages
+                    products={productById}
+                    slidesToShow={1}
+                    slidesToScroll={1}
+                  />
+                </div>}
 
               </div>
             </div>
@@ -124,7 +139,7 @@ const ProductDetails = () => {
               <h4>{`${productById[0].description.split()[0].slice(0, 50)}...`}</h4>
             </div>
             <hr style={{ width: "80%" }} />
-
+            {console.log(productById)}
             <div>
               <p>
                 <select
@@ -143,7 +158,6 @@ const ProductDetails = () => {
             </div>
 
             <div className="quantity">
-              {/* Quantity{" "} */}
               <Button
                 style={{
                   display: "flex",
@@ -185,8 +199,8 @@ const ProductDetails = () => {
           </div>
         </div>
       )}
-
       <Footer />
+
     </Wrapper>
   );
 };
@@ -253,15 +267,14 @@ const Wrapper = styledComponents.div`
     }
 
     .product-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       margin: 20px auto;
       padding: 10px;
       min-height: 250px;
-      min-width: 200px;
-      display: inline-block;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      // border: 1px solid red;
+      width: 50%;
     }
     
     .product-img-wraper {
@@ -299,7 +312,7 @@ const Wrapper = styledComponents.div`
       padding: 10px;
       margin: 0px auto;
       min-width: 250px;
-      // max-width: 200px;
+      width: 50%;
       color: #5f4d5d;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       text-align: center;

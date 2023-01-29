@@ -64,12 +64,13 @@ const AddProducts = ({ close }) => {
                 console.log(error.toString())
                 setMsg(error.toString())
             })
+        setIdToRemove('')
 
     }
 
     setTimeout(() => {
         setMsg('Remove Product By Id')
-    }, 4000);
+    }, 5000);
 
     return (
         <Wrapper>

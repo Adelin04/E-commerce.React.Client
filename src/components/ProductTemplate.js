@@ -82,6 +82,7 @@ const Wrapper = styledComponents.div`
   height: auto;
   max-height: 300px;
   cursor: pointer;
+  background: var(--backgroundCard)
 }
 
 .product-img:hover{

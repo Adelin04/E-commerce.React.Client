@@ -35,7 +35,7 @@ code {
   --baseColor: #d6bbd3;
   --sliderColor: #a58aa2d4;
   --buttonColor: #a58aa2d4;
-  /* --baseColor: #81d8d0; */
+  --backgroundCard:#c524b326;
   --myBorder: #8080801f;
   --myGreen: #118f5f;
   --mySalmon: salmon;
@@ -43,4 +43,5 @@ code {
   --error: red;
   --textBlack: rgb(21, 19, 19);
   --textWhite: white;
+  /* --baseColor: #81d8d0; */
 }
