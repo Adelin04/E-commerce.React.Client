@@ -45,16 +45,14 @@ const AddProducts = ({ close }) => {
     }
 
     const handleClickDeleteButton = async () => {
-
-        console.log(idToRemove);
         //logic delete button
         await fetch(`${URI}api/Product/v1/delete/productById/${idToRemove}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
             .then(data => {
-                console.log('data', data);
                 const { success } = data
+                
                 if (success) {
                     dispatch(deleteProductById({ idTarget: idToRemove }))
                     setMsg(`The product with id ${idToRemove} has been removed successfully`)

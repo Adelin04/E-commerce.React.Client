@@ -43,7 +43,7 @@ class CarouselProductImages extends React.Component {
                         flexDirection: "column",
                     }}
                 >
-                    <img style={{ width: "auto", height: "auto" }} src={logoIcon} />
+                    <img style={{ width: "550px", height: "auto" }} src={logoIcon} />
                     {<LoadingSpin />}
                 </div>
             );
@@ -106,9 +106,6 @@ class CarouselProductImages extends React.Component {
 export default CarouselProductImages;
 
 const Wrapper = styledComponents.div`
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
 
 .wrapper-img-carousel {
   display: flex;
@@ -126,6 +123,7 @@ const Wrapper = styledComponents.div`
   border-radius: 10px;
   border: 1px solid var(--myBorder);
   cursor: pointer;
+  background: var(--backgroundCard);
 }
 
 .product-price,

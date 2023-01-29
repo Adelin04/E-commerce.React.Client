@@ -93,7 +93,7 @@ const ProductDetails = () => {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                width: "90%",
+                width: "100%",
               }}
             >
               <div className="product-img-wraper">
@@ -121,6 +121,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="container-product-description">
+
             <div className="wrapper-title-price">
               <h3 className="product-title">{productById[0].name} </h3>
 
@@ -129,17 +130,20 @@ const ProductDetails = () => {
                 <p className="currency">{productById[0].currency}</p>
               </div>
             </div>
+
             <hr style={{ width: "80%" }} />
 
             <div className="wrapper-color">
               <h3>Color</h3>{" "}
               <p className="product-color">{productById[0].color}</p>
             </div>
+
             <div className="product-description">
               <h4>{`${productById[0].description.split()[0].slice(0, 50)}...`}</h4>
             </div>
+
             <hr style={{ width: "80%" }} />
-            {console.log(productById)}
+
             <div>
               <p>
                 <select

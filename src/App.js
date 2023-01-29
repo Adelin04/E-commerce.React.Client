@@ -35,7 +35,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
-        console.log('--> ', products);
+
         if (success) {
           dispatch(
             getAllProducts({

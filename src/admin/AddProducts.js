@@ -125,7 +125,7 @@ const AddProducts = ({ close }) => {
         .then(response => response.json())
         .then(data => {
           const { success, newProductCreated } = data
-          console.log(data);
+
           if (success) {
             dispatch(addNewProduct({
               newProduct: {
