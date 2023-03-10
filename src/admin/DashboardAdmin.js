@@ -11,7 +11,8 @@ import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
 
-const DashboardAdmin = () => {
+const DashboardAdmin = () =>
+{
   const { products } = useSelector(selectProduct);
   const admin = useSelector(selectUser).user;
   const { newProductsAdded } = useSelector(selectProduct);
@@ -23,10 +24,12 @@ const DashboardAdmin = () => {
   const [goToRemoveProduct, setGoToRemoveProduct] = useState(false)
   const [msg, setMsg] = useState('Create New Product')
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     fetch(`${URI}api/CategoryProduct/v1/get/allCategoriesProduct`)
       .then(response => response.json())
-      .then(data => {
+      .then(data =>
+      {
         const { success, listOfCategories, count } = data;
 
         if (success)
@@ -36,7 +39,8 @@ const DashboardAdmin = () => {
 
     fetch(`${URI}api/Size/v1/get/allSizes`)
       .then(response => response.json())
-      .then(data => {
+      .then(data =>
+      {
         const { success, sizes, nrsizes } = data;
 
         if (success)
@@ -45,7 +49,8 @@ const DashboardAdmin = () => {
       .catch(err => setMsg(err.toString()))
   }, [])
 
-  const handleClickCreateButton = async (e) => {
+  const handleClickCreateButton = async (e) =>
+  {
     console.log('create');
     let formData = new FormData();
 
@@ -79,7 +84,8 @@ const DashboardAdmin = () => {
   }
 
 
-  const handleClickCloseBtnProductAdded = (e) => {
+  const handleClickCloseBtnProductAdded = (e) =>
+  {
     e.preventDefault();
     let idTarget = e.target.id;
     console.log(idTarget);
@@ -87,7 +93,8 @@ const DashboardAdmin = () => {
     dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
   };
 
-  const showAllNewProductAdded = (products = Array) => {
+  const showAllNewProductAdded = (products = Array) =>
+  {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', width: '100%', margin: '0px' }}>
 
@@ -99,7 +106,8 @@ const DashboardAdmin = () => {
 
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '40px auto' }}>
 
-          {products.length > 0 && products.map((product, index) => {
+          {products.length > 0 && products.map((product, index) =>
+          {
             return (
               <div className="box-added-new-product" id={product.id} key={index}>
                 <div className="wrapper-btns-product-added">
@@ -147,6 +155,7 @@ const DashboardAdmin = () => {
 
   return (
     <Wrapper>
+
       <div className="menu">
 
         <div className="wrapper-title">
@@ -175,11 +184,14 @@ const DashboardAdmin = () => {
           <p className="admin"> <span>Admin </span>{admin && <span className="full-name">{` ${admin.firstName} ${admin.lastName}`}</span>}</p>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
           <div className="role"> <span>Role </span>
+
             <ul className="role-ul">
-              {admin.role[0].map((item, index) => {
+              {admin.role.map((item, index) =>
+              {
                 return <li className="role-li" key={index}>{item}</li>
               })}
             </ul>
+
           </div>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
           <p className="nr-prod-online"> <span>Nr. products online </span>{`  ${products && products.length}`}</p>
@@ -200,6 +212,8 @@ const DashboardAdmin = () => {
         {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
         {goToRemoveProduct && <RemoveProducts close={() => { setGoToRemoveProduct(false) }} />}
       </div>
+
+
     </Wrapper>
   );
 };
