@@ -46,7 +46,7 @@ const AddProducts = ({ close }) => {
 
     const handleClickDeleteButton = async () => {
         //logic delete button
-        await fetch(`${URI}api/Product/v1/delete/productById/${idToRemove}`, {
+        await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
             method: 'DELETE',
         })
             .then(response => response.json())

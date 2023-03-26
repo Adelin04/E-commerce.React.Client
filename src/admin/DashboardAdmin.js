@@ -26,7 +26,7 @@ const DashboardAdmin = () =>
 
   useEffect(() =>
   {
-    fetch(`${URI}api/CategoryProduct/v1/get/allCategoriesProduct`)
+    fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
       .then(response => response.json())
       .then(data =>
       {
@@ -37,7 +37,7 @@ const DashboardAdmin = () =>
       })
       .catch(err => setMsg(err.toString()))
 
-    fetch(`${URI}api/Size/v1/get/allSizes`)
+    fetch(`${URI}Size/v1/get/allSizes`)
       .then(response => response.json())
       .then(data =>
       {

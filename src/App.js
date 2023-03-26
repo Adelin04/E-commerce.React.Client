@@ -27,7 +27,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    await fetch(`${URI}api/Product/v1/get/allProducts`, {
+    await fetch(`${URI}Product/v1/get/allProducts`, {
       headers: {
         "Content-Type": "application/json",
       },
