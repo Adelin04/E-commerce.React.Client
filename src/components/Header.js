@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectUser } from "../Features/UserSlice";
-import { pathLinks } from "../components/LinksMenu";
+import {LinksMenu} from "../components/LinksMenu";
 
 import BubbleCart from '../components/BubbleCart';
 import NavBar from "./NavBar";
@@ -86,7 +86,7 @@ const Header = () => {
         </div>
       </div>
       <div className="NavBar">
-        <NavBar links={pathLinks} />
+        <NavBar links={LinksMenu} />
       </div>
     </Wrapper>
   );

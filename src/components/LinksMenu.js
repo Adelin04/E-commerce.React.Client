@@ -1,5 +1,5 @@
 // Links used for the NavBar component
-export const pathLinks = [
+export const LinksMenu = [
   {
     to: "/Clothes",
     name: "Clothes",

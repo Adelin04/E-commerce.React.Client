@@ -8,10 +8,13 @@ import { selectProduct } from "../Features/ProductSlice";
 import { useSelector } from "react-redux";
 import LoadingSpin from "react-loading-spin";
 import ProductsList from "../components/ProductsList";
+import ResponsiveCarousel from "../components/ResponsiveCarousel";
 
 const HomePage = () => {
   const state = useSelector(selectProduct);
+  const pathImagesCarousel_2nd = state &&  state.products.slice(0, 6).map(product => product.productImages)
 
+  
   return (
     <Wrapper>
       <div className="header-homepage">
@@ -22,7 +25,23 @@ const HomePage = () => {
         {state && state.filteredProducts !== null && <ProductsList products={state.filteredProducts} />}
       </div>
 
-      {state && (state.filteredProducts === null || state.filteredProducts.length === 0) &&
+      <div className="wrapperCarousel_1st">
+        <ResponsiveCarousel pathImages={[
+          "./slides/slide_3.png",
+          "./slides/slide_1.png",
+          "./slides/slide_2.png",
+        ]} />
+      </div>
+
+{/*       <div className="wrapperCarousel_2nd">
+        <ResponsiveCarousel pathImages={pathImagesCarousel_2nd.map(element => {return element[0].path})} width={20}/>
+      </div>
+
+      <div className="wrapperCarousel_3th">
+        <ResponsiveCarousel pathImages={pathImagesCarousel_2nd.map(element => {return element[0].path})} width={20} />
+      </div> */}
+
+     {state && (state.filteredProducts === null || state.filteredProducts.length === 0) &&
         <div
           className="wrapper-carousels"
           style={{
@@ -34,13 +53,13 @@ const HomePage = () => {
             margin: "30px",
           }}
         >
-          <Carousel
+{/*           <Carousel
             payload={[
               "./slides/slide_3.png",
               "./slides/slide_1.png",
               "./slides/slide_2.png",
             ]}
-          />
+          /> */}
 
           {state.products && <div
             className="multipleCarousel"
@@ -93,7 +112,7 @@ const HomePage = () => {
           </div>}
         </div>
 
-      }
+      } 
 
       <div className="footer">
         <Footer />
@@ -130,6 +149,26 @@ const Wrapper = styledComponents.div`
       // height: 100%;
     }
 
+    .wrapperCarousel_1st {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin: 30px auto;
+    }
+    
+    .wrapperCarousel_3th,
+    .wrapperCarousel_2nd {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 80%;
+      margin: 50px auto;
+    }
+
+    
     @media only screen and (max-width: 1024px) {
       .multipleCarousel {
         margin: 0px;

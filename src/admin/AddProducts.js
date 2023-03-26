@@ -1,19 +1,16 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // import UploadImage from "../components/UploadImage";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, selectProduct, addListOfNewProduct, addNewProduct } from "../Features/ProductSlice";
+import {  selectProduct, addListOfNewProduct, addNewProduct } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
 import LoadingSpin from "react-loading-spin";
-import axios from "axios";
+// import axios from "axios";
 
 const AddProducts = ({ close }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { categoriesProductAvailable } = useSelector(selectProduct);
@@ -93,7 +90,7 @@ const AddProducts = ({ close }) => {
   }
 
 
-  const handleClickCreateButton = async (e) => {
+  const handleClickCreateButton = async () => {
     setLoadind(true)
     let formData = new FormData();
 
@@ -148,13 +145,7 @@ const AddProducts = ({ close }) => {
       setLoadind(false)
       setMsg('The product was successfully created')
       resetFields()
-      // axios alternative
-      /*     try {
-        const res = await axios.post(`${URI}api/Product/v1/create/newProduct`, formData);
-        console.log(res);
-      } catch (ex) {
-        console.log(ex);
-      } */
+      
     } else { setMsg('Empty field(s)') }
   }
 
