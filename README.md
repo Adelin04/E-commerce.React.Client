@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# E-commerce.Net.React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ "E-commerce" as the name implies is an online store. 
 
-## Available Scripts
+Tech stack used:
+- .Net 7 for the backend 
+     - User authorization and authentication
+     - RESTful API
+- ReacJS for the frontend 
+- Redux-Toolkit
+- MySql for the database 
+- AWS S3 to serve images
 
-In the project directory, you can run:
+# Endpoints backend
 
-### `npm start`
+Auth endpoints:
+  - /api/Auth/v1/register/newUser
+  - /api/Auth/v1/login
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+User endpoints:
+  - /api/User/v1/getAllUsers
+  - /api/User/v1/get/userById/{id}
+  - /api/User/v1/update/userById/{id}
+  - /api/User/v1/delete/userById/{id}  
+  
+Product endpoints:
+  - /api/Product/v1/create/newProduct
+  - /api/Product/v1/get/allProducts
+  - /api/Product/v1/get/productById/{id}
+  - /api/Product/v1/update/productById/{id}
+  - /api/Product/v1/delete/productById/{id}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Role endpoint:
+  - /api/Role/v1/create/newRole/nameRole
+  - /api/Role/v1/get/roleById/{id}
+  - /api/Role/v1/get/allRoles
+  - /api/Role/v1/update/roleById/{id}
+  - /api/Role/v1/delete/roleById/{id}
+  
+CategoryProduct endpoints:
+  - /api/CategoryProduct/v1/add/newCategoryProduct
+  - /api/CategoryProduct/v1/get/allCategory
+  
+  ![swagger](https://user-images.githubusercontent.com/63923347/207935445-cfc01943-f246-4f23-a49f-f128e3959841.png)
+![login](https://user-images.githubusercontent.com/63923347/191663942-1e342d69-79a6-482e-83ed-d274a129c589.png)
+![home](https://user-images.githubusercontent.com/63923347/191663927-ec59e2d4-d40e-45cb-9dbe-af0b95f880ed.png)
+![clothes](https://user-images.githubusercontent.com/63923347/191663954-8f01c30a-e4b1-467c-8118-1743fade9728.png)
+![details product](https://user-images.githubusercontent.com/63923347/191663961-6e2cba7e-51ba-420d-9e92-a1414d314aa9.png)
+![logout](https://user-images.githubusercontent.com/63923347/191663974-03a31e19-c9a1-4e82-9e73-270941605804.png)
+![cart](https://user-images.githubusercontent.com/63923347/191663967-dac9853c-6140-4f03-8134-0c707f1045f1.png)
+![dashboard admin](https://user-images.githubusercontent.com/63923347/191664141-840d2ca2-ca81-4b63-a81e-874486ce14ab.png)
+![Create New Product](https://user-images.githubusercontent.com/63923347/208293959-54acb399-46a9-44c8-95fa-9eaab394fc05.png)
