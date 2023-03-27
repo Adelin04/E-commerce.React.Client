@@ -7,14 +7,15 @@ import ProductsList from "../components/ProductsList";
 import { selectProduct } from "../Features/ProductSlice";
 
 
-const AccesoryPage = () => {
+const AccesoryPage = () =>
+{
   let state = useSelector(selectProduct);
   return (
     <Wrapper>
       <Header />
 
       <div className="wrapper-products-list">
-        {state && state.filteredProducts === null && <ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name === "BROOCHES" || product.categoryProduct.name === 'BAG')} />}
+        {state && state.filteredProducts === null && <ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name === "ACCESSORY")} />}
         {state && <ProductsList products={state.filteredProducts} />}
       </div>
 

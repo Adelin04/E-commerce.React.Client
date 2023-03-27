@@ -8,19 +8,19 @@ import { selectProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 
 
-const AddProducts = ({ close }) =>
+const CategoryProducts = ({ close }) =>
 {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     //Redux State
-    const { products } = useSelector(selectProduct);
-    const { sizesProductAvailable } = useSelector(selectProduct);
+    const { categoriesProductAvailable } = useSelector(selectProduct);
+    console.log(categoriesProductAvailable);
 
     //Local variable
-    const [idToRemove, setIdToRemove] = useState();
-    const [productToRemove, setProductToRemove] = useState();
-    const [msg, setMsg] = useState('Remove Product By Id')
+    const [nameToRemove, setNameToRemove] = useState();
+    const [categoryToRemove, setCategoryToRemove] = useState();
+    const [msg, setMsg] = useState('Remove Category By Name')
 
 
     const handleClickCloseButton = (e) =>
@@ -31,24 +31,20 @@ const AddProducts = ({ close }) =>
         setMsg('Create New Product')
     }
 
-    const handleOnChange = (idSelected) =>
+    const handleOnChange = (nameSelected) =>
     {
-        setIdToRemove(idSelected);
-        const TMP_productToRemove = products.filter(product => product.id.toString() === idSelected.toString());
+        setNameToRemove(nameSelected);
+        const TMP_productToRemove = categoriesProductAvailable.filter(category => category.name.toString() === nameSelected.toString());
 
-        setProductToRemove(TMP_productToRemove);
+        setCategoryToRemove(TMP_productToRemove);
     }
 
-    const handleClickAddToDeleteListButton = () =>
-    {
-        // logic
 
-    }
 
     const handleClickDeleteButton = async () =>
     {
         //logic delete button
-        await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
+        await fetch(`${URI}Product/v1/delete/productById/${nameToRemove}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
@@ -58,8 +54,8 @@ const AddProducts = ({ close }) =>
 
                 if (success)
                 {
-                    dispatch(deleteProductById({ idTarget: idToRemove }))
-                    setMsg(`The product with id ${idToRemove} has been removed successfully`)
+                    dispatch(deleteProductById({ idTarget: nameToRemove }))
+                    setMsg(`The product with id ${nameToRemove} has been removed successfully`)
                 }
             })
             .catch(error =>
@@ -67,7 +63,7 @@ const AddProducts = ({ close }) =>
                 console.log(error.toString())
                 setMsg(error.toString())
             })
-        setIdToRemove('')
+        setNameToRemove('')
 
     }
 
@@ -78,12 +74,11 @@ const AddProducts = ({ close }) =>
 
     return (
         <Wrapper>
-            <div className="box-remove-product">
-                <div className="container-btn-box-remove-product">
+            <div className="box-remove-category">
+                <div className="container-btn-box-remove-category">
 
                     <div className="container-btn-close-remove-product">
                         <div className="wrapper-btn-add-remove-list-delete">
-                            <button className="btn-add-remove-list" onClick={handleClickAddToDeleteListButton}>Add to delete list</button>
                             <button className="btn-delete" onClick={handleClickDeleteButton}>Delete</button>
                         </div>
 
@@ -91,18 +86,19 @@ const AddProducts = ({ close }) =>
                     </div>
 
                 </div>
+
                 <div className="msg">{msg}</div>
 
                 <div className="wrapper-form-select-product-to-remove">
 
-                    <label>Select Id Product</label>
-                    <select className="select-size" value={idToRemove} onChange={(e) => handleOnChange(e.target.value)} >
+                    <label>Select Name Category </label>
+                    <select className="select-size" value={nameToRemove} onChange={(e) => handleOnChange(e.target.value)} >
                         < option value={'None'} > None</option>
                         {
-                            products && products.map((product, index) =>
+                            categoriesProductAvailable && categoriesProductAvailable.map((product, index) =>
                             {
                                 return (
-                                    < option key={index} value={product.id} > {product.id}</option>
+                                    < option key={index} value={product.id} > {product.name}</option>
                                 )
                             })
                         }
@@ -111,48 +107,6 @@ const AddProducts = ({ close }) =>
 
                 </div>
 
-                {productToRemove &&
-                    <div className="container-product-to-remove">
-
-                        <div className="container-product-to-remove-left-side">
-
-                            <div className="wrapper-product-to-remove-left-side">
-                                <label>Name </label>
-                                <p>{productToRemove[0].name}</p>
-                                <label>Color </label>
-                                <p>{productToRemove[0].color}</p>
-                                <label>Description </label>
-                                <p>{productToRemove[0].description}</p>
-                                <label>Price </label>
-                                <p>{productToRemove[0].price} {productToRemove[0].currency}</p>
-                                <label>Brand</label>
-                                <p>{productToRemove[0].brand}</p>
-                                <label>Size </label>
-                                <p>{productToRemove[0].size}</p>
-                                <label>Stock</label>
-                                <p>{productToRemove[0].stock}</p>
-                                <label>Category </label>
-                                <p>{productToRemove[0].categoryProduct.name}</p>
-                            </div>
-
-                        </div>
-
-                        <div className="wrapper-imgs">
-                            <div className="up-side-imgs">
-                                <div className="img-1"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 0 && productToRemove[0].productImages[0].path || logoIcon} alt="img 1" /></div>
-                                <div className="img-2"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 1 && productToRemove[0].productImages[1].path || logoIcon} alt="img 2" /></div>
-                            </div>
-
-                            <div className="down-side-imgs">
-                                <div className="img-3"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 2 && productToRemove[0].productImages[2].path || logoIcon} alt="img 3" /></div>
-                                <div className="img-4"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 3 && productToRemove[0].productImages[3].path || logoIcon} alt="img 4" /></div>
-                            </div>
-
-                        </div>
-
-
-                    </div >
-                }
 
             </div>
 
@@ -161,7 +115,7 @@ const AddProducts = ({ close }) =>
     )
 };
 
-export default AddProducts;
+export default CategoryProducts;
 
 const Wrapper = styledComponents.div`
     display: flex;
@@ -205,7 +159,7 @@ const Wrapper = styledComponents.div`
     }
 
 
-    .box-remove-product {
+    .box-remove-category {
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -224,7 +178,7 @@ const Wrapper = styledComponents.div`
         background: var(--baseColor);
     }
 
-    .container-btn-box-remove-product {
+    .container-btn-box-remove-category {
         display: flex;
         justify-content: center;
         align-items: center;

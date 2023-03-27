@@ -10,6 +10,7 @@ import UploadImage from "../components/UploadImage";
 import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
+import CategoryProducts from "./CategoryProducts";
 
 const DashboardAdmin = () =>
 {
@@ -21,6 +22,7 @@ const DashboardAdmin = () =>
   const dispatch = useDispatch();
 
   const [goToAddProduct, setGoToAddProduct] = useState(false)
+  const [goToSectionCategory, setGoToSectionCategory] = useState(false)
   const [goToRemoveProduct, setGoToRemoveProduct] = useState(false)
   const [msg, setMsg] = useState('Create New Product')
 
@@ -178,6 +180,10 @@ const DashboardAdmin = () =>
             className="menu-btn-remove-project"
             onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false) }}
           >Remove product</button>
+          <button
+            className="menu-btn-remove-project"
+            onClick={() => { setGoToSectionCategory(true); setGoToAddProduct(false); setGoToRemoveProduct(false) }}
+          >Category Product</button>
         </div>
         <div className="dashboard-admin-info">
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
@@ -210,6 +216,7 @@ const DashboardAdmin = () =>
 
       <div style={{ zIndex: '2' }}>
         {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
+        {goToSectionCategory && < CategoryProducts close={() => { setGoToAddCategory(false) }} />}
         {goToRemoveProduct && <RemoveProducts close={() => { setGoToRemoveProduct(false) }} />}
       </div>
 
