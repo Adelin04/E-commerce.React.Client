@@ -4,16 +4,16 @@ import styledComponents from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductsByCategory } from "../Features/ProductSlice";
-import {LinksMenu} from '../components/LinksMenu'
+import { LinksMenu } from '../components/LinksMenu'
 
 const SliderMenu = ({
-  indexOfLinkTouched, dynamicHeight, toggle 
+  indexOfLinkTouched, dynamicHeight, toggle
 
 }) => {
   const dispatch = useDispatch();
 
   const handleDispatch_ProductByCategory = (category) => {
-    console.log('category --> ',category);
+    // console.log('category --> ',category);
     dispatch(
       getProductsByCategory({ category })
     )
@@ -29,53 +29,14 @@ const SliderMenu = ({
           {LinksMenu[indexOfLinkTouched].subLinks.map((subLink, index) => {
             return (
               <div key={index} className='subLink' >
-                <NavLink className='linkSlider' to={LinksMenu[indexOfLinkTouched].to} onClick={() => handleDispatch_ProductByCategory(subLink.name)} > <p  style={{ visibility: `${toggle ? 'visible' : 'collapse'}`, transition: 'visibility 0.1s' }}>{subLink.name}</p> </NavLink>
+                <NavLink className='linkSlider' to={LinksMenu[indexOfLinkTouched].to} onClick={() => handleDispatch_ProductByCategory(subLink.name)} > <p style={{ visibility: `${toggle ? 'visible' : 'collapse'}`, transition: 'visibility 0.1s' }}>{subLink.name}</p> </NavLink>
               </div>
             );
           })}
 
         </div>
       </div>
-      {/*       {toggle ? (
-        <div
 
-          className="slide"
-          style={{ height: dinamicValue, transition: "height 1s" }}
-        >
-          <div
-            className="container-links transition"
-            style={
-              dinamicValue > 0
-                ? {
-                  height: `${dinamicValue === 100 ? 35 : 0}px`,
-                  background: "#a58aa2d4",
-                  borderRadius: "5px",
-                  transition: "all 2.5s",
-                }
-                : {
-                  height: "0px",
-                  background: "transparent",
-                  borderRadius: "5px",
-                  transition: "all 0.2s",
-                }
-            }
-          >
-            <div className="link-section">
-              {dinamicValue > 0
-                ? linksSlide[indexOfLinkTouched].subLinks.map(
-                  (subLink, index) => {
-                    return (
-                      <div key={index} className="wrapper-link" >
-                        <NavLink className="link-popUp" to={linksSlide[indexOfLinkTouched].to} onClick={() => handleDispatch_ProductByCategory(subLink.name)}>{subLink.name} </NavLink>
-                      </div>
-                    );
-                  }
-                )
-                : null}
-            </div>
-          </div>
-        </div>
-      ) : null} */}
     </Wrapper>
   );
 };

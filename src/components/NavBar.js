@@ -16,23 +16,9 @@ const NavBar = ({ links }) => {
   const [dynamicHeight, setDynamicHeight] = useState(0);
   const [toggle, setToggle] = useState(close);
 
-  /*   const handleMouseOver = (indexOfLinkTouched) => {
-      setIndexOfLinkTouched(indexOfLinkTouched);
-      setToggle(open);
-      setHeightPopUp(100);
-    };
-  
-    const handleMouseOut = (e) => {
-      if (toggle === close) setHeightPopUp(0);
-    };
-  
-    const handleMouseLeave = () => {
-      setHeightPopUp(0);
-    }; */
-
-    const handleDispatchReset = () => {
-      dispatch(resetFilterCategory({ reset: null }))
-    }
+  const handleDispatchReset = () => {
+    dispatch(resetFilterCategory({ reset: null }))
+  }
 
   return (
 
@@ -42,35 +28,13 @@ const NavBar = ({ links }) => {
         {links.map((link, index) => {
           return (
             <Link className='link' to={link.to} key={index} onClick={handleDispatchReset} onMouseLeave={() => setDynamicHeight(0)} onMouseOver={() => { setIndexOfLinkTouched(index), setDynamicHeight(70), setToggle(open) }}> {link.name} </Link>
-            )
-          })}
+          )
+        })}
 
       </div>
       <SliderMenu indexOfLinkTouched={indexOfLinkTouched} dynamicHeight={dynamicHeight} toggle={toggle} />
     </Wrapper>
-    /* <Wrapper onMouseLeave={handleMouseLeave}>
-      {links.map((link, index) => {
-        return (
-          <NavLink
-            className="link"
-            to={link.to}
-            key={index}
-            onMouseOver={() => handleMouseOver(index)}
-            onMouseOut={handleMouseOut}
-            style={{ textDecoration: "none" }}
-            onClick={handleDispatchReset}
-          >
-            {link.name}
-          </NavLink>
-        );
-      })}
-      <SliderMenu
-        dinamicValue={heightPopUp}
-        linksSlide={links}
-        indexOfLinkTouched={indexOfLinkTouched}
-        toggle={toggle}
-      />
-    </Wrapper> */
+
   );
 };
 

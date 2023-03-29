@@ -91,6 +91,13 @@ export const ProductSlice = createSlice({
       state.products = filteredProduct;
     },
 
+    deleteProductByName: (state, action) => {
+      const currentState = current(state);
+      const filteredProduct = currentState.products.filter(product => product.name.toString() !== action.payload.nameToRemove.toString());
+
+      state.products = filteredProduct;
+    },
+
     removeFromListOfNewProduct: (state, action) => {
       const currentState = current(state);
       let TMP_LIST = currentState.newProductsAdded.filter(product => parseInt(product.id) !== parseInt(action.payload.removeId))
@@ -101,6 +108,6 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById,deleteProductByName } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

@@ -40,9 +40,10 @@ const Register = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          const { message, succes } = data;
+          console.log('data',data);
+          const { message, success } = data;
 
-          if (succes) {
+          if (success) {
             setError(null);
             goToLoginComponent();
           } else setError(message);

@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import { selectProduct, deleteProductById } from "../Features/ProductSlice";
+import { selectProduct, deleteProductById, deleteProductByName } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 
 
-const CategoryProducts = ({ close }) =>
-{
+const CategoryProducts = ({ close }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     //Redux State
+    const { products } = useSelector(selectProduct);
     const { categoriesProductAvailable } = useSelector(selectProduct);
-    console.log(categoriesProductAvailable);
 
     //Local variable
     const [nameToRemove, setNameToRemove] = useState();
@@ -23,43 +22,37 @@ const CategoryProducts = ({ close }) =>
     const [msg, setMsg] = useState('Remove Category By Name')
 
 
-    const handleClickCloseButton = (e) =>
-    {
+    const handleClickCloseButton = (e) => {
         e.preventDefault();
         // resetFields();
         close();
         setMsg('Create New Product')
     }
 
-    const handleOnChange = (nameSelected) =>
-    {
+    const handleOnChange = (nameSelected) => {
         setNameToRemove(nameSelected);
         const TMP_productToRemove = categoriesProductAvailable.filter(category => category.name.toString() === nameSelected.toString());
-
         setCategoryToRemove(TMP_productToRemove);
     }
 
 
 
-    const handleClickDeleteButton = async () =>
-    {
+    const handleClickDeleteButton = async () => {
         //logic delete button
-        await fetch(`${URI}Product/v1/delete/productById/${nameToRemove}`, {
+        await fetch(`${URI}delete/categoryByName/${nameToRemove}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
-            .then(data =>
-            {
+            .then(data => {
                 const { success } = data
-
-                if (success)
-                {
-                    dispatch(deleteProductById({ idTarget: nameToRemove }))
+console.log(data);
+                if (success) {
+                    console.log(nameToRemove);
+                    dispatch(deleteProductByName({ nameToRemove: nameToRemove }))
                     setMsg(`The product with id ${nameToRemove} has been removed successfully`)
                 }
             })
-            .catch(error =>
-            {
+            .catch(error => {
                 console.log(error.toString())
                 setMsg(error.toString())
             })
@@ -67,9 +60,8 @@ const CategoryProducts = ({ close }) =>
 
     }
 
-    setTimeout(() =>
-    {
-        setMsg('Remove Product By Id')
+    setTimeout(() => {
+        setMsg('Remove Product By Name')
     }, 5000);
 
     return (
@@ -95,10 +87,9 @@ const CategoryProducts = ({ close }) =>
                     <select className="select-size" value={nameToRemove} onChange={(e) => handleOnChange(e.target.value)} >
                         < option value={'None'} > None</option>
                         {
-                            categoriesProductAvailable && categoriesProductAvailable.map((product, index) =>
-                            {
+                            categoriesProductAvailable && categoriesProductAvailable.map((category, index) => {
                                 return (
-                                    < option key={index} value={product.id} > {product.name}</option>
+                                    < option key={index} value={category.name} > {category.name}</option>
                                 )
                             })
                         }

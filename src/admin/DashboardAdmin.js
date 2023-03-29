@@ -4,9 +4,8 @@ import AddProducts from "./AddProducts";
 import logoIcon from '../icons/logoIcon.svg'
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addNewProduct, getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
+import {  getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
-import UploadImage from "../components/UploadImage";
 import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
