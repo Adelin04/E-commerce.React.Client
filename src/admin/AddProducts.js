@@ -115,6 +115,7 @@ const AddProducts = ({ close }) => {
         formData.append(`files`, image);
       }
 
+      
       await fetch(`${URI}Product/v1/create/newProduct`, {
         method: "POST",
         body: formData,

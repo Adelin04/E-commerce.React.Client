@@ -215,8 +215,8 @@ const DashboardAdmin = () =>
 
       <div style={{ zIndex: '2' }}>
         {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
-        {goToSectionCategory && < CategoryProducts close={() => { setGoToAddCategory(false) }} />}
         {goToRemoveProduct && <RemoveProducts close={() => { setGoToRemoveProduct(false) }} />}
+        {goToSectionCategory && < CategoryProducts close={() => { setGoToSectionCategory(false) }} />}
       </div>
 
 
