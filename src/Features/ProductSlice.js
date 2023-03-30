@@ -86,16 +86,24 @@ export const ProductSlice = createSlice({
 
     deleteProductById: (state, action) => {
       const currentState = current(state);
-      const filteredProduct = currentState.products.filter(product => product.id.toString() !== action.payload.idTarget.toString());
+      const filteredProduct = currentState.products.filter(product => Number(product.id) !== Number(action.payload.idTarget));
 
       state.products = filteredProduct;
     },
 
     deleteProductByName: (state, action) => {
       const currentState = current(state);
-      const filteredProduct = currentState.products.filter(product => product.name.toString() !== action.payload.nameToRemove.toString());
+      const filteredProduct = currentState.products.filter(product => product.name !== action.payload.nameToRemove);
 
       state.products = filteredProduct;
+    },
+
+    deleteCategoryProductByName: (state, action) => {
+      const currentState = current(state);
+      console.log('-> ', action.payload.categoryRemoved);
+      const filteredCategoryProduct = currentState.categoriesProductAvailable.filter(category => category.name !== action.payload.categoryRemoved)
+
+      state.categoriesProductAvailable = filteredCategoryProduct;
     },
 
     removeFromListOfNewProduct: (state, action) => {
@@ -108,6 +116,6 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById,deleteProductByName } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById, deleteProductByName,deleteCategoryProductByName } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

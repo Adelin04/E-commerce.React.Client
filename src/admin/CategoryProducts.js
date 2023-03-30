@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import { selectProduct, deleteProductById, deleteProductByName } from "../Features/ProductSlice";
+import { selectProduct, deleteProductById, deleteProductByName, deleteCategoryProductByName } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 
 
@@ -26,7 +26,6 @@ const CategoryProducts = ({ close }) => {
         e.preventDefault();
         // resetFields();
         close();
-        setMsg('Create New Product')
     }
 
     const handleOnChange = (nameSelected) => {
@@ -39,16 +38,16 @@ const CategoryProducts = ({ close }) => {
 
     const handleClickDeleteButton = async () => {
         //logic delete button
-        await fetch(`${URI}delete/categoryByName/${nameToRemove}`, {
+        await fetch(`${URI}categoryProduct/v1/delete/categoryProductByName/${nameToRemove}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
             .then(data => {
                 const { success } = data
-console.log(data);
+                console.log('data delete btn -> ', data);
                 if (success) {
                     console.log(nameToRemove);
-                    dispatch(deleteProductByName({ nameToRemove: nameToRemove }))
+                    dispatch(deleteCategoryProductByName({ categoryRemoved: nameToRemove }))
                     setMsg(`The product with id ${nameToRemove} has been removed successfully`)
                 }
             })
@@ -61,7 +60,7 @@ console.log(data);
     }
 
     setTimeout(() => {
-        setMsg('Remove Product By Name')
+        setMsg('Remove Category By Name')
     }, 5000);
 
     return (

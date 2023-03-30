@@ -53,35 +53,7 @@ const DashboardAdmin = () =>
   const handleClickCreateButton = async (e) =>
   {
     console.log('create');
-    let formData = new FormData();
-
-    //   formData.append("name", nameProduct)
-    //   formData.append("brand", brandProduct)
-    //   formData.append("color", colorProduct)
-    //   formData.append("description", descriptionProduct)
-    //   formData.append("price", priceProduct)
-    //   formData.append("sizes", [
-    //     {
-    //       "stock": stockProduct,
-    //       "size": sizeProduct
-    //     }
-    //   ])
-    //   formData.append("categoryName", categoryProduct)
-
-    //   // append all images to formData
-    //   for (let index = 0; index < selectedPictures.files.length; index++) {
-    //     let image = selectedPictures.files[index];
-    //     formData.append(`files`, image);
-    //   }
-
-    //   await fetch(`${URI}api/Product/v1/create/newProduct`, {
-    //     method: "POST",
-    //     body: formData,
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => console.log('data', data))
-    //     .catch(error => console.log(error))
-
+   
   }
 
 
@@ -89,7 +61,6 @@ const DashboardAdmin = () =>
   {
     e.preventDefault();
     let idTarget = e.target.id;
-    console.log(idTarget);
 
     dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
   };
@@ -173,11 +144,11 @@ const DashboardAdmin = () =>
         <div className="container-btns">
           <button
             className="menu-btn-add-new-project"
-            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false) }}
+            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false) ;setGoToSectionCategory(false)}}
           >Add new product</button>
           <button
             className="menu-btn-remove-project"
-            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false) }}
+            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false);setGoToSectionCategory(false) }}
           >Remove product</button>
           <button
             className="menu-btn-remove-project"
@@ -207,6 +178,7 @@ const DashboardAdmin = () =>
       <div className="main-page" onClick={() => setGoToAddProduct(false)}>
         {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
         {goToRemoveProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
+        {goToSectionCategory && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
 
         <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
           {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
