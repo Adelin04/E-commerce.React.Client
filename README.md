@@ -3,12 +3,12 @@
  "E-commerce" as the name implies is an online store. 
 
 Tech stack used:
-- .Net 7 for the backend 
+- .Net 6 for the backend 
      - User authorization and authentication
      - RESTful API
 - ReacJS for the frontend 
 - Redux-Toolkit
-- MySql for the database 
+- PostgreSql for the database 
 - AWS S3 to serve images
 
 # Endpoints backend
