@@ -19,11 +19,11 @@ const ShoppingCartSlice = createSlice({
         size: action.payload.size,
       };
 
-      let searchedProduct = currentState.shoppingCartList.filter(
+      let existProduct = currentState.shoppingCartList.filter(
         (product) =>  product.id === newProduct.id
       );
 
-      if (searchedProduct.length === 0) {
+      if (existProduct.length === 0) {
         newProduct.quantityPerSize = [productQtySize];
         state.shoppingCartList = [...state.shoppingCartList, newProduct];
       } else {
@@ -33,21 +33,21 @@ const ShoppingCartSlice = createSlice({
           (product) => product.id !== newProduct.id
         );
 
-        searchedProduct[0].quantityPerSize.forEach((existProductQtySize) => {
-          let restOfQtySize = searchedProduct[0].quantityPerSize.filter(
+        existProduct[0].quantityPerSize.forEach((existProductQtySize) => {
+          let restOfQtySize = existProduct[0].quantityPerSize.filter(
             (item) => item.size !== existProductQtySize.size
           );
 
           TMP_PRODUCT = {
-            id: searchedProduct[0].id,
-            color: searchedProduct[0].color,
-            createdAt: searchedProduct[0].createdAt,
-            updatedAt: searchedProduct[0].updateAt,
-            currency: searchedProduct[0].currency,
-            description: searchedProduct[0].description,
-            name: searchedProduct[0].name,
-            picturePath: searchedProduct[0].picturePath,
-            price: searchedProduct[0].price,
+            id: existProduct[0].id,
+            color: existProduct[0].color,
+            createdAt: existProduct[0].createdAt,
+            updatedAt: existProduct[0].updateAt,
+            currency: existProduct[0].currency,
+            description: existProduct[0].description,
+            name: existProduct[0].name,
+            productImages: existProduct[0].productImages,
+            price: existProduct[0].price,
             quantityPerSize:
               existProductQtySize.size === productQtySize.size
                 ? [
@@ -59,13 +59,13 @@ const ShoppingCartSlice = createSlice({
                   },
                 ]
                 : [
-                  ...searchedProduct[0].quantityPerSize,
+                  ...existProduct[0].quantityPerSize,
                   {
                     quantity: productQtySize.quantity,
                     size: productQtySize.size,
                   },
                 ],
-            stock: searchedProduct[0].stock,
+            stock: existProduct[0].stock,
           };
         });
         state.shoppingCartList = [...restOfList, TMP_PRODUCT];

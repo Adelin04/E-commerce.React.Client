@@ -152,6 +152,7 @@ const ProductDetails = () => {
                   }
                   className="select"
                 >
+                  <option value={"None"}>None</option>
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>

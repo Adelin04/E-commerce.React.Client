@@ -19,6 +19,7 @@ import { getAllProducts } from "./Features/ProductSlice";
 import ProductDetails from "./components/ProductDetails";
 import LoadingSpin from "react-loading-spin";
 import UserSetting from "./components/UserSetting";
+import Address from "./pages/Address";
 
 function App() {
   //user state
@@ -85,6 +86,7 @@ function App() {
           <Route path="/Accessory" element={<AccesoryPage />} />
           <Route path="/Collections" element={<CollectionsPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/address" element={<Address />} />
           <Route path="/user/setting" element={<UserSetting />} />
           <Route
             path="/admin/dashboard"

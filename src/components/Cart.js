@@ -6,15 +6,51 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { selectShoppingCart } from "../Features/ShoppingCartSlice";
 import PriceFormated from "./PriceFormated";
+import CardTotalPay from "./CardTotalPay";
+import { URI } from "../_Utils/Dependency";
+import { selectUser } from "../Features/UserSlice";
+import { useState } from "react";
 
 //  Shopping Cart component
 const Cart = () => {
   const { shoppingCartList, nrProducts, totalPrice, currency } =
     useSelector(selectShoppingCart);
+  const { user } = useSelector(selectUser);
 
+  const [error, setError] = useState();
+
+  const handleBasket = async () => {
+    const TMP_BasketList = [];
+
+    console.log('shoppingCartList ---> ', shoppingCartList);
+    shoppingCartList && shoppingCartList.map(product => {
+      const TMP_BasketObj = { productId: null, quantitySize: null };
+
+      TMP_BasketObj.productId = product.id
+      TMP_BasketObj.quantitySize = product.quantityPerSize
+
+      TMP_BasketList.push(TMP_BasketObj)
+    })
+    console.log(TMP_BasketList);
+    let payload = { userEmail: user.email || null, products: TMP_BasketList }
+
+    if (shoppingCartList !== null)
+      await fetch(`${URI}basket/v1/add/newBasket`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => setError(error.toString()))
+  }
   return (
     <Wrapper>
       <Header />
+
+      {error && error.toString()}
 
       <div className="content-shoppingCart">
         <p
@@ -32,9 +68,8 @@ const Cart = () => {
 
                   <div className="separator-product-hr">
                     <div className="product-details">
-
                       <div className="img-product-details-cart">
-                        <img src={product.productImages[0].path} />
+                        <img src={product.productImages && product.productImages[0].path} />
                       </div>
 
 
@@ -92,23 +127,16 @@ const Cart = () => {
 
         <div className="products-shoppingCart"></div>
 
-        <div className="wrapper-order">
-          <div className="order">
-            <p style={{ fontSize: "25px", margin: "0px" }}>Order summary </p>
-            <p>Number products: {nrProducts}</p>
-            <p>Delivery cost: {0}{" "}{currency}</p>
-
-            <div className="total-suma">
-              <span style={{ fontSize: "22px", fontWeight: "bolder" }}>
-                Total: {`${totalPrice.toString().split('.')[0]}.${totalPrice.toString().split('.')[1] !== undefined ? totalPrice.toString().split('.')[1].slice(0, 2) : '00'}`}
-                {currency}
-              </span>
-            </div>
-            <Link to="/pay" className="link-sumar-comanda">
-              <span>Next step</span>
-            </Link>
-          </div>
+        <div className="wrapper-cart-cardToPlay" >
+          <CardTotalPay totalPrice={totalPrice} nrProducts={nrProducts} currency={currency.toString()} />
         </div>
+
+        <div className="wrapper-cart-link-nextStep" >
+          <Link to="/address" className="link-sumar-comanda" onClick={handleBasket}>
+            <span>Next step</span>
+          </Link>
+        </div>
+
       </div>
 
       <Footer />
@@ -374,9 +402,8 @@ const Wrapper = styledComponents.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 30%;
         height: 35px;
-        margin-bottom: 10px;
         font-weight: bolder;
         text-decoration: none;
         color: var(--baseColor);
@@ -397,6 +424,17 @@ const Wrapper = styledComponents.div`
         margin-bottom: 5px;
         border: 1px solid rgb(228, 228, 228);
         background-color: rgb(247, 248, 248);
+      }
+      
+      .wrapper-cart-link-nextStep {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        width: auto;
+        height: auto;
+
       }
 
       @media only screen and (max-width: 500px) {
