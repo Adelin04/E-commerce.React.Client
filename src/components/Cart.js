@@ -24,14 +24,14 @@ const Cart = () => {
 
     console.log('shoppingCartList ---> ', shoppingCartList);
     shoppingCartList && shoppingCartList.map(product => {
-      const TMP_BasketObj = { productId: null, quantitySize: null };
+      const TMP_BasketObj = {};
 
       TMP_BasketObj.productId = product.id
       TMP_BasketObj.quantitySize = product.quantityPerSize
 
       TMP_BasketList.push(TMP_BasketObj)
     })
-    console.log(TMP_BasketList);
+    console.log('TMP_BasketList --> \n',TMP_BasketList);
     let payload = { userEmail: user.email || null, products: TMP_BasketList }
 
     if (shoppingCartList !== null)
