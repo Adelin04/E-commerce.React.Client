@@ -39,7 +39,8 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { success, token } = data;
+        const { success, token, basketByUser } = data;
+
         let TMP_USER = [];
         if (success) {
           localStorage.setItem("TOKEN_ACCES", `Bearer ${token}`);
@@ -62,6 +63,16 @@ const Login = () => {
               token: token,
             })
           );
+
+          // dispatch(
+          //   addProductToShoppingCart({
+          //     newPorduct: SerializeProduct(productById[0]),
+          //     quantity,
+          //     size,
+          //   })
+          // );
+
+
           goHome();
         } else {
           const { message } = data;

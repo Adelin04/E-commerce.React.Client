@@ -21,13 +21,19 @@ import LoadingSpin from "react-loading-spin";
 import UserSetting from "./components/UserSetting";
 import Address from "./pages/Address";
 
+
 function App() {
   //user state
   const dispatch = useDispatch();
   let userLogged = useSelector(selectUser).user;
+
   const [loading, setLoading] = useState(true);
 
+
+
+
   useEffect(async () => {
+
     await fetch(`${URI}Product/v1/get/allProducts`, {
       headers: {
         "Content-Type": "application/json",
@@ -43,6 +49,7 @@ function App() {
               products: products,
             })
           );
+
         }
       })
       .catch((error) => console.log(error))
@@ -71,9 +78,12 @@ function App() {
             })
           );
         }
+
       });
+
     return setLoading(false);
   }, []);
+
 
   return (
     <div className="App">
