@@ -10,6 +10,7 @@ import CardTotalPay from "./CardTotalPay";
 import { URI } from "../_Utils/Dependency";
 import { selectUser } from "../Features/UserSlice";
 import { useState } from "react";
+import Button from "./Button";
 
 //  Shopping Cart component
 const Cart = () => {
@@ -90,6 +91,9 @@ const Cart = () => {
                             );
                           })}
                       </ul>
+
+                      <button className="product-details-delete-btn">DELETE</button>
+
                     </div>
 
                     <hr style={{ width: "100%" }} />
@@ -276,6 +280,22 @@ const Wrapper = styledComponents.div`
           height: 30px;
           font-weight: bold;
           color: var(--sliderColor);
+      }
+      
+      .product-details-delete-btn {
+        display: flex;
+        height: 165px;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        color: white;
+        background: var(--baseColor);
+      }
+      
+      .product-details-delete-btn:hover {
+        color: var(--mySalmon);
       }
 
       .container-shoppingCart {
