@@ -14,7 +14,7 @@ import { selectProduct } from "../Features/ProductSlice";
 const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  let {products} = useSelector(selectProduct);
+  let { products } = useSelector(selectProduct);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,9 @@ const Login = () => {
 
         if (success) {
           localStorage.setItem("TOKEN_ACCES", `Bearer ${token}`);
-          localStorage.setItem("BASKET", ` ${JSON.stringify(basketByUser.items.map(product => [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
+          localStorage.setItem("BASKET",
+            `${JSON.stringify(basketByUser.items.map(product =>
+              [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
 
           const decoded_user = jwt_decode(token); // decode your token here
           for (const claim in decoded_user) {

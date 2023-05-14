@@ -6,6 +6,7 @@ const Button = ({
   textBtn,
   onClick = null,
   onChange = null,
+  disabled = false,
   style = null,
   key = null,
   id = null,
@@ -19,6 +20,7 @@ const Button = ({
         onClick={onClick}
         onChange={onChange}
         className="prjectsApp-btn"
+        disabled={disabled}
       >
         {textBtn}
       </button>

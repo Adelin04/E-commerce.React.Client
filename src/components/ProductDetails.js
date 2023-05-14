@@ -45,7 +45,7 @@ const ProductDetails = () => {
 
 
     // alternative if I hadn't used redux -> request to server
-    
+
     // fetch(`${URI}api/product/v1/get/productById/${id}`)
     //   .then((response) => response.json())
     //   .then((data) => {
@@ -96,7 +96,15 @@ const ProductDetails = () => {
         }
       })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+          let { success, newBasketCreated } = data;
+
+          //  Update the localStorage BASKET 
+          if (success)
+            localStorage.setItem("BASKET",
+              `${JSON.stringify(newBasketCreated.items.map(product =>
+                [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
+        })
         .catch(error => setError(error.toString()))
   }
 
@@ -246,9 +254,11 @@ const ProductDetails = () => {
                 height: "auto",
                 margin: "5px",
               }}
+              disabled={size === '' ? true : false}
               textBtn={"Add to cart"}
               onClick={handleAddToCart}
             />
+
           </div>
         </div>
       )}
