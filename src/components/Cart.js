@@ -19,33 +19,6 @@ const Cart = () => {
 
   const [error, setError] = useState();
 
-  const handleBasket = async () => {
-    const TMP_BasketList = [];
-
-    console.log('shoppingCartList ---> ', shoppingCartList);
-    shoppingCartList && shoppingCartList.map(product => {
-      const TMP_BasketObj = {};
-
-      TMP_BasketObj.productId = product.id
-      TMP_BasketObj.quantitySize = product.quantityPerSize
-
-      TMP_BasketList.push(TMP_BasketObj)
-    })
-    console.log('TMP_BasketList --> \n',TMP_BasketList);
-    let payload = { userEmail: user.email || null, products: TMP_BasketList }
-
-    if (shoppingCartList !== null)
-      await fetch(`${URI}basket/v1/add/newBasket`, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => setError(error.toString()))
-  }
   return (
     <Wrapper>
       <Header />
@@ -53,11 +26,12 @@ const Cart = () => {
       {error && error.toString()}
 
       <div className="content-shoppingCart">
-        <p
-          style={{ fontSize: "35px", marginTop: "0px", marginBottom: "10px" }}
-        >
-          Shopping Cart
-        </p>
+
+        <div className="content-shoppingCart-title">
+          <h3 style={{ fontSize: "35px", marginTop: "0px", marginBottom: "10px" }}>Shopping Cart</h3>
+          <h3 style={{ fontSize: "35px", marginTop: "0px", marginBottom: "10px" }}> {`${user && user.firstName || ''} `}</h3>
+        </div>
+        <hr />
 
 
         <div className="shoppingCart-details">
@@ -132,7 +106,7 @@ const Cart = () => {
         </div>
 
         <div className="wrapper-cart-link-nextStep" >
-          <Link to="/address" className="link-sumar-comanda" onClick={handleBasket}>
+          <Link to="/address" className="link-sumar-comanda" /* onClick={handleBasket} */>
             <span>Next step</span>
           </Link>
         </div>
@@ -140,7 +114,7 @@ const Cart = () => {
       </div>
 
       <Footer />
-    </Wrapper>
+    </Wrapper >
   );
 };
 
@@ -320,6 +294,14 @@ const Wrapper = styledComponents.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        width: 80%;
+        height: auto;
+        margin: 0px auto;
+      }
+
+      .content-shoppingCart-title {
+        display: flex;
+        justify-content: space-around;
         width: 80%;
         height: auto;
         margin: 0px auto;

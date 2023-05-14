@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styledComponents from "styled-components";
 import { getProductById, selectProduct } from "../Features/ProductSlice";
-import { addProductToShoppingCart } from "../Features/ShoppingCartSlice";
+import { addProductToShoppingCart, selectShoppingCart } from "../Features/ShoppingCartSlice";
 import { URI } from "../_Utils/Dependency";
 import { SerializeProduct } from "../_Utils/SerializeProduct";
 import Button from "./Button";
@@ -14,11 +14,15 @@ import Header from "./Header";
 import PriceFormated from "./PriceFormated";
 import CarouselMultiple from "../components/CarouselMultiple";
 import CarouselProductImages from "./CarouselProductImages";
+import { selectUser } from "../Features/UserSlice";
 
 //  The ProductDetails component used when you clicked on a product
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { products } = useSelector(selectProduct);
+  const { shoppingCartList, nrProducts, totalPrice, currency } =
+    useSelector(selectShoppingCart);
+  const { user } = useSelector(selectUser);
 
   const [productById, setProductById] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -27,7 +31,7 @@ const ProductDetails = () => {
   let { id } = useParams();
 
 
-  // Here I made a redux request to return the product with the id that the customer clicked on
+  //  Return the clicked product from redux
   useEffect(() => {
     if (products) {
       let res = products.filter(
@@ -41,6 +45,7 @@ const ProductDetails = () => {
 
 
     // alternative if I hadn't used redux -> request to server
+    
     // fetch(`${URI}api/product/v1/get/productById/${id}`)
     //   .then((response) => response.json())
     //   .then((data) => {
@@ -55,8 +60,49 @@ const ProductDetails = () => {
 
 
   // Function that handles the product that was clicked to add to shopping cart
+
+  const handleBasket = async () => {
+    const TMP_BasketList = [];
+
+    console.log('productById ---> ', productById);
+    shoppingCartList && shoppingCartList.map(product => {
+      const TMP_BasketObj = {};
+
+      TMP_BasketObj.productId = product.id
+      TMP_BasketObj.quantitySize = product.quantityPerSize
+
+      TMP_BasketList.push(TMP_BasketObj)
+    })
+
+    //  Push to list the product clicked
+    TMP_BasketList.push({
+      productId: productById[0].id,
+      quantitySize: [{
+        quantity: quantity,
+        size: size,
+      }]
+    })
+
+    //  Set the payload for backend
+    let payload = { userEmail: user.email || null, products: TMP_BasketList }
+
+    //  Check the basket and send the payload
+    if (shoppingCartList !== null)
+      await fetch(`${URI}basket/v1/add/newBasket`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => setError(error.toString()))
+  }
+
+  //  Add new product to basket
   const handleAddToCart = () => {
-    console.log(productById);
+
     dispatch(
       addProductToShoppingCart({
         newPorduct: SerializeProduct(productById[0]),
@@ -65,6 +111,7 @@ const ProductDetails = () => {
       })
     );
 
+    handleBasket();
   };
 
   return (

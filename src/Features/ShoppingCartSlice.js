@@ -83,6 +83,7 @@ const ShoppingCartSlice = createSlice({
       state.totalPrice = 0;
       state.currency = ''
     },
+    
   },
 });
 
