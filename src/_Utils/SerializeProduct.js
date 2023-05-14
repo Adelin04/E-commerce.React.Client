@@ -7,7 +7,7 @@ export const SerializeProduct = (product ) => {
         description: product.description,
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: Number(product.price),
         productImages: product.productImages,
         stock: product.stock,
         updatedAt: product.updatedAt

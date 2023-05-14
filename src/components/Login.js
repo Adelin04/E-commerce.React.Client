@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styledComponents from "styled-components";
 import { login } from "../Features/UserSlice";
 import { URI } from "../_Utils/Dependency";
 import Button from "./Button";
 import jwt_decode from "jwt-decode";
+import { addProductToShoppingCart } from "../Features/ShoppingCartSlice";
+import { SerializeProduct } from "../_Utils/SerializeProduct";
+import { selectProduct } from "../Features/ProductSlice";
 
 //  Login component
 const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  let {products} = useSelector(selectProduct);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,10 +44,12 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         const { success, token, basketByUser } = data;
-
         let TMP_USER = [];
+
         if (success) {
           localStorage.setItem("TOKEN_ACCES", `Bearer ${token}`);
+          localStorage.setItem("BASKET", ` ${JSON.stringify(basketByUser.items.map(product => [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
+
           const decoded_user = jwt_decode(token); // decode your token here
           for (const claim in decoded_user) {
             if (Object.hasOwnProperty.call(decoded_user, claim)) {
@@ -64,15 +70,6 @@ const Login = () => {
             })
           );
 
-          // dispatch(
-          //   addProductToShoppingCart({
-          //     newPorduct: SerializeProduct(productById[0]),
-          //     quantity,
-          //     size,
-          //   })
-          // );
-
-
           goHome();
         } else {
           const { message } = data;
@@ -83,7 +80,24 @@ const Login = () => {
       .catch((error) => {
         setError(error);
         setMsgButton("Login");
-      });
+      })
+      .finally(
+        () => {
+          const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
+          basketByUser && basketByUser.map(productBasket => {
+
+            dispatch(
+              addProductToShoppingCart({
+                newPorduct: SerializeProduct(products.filter(product => product.id === productBasket[0].productId)[0]),
+                quantity: productBasket[0].quantity,
+                size: productBasket[0].size,
+              })
+            );
+
+          })
+        }
+      );
+
   };
 
   return (

@@ -32,7 +32,7 @@ const ProductDetails = () => {
     if (products) {
       let res = products.filter(
         (product) => product.id === parseInt(id))
-      //set the productById
+
       setProductById(res)
     } else return null
 
@@ -56,6 +56,7 @@ const ProductDetails = () => {
 
   // Function that handles the product that was clicked to add to shopping cart
   const handleAddToCart = () => {
+    console.log(productById);
     dispatch(
       addProductToShoppingCart({
         newPorduct: SerializeProduct(productById[0]),

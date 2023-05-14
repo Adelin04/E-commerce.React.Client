@@ -6,6 +6,7 @@ import styledComponents from "styled-components";
 import { useDispatch } from "react-redux";
 import { logout } from "../Features/UserSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { resetBasket } from "../Features/ShoppingCartSlice";
 
 const PopUp_ProfileUser = ({ user, toggle }) => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const PopUp_ProfileUser = ({ user, toggle }) => {
               <Button
                 style={{ margin: "2px", width: "auto", height: "auto" }}
                 textBtn={"Logout"}
-                onClick={() => dispatch(logout())}
+                onClick={() => {dispatch(logout());dispatch(resetBasket())}}
               />
             ) : (
               <Button

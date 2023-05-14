@@ -15,11 +15,13 @@ import DashboardAdmin from "./admin/DashboardAdmin";
 
 import Cart from "./components/Cart";
 import jwt_decode from "jwt-decode";
-import { getAllProducts } from "./Features/ProductSlice";
+import { getAllProducts, selectProduct } from "./Features/ProductSlice";
 import ProductDetails from "./components/ProductDetails";
 import LoadingSpin from "react-loading-spin";
 import UserSetting from "./components/UserSetting";
 import Address from "./pages/Address";
+import { addProductToShoppingCart } from "./Features/ShoppingCartSlice";
+import { SerializeProduct } from "./_Utils/SerializeProduct";
 
 
 function App() {
@@ -50,6 +52,21 @@ function App() {
             })
           );
 
+
+          const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
+          basketByUser && basketByUser.map(productBasket => {
+
+            dispatch(
+              addProductToShoppingCart({
+                newPorduct: SerializeProduct(products.filter(product => product.id === productBasket[0].productId)[0]),
+                quantity: productBasket[0].quantity,
+                size: productBasket[0].size,
+              })
+            );
+
+          })
+
+
         }
       })
       .catch((error) => console.log(error))
@@ -77,8 +94,8 @@ function App() {
               },
             })
           );
-        }
 
+        }
       });
 
     return setLoading(false);

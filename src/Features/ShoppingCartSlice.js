@@ -12,6 +12,7 @@ const ShoppingCartSlice = createSlice({
     addProductToShoppingCart: (state, action) => {
       const currentState = current(state);
       let newProduct = action.payload.newPorduct;
+
       state.nrProducts += action.payload.quantity;
 
       let productQtySize = {
@@ -20,7 +21,7 @@ const ShoppingCartSlice = createSlice({
       };
 
       let existProduct = currentState.shoppingCartList.filter(
-        (product) =>  product.id === newProduct.id
+        (product) => product.id === newProduct.id
       );
 
       if (existProduct.length === 0) {
@@ -33,7 +34,7 @@ const ShoppingCartSlice = createSlice({
           (product) => product.id !== newProduct.id
         );
 
-        existProduct[0].quantityPerSize.forEach((existProductQtySize) => {
+        existProduct[0].quantityPerSize.map((existProductQtySize) => {
           let restOfQtySize = existProduct[0].quantityPerSize.filter(
             (item) => item.size !== existProductQtySize.size
           );
@@ -75,12 +76,15 @@ const ShoppingCartSlice = createSlice({
       state.totalPrice = totalPrice;
       state.currency = state.shoppingCartList[0].currency;
     },
+
+    resetBasket: (state) => {
+      state.nrProducts = 0;
+      state.shoppingCartList = [];
+      state.totalPrice = 0;
+      state.currency = ''
+    },
   },
 });
-
-export const { addProductToShoppingCart } = ShoppingCartSlice.actions;
-export const selectShoppingCart = (state) => state.shoppingCart;
-export default ShoppingCartSlice.reducer;
 
 const calculateTotalPrice = (shoppingCartList) => {
   let totalPrice = 0;
@@ -93,3 +97,8 @@ const calculateTotalPrice = (shoppingCartList) => {
   });
   return totalPrice;
 };
+
+export const { addProductToShoppingCart, resetBasket } = ShoppingCartSlice.actions;
+export const selectShoppingCart = (state) => state.shoppingCart;
+export default ShoppingCartSlice.reducer;
+
