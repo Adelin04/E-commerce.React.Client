@@ -18,6 +18,7 @@ const Cart = () => {
     useSelector(selectShoppingCart);
   const { user } = useSelector(selectUser);
 
+  const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState();
 
   return (
@@ -58,19 +59,50 @@ const Cart = () => {
 
                                   <li className="quantityPerSize">
                                     <div className="wrapper-quantityPerSize-qty">
-                                      <span className="quantityPerSize-qty-txt">
+                                      {/* <span className="quantityPerSize-qty-txt">
                                         Qty
-                                      </span>
-                                      <span className="quantityPerSize-qty-nr">
-                                        {item.quantity}
-                                      </span>
+                                      </span> */}
+
+              
+                                        <Button
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            width: "25px",
+                                            height: "auto",
+                                            margin: "5px",
+                                          }}
+                                          textBtn={"-"}
+                                          onClick={() => {
+                                            quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1);
+                                          }}
+                                        />
+                                        <span className="quantityPerSize-qty-nr">
+                                          {item.quantity}
+                                        </span>
+                                        <Button
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            width: "25px",
+                                            height: "auto",
+                                            margin: "5px",
+                                          }}
+                                          textBtn={"+"}
+                                          onClick={() => {
+                                            setQuantity(quantity + 1);
+                                          }}
+                                        />
+                                  
+
+
                                     </div>
 
                                     <div className="wrapper-quantityPerSize-size">
-                                      <span className="quantityPerSize-size-txt">
+                                      {/* <span className="quantityPerSize-size-txt">
                                         Size
-                                      </span>
-                                      <span className="quantityPerSize-size-nr">
+                                      </span> */}
+                                      <span className="quantityPerSize-size">
                                         {item.size}
                                       </span>
                                     </div>
@@ -110,7 +142,7 @@ const Cart = () => {
         </div>
 
         <div className="wrapper-cart-link-nextStep" >
-          <Link to="/address" className="link-sumar-comanda" /* onClick={handleBasket} */>
+          <Link to="/address" className="link-to-order" >
             <span>Next step</span>
           </Link>
         </div>
@@ -141,7 +173,7 @@ const Wrapper = styledComponents.div`
       .shoppingCart-details {
         display: flex;
         flex-direction: column;
-        margin: 15px;
+        width: 100%;
       }
       
       .container-product-details {
@@ -149,6 +181,7 @@ const Wrapper = styledComponents.div`
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
+        width: 100%;
         margin: 5px 0px;
       }
 
@@ -158,7 +191,7 @@ const Wrapper = styledComponents.div`
         justify-content: space-around;
         align-items: center;
         width: 100%;
-        min-height: 130px;
+        // min-height: 130px;
       }
 
       .product-details img {
@@ -182,7 +215,7 @@ const Wrapper = styledComponents.div`
         align-items: center;
         width: 60%;
         height: auto;
-        margin: auto;
+        margin: 5px ;
         padding: 0px;
       }
       
@@ -196,7 +229,7 @@ const Wrapper = styledComponents.div`
 
       .wrapper-quantityPerSize {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         width:100%;
       }
@@ -214,9 +247,9 @@ const Wrapper = styledComponents.div`
       .wrapper-quantityPerSize-size,
       .wrapper-quantityPerSize-qty {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
-        width: 50px;
+        width: auto;
       }
       
       .quantityPerSize-qty-txt {
@@ -245,14 +278,15 @@ const Wrapper = styledComponents.div`
         color: var(--buttonColor);
       }
       
-      .quantityPerSize-size-nr {
-        font-size: 17px;
+      .quantityPerSize-size {
+        font-size: 23px;
         font-weight: bold;
         color: var(--baseColor);
       }
       
       .product-details-price{
         display: flex;
+        margin-right: 30px;
       }
   
       .product-details-price p:first-child {
@@ -280,18 +314,19 @@ const Wrapper = styledComponents.div`
           height: 30px;
           font-weight: bold;
           color: var(--sliderColor);
-      }
-      
-      .product-details-delete-btn {
-        display: flex;
-        height: 165px;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        outline: none;
-        font-size: 15px;
-        color: white;
-        background: var(--baseColor);
+        }
+        
+        .product-details-delete-btn {
+          display: flex;
+          height: 165px;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          outline: none;
+          font-size: 15px;
+          border-radius: 5px;
+          color: var(--baseColor);
+          background-color: var(--buttonColor);
       }
       
       .product-details-delete-btn:hover {
@@ -315,7 +350,7 @@ const Wrapper = styledComponents.div`
         flex-direction: column;
         justify-content: space-between;
         width: 80%;
-        height: auto;
+        height: 100%;
         margin: 0px auto;
       }
 
@@ -400,19 +435,21 @@ const Wrapper = styledComponents.div`
         /* background-color: rgb(247, 248, 248); */
       }
       
-      .link-sumar-comanda {
+      .link-to-order {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 30%;
+        min-width: 120px;
+        width: auto;
         height: 35px;
         font-weight: bolder;
         text-decoration: none;
+        border-radius: 5px;
         color: var(--baseColor);
         background-color: var(--buttonColor);
       }
 
-      .link-sumar-comanda:hover {
+      .link-to-order:hover {
         color: white;
       }
       
@@ -438,8 +475,16 @@ const Wrapper = styledComponents.div`
         height: auto;
 
       }
+      
+      @media only screen and (max-width: 650px) {
+
+      }
 
       @media only screen and (max-width: 500px) {
+
+        .content-shoppingCart-title {
+          display : block;
+        }
         
         .shoppingCart-details {
           display: flex;
@@ -450,7 +495,7 @@ const Wrapper = styledComponents.div`
           .product-details {
             flex-direction: column;
             text-align: center;
-            height: 250px;
+            height: auto;
           }
 
           .product-details img {
@@ -468,6 +513,7 @@ const Wrapper = styledComponents.div`
             margin: 15px auto;
           }
           
+
           .wrapper-quantityPerSize {
             display: flex;
             flex-direction: column;
@@ -477,20 +523,31 @@ const Wrapper = styledComponents.div`
           
           .quantityPerSize {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
+            justify-content: space-around;
+            width: 50%;
+            height: auto;
             margin: auto;
             
           }
           
           .product-price {
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
             margin: 15px auto;
           }
 
+          .product-details-price{
+            display: flex;
+            margin: 0px;
+          }
+
+          .product-details-delete-btn {
+            weight: 100%;
+            height: 35px;
+          }
         }
 
 `;
