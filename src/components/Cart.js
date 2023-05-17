@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styledComponents from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { selectShoppingCart } from "../Features/ShoppingCartSlice";
+import { decreaseCounter, increaseCounter, selectShoppingCart } from "../Features/ShoppingCartSlice";
 import PriceFormated from "./PriceFormated";
 import CardTotalPay from "./CardTotalPay";
 import { URI } from "../_Utils/Dependency";
@@ -17,6 +17,7 @@ const Cart = () => {
   const { shoppingCartList, nrProducts, totalPrice, currency } =
     useSelector(selectShoppingCart);
   const { user } = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState();
@@ -51,9 +52,9 @@ const Cart = () => {
 
                       <ul className="list-size-product">
                         {product &&
-                          product.quantityPerSize.map((item, index) => {
+                          product.quantityPerSize.map((item, indexItem) => {
                             return (
-                              <div key={index} className="wrapper-quantityPerSize">
+                              <div key={indexItem} className="wrapper-quantityPerSize">
 
                                 <div style={{ display: 'contents' }}>
 
@@ -63,37 +64,38 @@ const Cart = () => {
                                         Qty
                                       </span> */}
 
-              
-                                        <Button
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            width: "25px",
-                                            height: "auto",
-                                            margin: "5px",
-                                          }}
-                                          textBtn={"-"}
-                                          onClick={() => {
-                                            quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1);
-                                          }}
-                                        />
-                                        <span className="quantityPerSize-qty-nr">
-                                          {item.quantity}
-                                        </span>
-                                        <Button
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            width: "25px",
-                                            height: "auto",
-                                            margin: "5px",
-                                          }}
-                                          textBtn={"+"}
-                                          onClick={() => {
-                                            setQuantity(quantity + 1);
-                                          }}
-                                        />
-                                  
+                                      {/* {console.log(product)} */}
+                                      <Button
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          width: "25px",
+                                          height: "auto",
+                                          margin: "5px",
+                                        }}
+                                        textBtn={"-"}
+                                        id={product.id}
+                                        onClick={() => {
+                                          dispatch(decreaseCounter({ productId: product.id, indexItem: indexItem }))
+                                        }}
+                                      />
+                                      <span className="quantityPerSize-qty-nr">
+                                        {item.quantity}
+                                      </span>
+                                      <Button
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          width: "25px",
+                                          height: "auto",
+                                          margin: "5px",
+                                        }}
+                                        textBtn={"+"}
+                                        onClick={() => {
+                                          dispatch(increaseCounter({ productId: product.id, indexItem: indexItem }))
+                                        }}
+                                      />
+
 
 
                                     </div>
@@ -350,7 +352,7 @@ const Wrapper = styledComponents.div`
         flex-direction: column;
         justify-content: space-between;
         width: 80%;
-        height: 100%;
+        height: auto;
         margin: 0px auto;
       }
 
