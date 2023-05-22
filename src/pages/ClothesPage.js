@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styledComponents from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ProductsList from "../components/ProductsList";
@@ -11,43 +10,17 @@ const ClothesPage = () => {
   let state = useSelector(selectProduct);
 
   return (
-    <Wrapper>
-
+    <div className="clothesPage flex flex-col justify-between items-center w-full h-full">
       <Header />
 
-      <div className="wrapper-products-list">
+      <div className="wrapper-products-list flex justify-around items-center w-full my-10 mx-auto">
         {state && state.filteredProducts === null ? < ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name !== 'BROOCHES' && product.categoryProduct.name !== 'BAG')} /> : <ProductsList products={state.filteredProducts} />}
       </div>
 
       <Footer />
-    </Wrapper>
+
+    </div>
   );
 };
 
 export default ClothesPage;
-
-const Wrapper = styledComponents.div`
-    display: flex;
-    flex-direction:column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height:100%;
-
-    .wrapper-products-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-      margin: 50px auto;
-      width: 100%;
-    }
-    
-
-    @media only screen and (max-width: 720px) {
-      .products-list {
-        margin: 50px auto;
-        height: auto;
-      }
-    }
-`;

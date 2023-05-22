@@ -1,32 +1,21 @@
 import React from "react";
-import styledComponents from "styled-components";
-import Button from "./Button";
 import ProductTemplate from "./ProductTemplate";
 
 const ProductsList = ({ products }) => {
   return (
-    <Wrapper>
-
+    <div className="product-list flex flex-wrap justify-center items-center w-[80%] m-auto h-full">
       {products &&
         products.map((product, index) => {
           return (
-            <div style={{ display: "flex", margin: "20px 50px" }} key={index}>
+            <div className="product-card m-auto" key={index}>
               <ProductTemplate product={product} />
             </div>
           );
         })}
+    </div>
 
-    </Wrapper>
+    // </div>
   );
 };
 
 export default ProductsList;
-
-const Wrapper = styledComponents.div`
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 80%;
-    height: 100%;
-    flex-wrap: wrap;   
-`;

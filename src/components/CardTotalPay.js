@@ -4,56 +4,22 @@ import styled from "styled-components";
 
 const CardTotalPay = ({ totalPrice = 0, nrProducts = 0, currency = "" }) => {
     return (
-        <React.Fragment>
-            <div className="wrapper-order">
-                <div className="order">
-                    <p style={{ fontSize: "25px", margin: "0px" }}>Order summary </p>
-                    <p>Number products: {nrProducts}</p>
-                    <p>Delivery cost: {0}{" "}{currency}</p>
+        <div className="container-order flex flex-col justify-center items-center w-max mt-5 p-2 float-right">
 
-                    <div className="total-suma">
-                        <span style={{ fontSize: "22px", fontWeight: "bolder" }}>
-                            Total: {`${totalPrice.toString().split('.')[0]}.${totalPrice.toString().split('.')[1] !== undefined ? totalPrice.toString().split('.')[1].slice(0, 2) : '00'}`}
-                            {currency}
-                        </span>
-                    </div>
+            <h3 className="title-order flex justify-center items-center m-1 p-1 text-[25px] font-bold">Order summary </h3>
+            <h5 className="count-products-order flex p-1 text-[15px] font-bold"> Total Items </h5> <p>{nrProducts}</p>
+            <p className="delivery-products-order flex p-1 text-[15px] font-bold">Delivery cost: {0}{" "}{currency}</p>
 
-                </div>
+            <div className="total-price-order flex justify-center items-center w-max h-max m-1 p-1 text-[30px] font-bold">
+                <span>
+                    Total: {`${totalPrice.toString().split('.')[0]}.${totalPrice.toString().split('.')[1] !== undefined ? totalPrice.toString().split('.')[1].slice(0, 2) : '00'}`}
+                    {currency}
+                </span>
             </div>
-        </React.Fragment>
+
+
+        </div>
     )
 }
-
-const Wrapper = styled.div`
-.wrapper-order {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .order {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-between;
-    width: 250px;
-    height: auto;
-    margin-top: 25px;
-    /* background-color: rgb(247, 248, 248); */
-  }
-  
-
-  
-  .total-suma {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: auto;
-    height: 70px;
-    margin-bottom: 5px;
-    border: 1px solid rgb(228, 228, 228);
-    background-color: rgb(247, 248, 248);
-  }
-`
 
 export default CardTotalPay;

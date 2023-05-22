@@ -6,10 +6,10 @@ import Header from "../components/Header";
 import ProductsList from "../components/ProductsList";
 import { selectProduct } from "../Features/ProductSlice";
 
-const ProductsPage = () => {
+const CollectionPage = () => {
   let state = useSelector(selectProduct);
   return (
-    <Wrapper>
+    <div className="clothesPage flex flex-col justify-between items-center w-full h-full">
       <Header />
 
       <div className="wrapper-products-list">
@@ -18,11 +18,11 @@ const ProductsPage = () => {
       </div>
 
       <Footer />
-    </Wrapper>
+    </div >
   );
 };
 
-export default ProductsPage;
+export default CollectionPage;
 
 const Wrapper = styledComponents.div`
   display: flex;

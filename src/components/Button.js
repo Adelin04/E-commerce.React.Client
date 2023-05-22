@@ -3,6 +3,7 @@ import styledComponents from "styled-components";
 
 //  Button component
 const Button = ({
+  className,
   textBtn,
   onClick = null,
   onChange = null,
@@ -12,19 +13,20 @@ const Button = ({
   id = null,
 }) => {
   return (
-    <Wrapper>
-      <button
-        key={key}
-        id={id}
-        style={style}
-        onClick={onClick}
-        onChange={onChange}
-        className="prjectsApp-btn"
-        disabled={disabled}
-      >
-        {textBtn}
-      </button>
-    </Wrapper>
+    // <Wrapper>
+    <button
+      className={`prjectsApp-btn ${className}` + " " + " bg-[var(--sliderColor)] hover:text-white hover:bg-[var(--baseColor)] rounded-md"}
+
+      key={key}
+      id={id}
+      style={style}
+      onClick={onClick}
+      onChange={onChange}
+      disabled={disabled}
+    >
+      {textBtn}
+    </button>
+    // </Wrapper>
   );
 };
 

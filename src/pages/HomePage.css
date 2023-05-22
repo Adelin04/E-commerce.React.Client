@@ -1,0 +1,12 @@
+@media screen and (max-width: 450px) {
+
+
+    .slick-prev,
+    .slick-next {
+        visibility: hidden !important;
+    }
+
+    .control-dots {
+        visibility: hidden !important;
+    }
+}

@@ -15,14 +15,39 @@ const PopUp_ProfileUser = ({ user, toggle }) => {
   const open = toggle;
 
   return (
-    <Wrapper>
-      <div className={`${open ? "open" : "close"}`}>
-        <div
-          className={
-            "wrapper-setting-username" + `${open ? " visible" : " hidden"}`
-          }
-        >
-          <div className="go-setting">
+    <div className={`${open ?
+      "flex flex-col justify-center items-center w-[170px] h-[120px] rounded-lg bg-baseColor transition ease-linear duration-[1s]"
+      :
+      "invisible w-0 h-0 transition-all duration-[1s]"
+      } `}>
+
+      <div className={`${open ?
+        "flex flex-col justify-around items-center w-[170px] h-[120px] rounded-lg bg-baseColor transition duration-[1s]"
+        :
+        "invisible w-0 h-0"
+        } `}>
+
+
+        <div className="user-name flex text-[20px] font-bold">
+          <span>
+            {user && user.firstName} {user && user.lastName}
+          </span>
+
+        </div>
+
+        <div className={"admin"}>
+          {user && user.role[0].includes("ADMIN") ? (
+            <Button
+              className={"flex justify-center items-center w-max h-7 p-1 m-1 font-bold hover:border-2"}
+              textBtn={"Dashboard Admin"}
+              onClick={() => navigate("/admin/dashboard")}
+            />
+          ) : null}
+        </div>
+
+        <div className="btn-login-logout flex justify-center  items-center w-full">
+
+          <div className="go-setting flex justify-center items-center w-[30%] p-1 m-1">
             <Link to={"/user/setting"}>
               <img
                 style={{ width: "20px", height: "auto" }}
@@ -31,118 +56,26 @@ const PopUp_ProfileUser = ({ user, toggle }) => {
             </Link>
           </div>
 
-          <div className="user-name">
-            <span>
-              {user && user.firstName} {user && user.lastName}
-            </span>
-          </div>
-        </div>
-
-
-        <div className={"wrapper-btns" + `${open ? " visible" : " hidden"}`}>
-          <div className={"admin"}>
-            {user && user.role[0].includes("ADMIN") ? (
-              <Button
-                style={{ margin: "2px", width: "auto", height: "auto" }}
-                textBtn={"Dashboard Admin"}
-                onClick={() => navigate("/admin/dashboard")}
-              />
-            ) : null}
-          </div>
-          <div className="btn-logout">
-            {user ? (
-              <Button
-                style={{ margin: "2px", width: "auto", height: "auto" }}
-                textBtn={"Logout"}
-                onClick={() => {dispatch(logout());dispatch(resetBasket())}}
-              />
-            ) : (
-              <Button
-                style={{ margin: "2px", width: "auto", height: "auto" }}
-                textBtn={"Login"}
-                onClick={() => navigate("/auth")}
-              />
-            )}
-          </div>
+          {user ? (
+            <Button
+              className={"flex justify-center items-center w-[50%] h-7  p-1 m-1 hover:border-2"}
+              textBtn={"Logout"}
+              onClick={() => { dispatch(logout()); dispatch(resetBasket()) }}
+            />
+          ) : (
+            <Button
+              className={"flex justify-center items-center w-full h-6  p-1 m-1 hover:border-2"}
+              textBtn={"Login"}
+              onClick={() => navigate("/auth")}
+            />
+          )}
         </div>
 
       </div>
-    </Wrapper>
+
+
+    </div>
   );
 };
 
 export default PopUp_ProfileUser;
-
-const Wrapper = styledComponents.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: auto;
-    height: auto;
-    
-    .open {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 150px;
-      height: 120px;
-      border-radius: 5px;
-      background-color: var(--baseColor); 
-      transition: width,height 1s;
-    }
-    
-    .close {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 0px;
-      height: 0px;
-      transition: all 1.5s;
-    }
-    
-    .wrapper-setting-username{
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width:100%; 
-    }
-    
-    .user-name {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: auto; 
-    }
-    
-    .go-setting a{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .wrapper-btns {
-      display: flex;
-      flex-direction:column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: auto;
-    }
-
-    .wrapper-setting-username.visible,
-    .wrapper-btns.visible {
-      height: auto;
-      visibility: visible;
-      transition: all 1s;
-    }
-    
-    .wrapper-setting-username.hidden,
-    .wrapper-btns.hidden {
-      height: 0px;
-      visibility: hidden;
-      transition: visibility 0.3s;
-    }
-`;

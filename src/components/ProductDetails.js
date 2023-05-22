@@ -247,7 +247,7 @@ const ProductDetails = () => {
                 }}
               />
             </div>
-            
+
             <Button
               id={productById[0].id}
               style={{

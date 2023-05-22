@@ -6,210 +6,72 @@ import { FaYoutube } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
 import styledComponents from "styled-components";
 import Button from "./Button";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 //  Footer component
 const Footer = () => {
+  const [emailSubscriber, setEmailSubscriber] = useState('')
+
   return (
-    <Wrapper>
-      <div className="wrapper-social-newsletter">
-        <div className="wrapper-icon-social">
-          <div style={{ display: "flex", width: "100%" }}>
-            <p>
-              <FaFacebook className="facebook-icon" />
-            </p>
-            <p>
-              <FaInstagram className="instagram-icon" />
-            </p>
-            <p>
-              <FaYoutube className="youtube-icon" />
-            </p>
-            <p>
-              <FaMailBulk className="email-icon" />
-            </p>
-          </div>
+    <div className="container-social-newsletter flex flex-row justify-around w-full h-max my-0 mx-auto  bg-[var(--baseColor)]">
 
-          <div className="wrapper-copyright">
-            <p className="copyright">
-              Made In Romania. © {new Date().getFullYear()}
-            </p>
-          </div>
+      <div className="container-social-footer flex flex-col justify-center items-center w-[35%] p-2">
+
+        <div className="wrapper-social-footer flex flex-row w-full h-[70%] justify-around items-center sm:flex-col flex-wrap">
+          <p className="w-auto h-auto">
+            <FaFacebook className="facebook-icon flex justify-center items-center w-8 h-max" />
+          </p>
+          <p>
+            <FaInstagram className="instagram-icon flex justify-center items-center w-8 h-max" />
+          </p>
+          <p>
+            <FaYoutube className="youtube-icon flex justify-center items-center w-8 h-max" />
+          </p>
+          <p>
+            <FaMailBulk className="email-icon flex justify-center items-center w-8 h-max" />
+          </p>
         </div>
 
-        <div className="footer-newsletter">
-          <div className="title">
-            <h4>Newsletter</h4>
-          </div>
-
-          <div className="wrapper-footer-abonare">
-            <input
-              className="footer-input-abonare"
-              placeholder="Email address"
-            />
-          </div>
-
-          <div className="footer-acord">
-            <input className="footer-input-checkbox" type="checkbox" />
-            <p>I agree with all the terms and conditions</p>
-          </div>
-
-          <Button
-            style={{
-              widt: "auto",
-              height: "auto",
-              margin: "5px",
-            }}
-            textBtn={"Subscribe"}
-            onClick={() => console.log('subscribe')}
-          />
+        <div className="wrapper-copyright-footer flex flex-row w-full h-[30%] justify-center items-center">
+          <p className="copyright flex justify-center items-center w-max h-max text-center">
+            Made In Romania. © {new Date().getFullYear()}
+          </p>
         </div>
+
       </div>
-    </Wrapper>
+
+      <div className="container-newsletter-terms-footer flex flex-col justify-center items-center w-[55%] p-2">
+
+        <h3 className="title-newsletter-footer flex justify-center items-center text-lg font-bold p-2"> Newsletter </h3>
+
+        <input
+          className="input-abonare-footer flex bg-[var(--baseColor)] w-[35%] text-center outline-none border-b-2 border-red-400"
+          placeholder="Email address"
+          value={emailSubscriber}
+          id={emailSubscriber}
+          type={"email"}
+          onChange={(e) => setEmailSubscriber(e.target.value)}
+        />
+
+        <div className="acord-terms-footer flex flex-col justify-center items-center text-center">
+          <input className="input-checkbox-footer m-2" type="checkbox" />
+          <p>I agree with all the terms and conditions</p>
+          <p>
+            <Link to={'/termsAndCondition'}>Read the terms and conditions</Link>
+          </p>
+        </div>
+
+        <Button
+          className="hover:border-2 border-rose-600 min-w-[50%] min-h-[30px] m-[15px]"
+          textBtn={"Subscribe"}
+          onClick={() => console.log('send the email confirmation')}
+        />
+
+      </div>
+
+    </div>
   );
 };
 
 export default Footer;
-
-const Wrapper = styledComponents.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    width: 100%;
-    height: auto;
-    margin:0px auto;
-    background-color: var(--baseColor);
-    // background-color: #d6bbd3;
-    
-    .wrapper-social-newsletter {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      height: auto;
-      margin: auto;
-    }
-
-.footer-newsletter {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center
-  flex-direction: column;
-  width: 100%;
-  min-height: 150px;
-  margin: auto;
-}
-
-.footer-newsletter h4 {
-  margin: 10px;
-}
-
-.wrapper-footer-abonare {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center
-  
-}
-
-.footer-input-abonare {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  text-align: center;
-  width: 50%;
-  margin: 5px;
-  border: none;
-  border-bottom: 2px solid;
-  outline: none;
-}
-
-.footer-acord {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  padding: 0px;
-  font-size: 12px;
-  width: 100%;
-  margin-top: 15px;
-}
-
-.footer-acord p {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  text-align: center;
-  width: 30%;
-  margin: 0px;
-}
-
-.footer-input-checkbox {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  text-align: center;
-  cursor: pointer;
-}
-
-
-.wrapper-footer-abonare {
-  position: relative;
-  width: 100%;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: space-between;
-  text-decoration: none;
-  margin: 5px;
-  padding: 5px;
-  width: 220px;
-}
-
-.wrapper-icon-social{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-  height: 100%;
-}
-
-.wrapper-icon-social p {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: auto;
-}
-
-.facebook-icon,
-.instagram-icon,
-.youtube-icon,
-.email-icon {
-font-size: 25px;
-}
-
-.facebook-icon,
-.instagram-icon,
-.youtube-icon,
-.email-icon:hover {
-cursor: pointer;
-}
-
-.copyright {
-  text-align: center;
-  font-size: 15px;
-  margin: 5px;
-}
-
-
-@media only screen and (max-width:600px) {
-  .wrapper-social-newsletter
-  {
-    justify-content: space-between;
-    flex-direction:column;
-  }
-}
-`;

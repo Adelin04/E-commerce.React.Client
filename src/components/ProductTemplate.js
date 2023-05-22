@@ -13,150 +13,44 @@ const ProductTemplate = ({ product }) => {
   };
 
   return (
-    <Wrapper>
-      <div className="product-content">
-        <h3 className="product-title">{product.name}</h3>
 
-        {product ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-          >
-            <div className="product-img-wraper">
-              <img
-                onClick={handleClickProduct}
-                id={product.id}
-                className="product-img"
-                src={product.productImages[0].path}
-                alt="product"
-              />
-            </div>
+    <div className="productTemplate flex flex-col justify-between items-center p-2 m-2 rounded-xl">
 
-            <div className="product-description">
-              <p> {`${product.description.split()[0].slice(0, 15)}...`}</p>
-            </div>
+      <h3 className="productTemplate-title flex justify-center items-center text-[20px] font-bold p-1 m-1">{product.name}</h3>
 
-            <div className="product-template-price">
-              {<PriceFormated price={product.price} />}
-              <p className="currency">{product.currency}</p>
-            </div>
+      {product ? (
+        <div className="product flex flex-col justify-between items-center">
+
+
+          <div className="wrapper-productTemplate-img flex justify-center overflow-hidden rounded-xl min-w-[100px] max-h-[300px]">
+            <img
+              className="productTemplate-img object-cover  w-[180px] rounded-md cursor-pointer  m-1 p-1 hover:scale-150 transition duration-[2s]"
+              onClick={handleClickProduct}
+              id={product.id}
+              src={product.productImages[0].path}
+              alt="product image"
+            />
           </div>
-        ) : (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            {<LoadingSpin />}
+
+          <div className="productTemplate-description flex justify-center items-center text-[15px] font-bold p-1 m-1">
+            <p className="description text-center decoration-textDescriptionAndPrice"> {`${product.description.split()[0].slice(0, 15)}...`}</p>
           </div>
-        )}
-      </div>
-    </Wrapper>
+
+          <div className="productTemplate-price flex justify-center items-center text-[15px] font-bold p-1 m-1 decoration-textDescriptionAndPrice">
+            {<PriceFormated price={product.price} />}
+            <p className="productTemplate-currency flex justify-center items-center my-0 mx-[5px] h-10  decoration-textDescriptionAndPrice"> {product.currency} </p>
+          </div>
+
+        </div>
+      ) : (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {<LoadingSpin />}
+        </div>
+      )}
+    </div>
+
   );
 };
 
 export default ProductTemplate;
 
-const Wrapper = styledComponents.div`
-
-.product - content {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin: auto;
-  padding: 25px;
-  min-height: 250px;
-  min-width: 200px;
-}
-
-.product-img-wraper {
-  display:flex;
-  justify-content:center;
-  overflow: hidden;
-  border-radius: 15px;
-}
-
-.product-img{
-  border - radius: 15px;
-  width: 250px;
-  min-height: 300px;
-  height: auto;
-  max-height: 300px;
-  cursor: pointer;
-  background: var(--backgroundCard)
-}
-
-.product-img:hover{
-  transform: scale(1.2);
-  transition: 2s;
-}
-
-.product-title {
-  color: #5f4d5d;
-  text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.product-description {
-  display:flex;
-  justify-content: center;
-  margin:auto;
-  max-width: 200px;
-  color: #5f4d5d;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  text-align: center;
-  font-size: small;
-}
-
-.product-template-price{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.product-template-price p:first-child {
-  font-size: 30px;
-  font-weight: bold;
-  margin: 0px;
-  color: var(--sliderColor);
-}
-
-.price-after-dot {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 0px;
-  height: 30px;
-  font-weight: bold;
-  color: var(--sliderColor);
-}
-
-  .product-template-price .currency {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    margin: 0px 5px;
-    height: 30px;
-    font-weight: bold;
-    color: var(--sliderColor);
-}
-
- .product-btn {
-    margin - left: 50%;
-    transform: translate(-50%);
-    width: 60px;
-    justify-content: space-around;
-    border: 1px solid #b08ead;
-    padding: 5px 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    outline: none;
-    color: #d6bbd3;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-  @media only screen and (min-width:1000px) {
-    .lg-size-33 {
-      width: 40%;
-    }
-  }
-`;
