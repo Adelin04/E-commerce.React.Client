@@ -123,7 +123,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <Wrapper>
+    <div className="productDetails flex flex-col justify-between items-center w-full h-full">
       <Header />
 
 
@@ -142,41 +142,27 @@ const ProductDetails = () => {
       )}
 
       {productById && (
-        <div className="product-details-container">
-          <div className="product-content">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <div className="product-img-wraper">
-                {productById && <div
-                  className="multipleCarousel"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "start",
-                    alignItems: "center",
-                    width: "50%",
-                    height: "auto",
-                    margin: "50px",
-                  }}
-                >
+        <div className="product-details-container flex justify-around items-center  w-[80%]h-full">
+
+          <div className="product-img-wraper flex justify-center items-center w-[40%] h-max p-1 m-1">
+            {productById &&
+
+              <div className="wrapper-carousel flex justify-center items-center w-[350px]">
+                <div className="multipleCarousel flex justify-center items-center w-full">
                   <CarouselProductImages
                     products={productById}
                     slidesToShow={1}
                     slidesToScroll={1}
                   />
-                </div>}
-
+                </div>
               </div>
-            </div>
+
+            }
+
           </div>
 
-          <div className="container-product-description">
+
+          <div className="container-product-description flex flex-col justify-center items-center w-[40%] h-max p-1 m-1">
 
             <div className="wrapper-title-price">
               <h3 className="product-title">{productById[0].name} </h3>
@@ -218,7 +204,8 @@ const ProductDetails = () => {
               </p>
             </div>
 
-            <div className="quantity">
+            <div className="wrapper-counter flex flex-row m-1">
+
               <Button
                 style={{
                   display: "flex",
@@ -232,7 +219,7 @@ const ProductDetails = () => {
                   quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1);
                 }}
               />
-              <span>{quantity}</span>
+
               <Button
                 style={{
                   display: "flex",
@@ -248,6 +235,8 @@ const ProductDetails = () => {
               />
             </div>
 
+
+
             <Button
               id={productById[0].id}
               style={{
@@ -261,11 +250,16 @@ const ProductDetails = () => {
             />
 
           </div>
+
         </div>
-      )}
+      )
+      }
+
+
+
       <Footer />
 
-    </Wrapper>
+    </div >
   );
 };
 
