@@ -64,7 +64,7 @@ const PopUp_ProfileUser = ({ user, toggle }) => {
             />
           ) : (
             <Button
-              className={"flex justify-center items-center w-full h-6  p-1 m-1 hover:border-2"}
+              className={"flex justify-center items-center w-[50%] h-7  p-1 m-1 hover:border-2"}
               textBtn={"Login"}
               onClick={() => navigate("/auth")}
             />

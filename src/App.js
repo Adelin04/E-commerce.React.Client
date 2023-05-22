@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import ClothesPage from "./pages/ClothesPage";
@@ -28,6 +28,8 @@ function App() {
   //user state
   const dispatch = useDispatch();
   let userLogged = useSelector(selectUser).user;
+
+  let navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
 
@@ -107,7 +109,7 @@ function App() {
       {!loading ? (
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/auth" element={userLogged ? <HomePage /> : <AuthPage />} exact />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/Clothes" element={<ClothesPage />} />
           <Route path="/Accessory" element={<AccesoryPage />} />

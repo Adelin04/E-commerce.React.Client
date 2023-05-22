@@ -44,6 +44,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         const { success, token, basketByUser } = data;
+       
         let TMP_USER = [];
 
         if (success) {
