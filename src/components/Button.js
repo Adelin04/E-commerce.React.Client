@@ -15,7 +15,7 @@ const Button = ({
   return (
     // <Wrapper>
     <button
-      className={`prjectsApp-btn ${className}` + " " + " bg-[var(--sliderColor)] hover:text-white hover:bg-[var(--baseColor)] rounded-md"}
+      className={`prjectsApp-btn ${className}` + " " + " bg-[var(--sliderColor)] hover:text-white hover:bg-[var(--baseColor)] rounded-md cursor-pointer"}
 
       key={key}
       id={id}

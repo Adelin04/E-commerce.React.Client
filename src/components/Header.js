@@ -45,7 +45,7 @@ const Header = () => {
             to={"/"}
             style={{ textDecoration: "none", color: "black", width: "170px" }}
           >
-            <img style={{ width: "40px", height: "auto" }} src={logoIcon} />
+            <img className="" style={{ width: "40px", height: "auto" }} src={logoIcon} />
             <span style={{ margin: "0px 5px" }}>BOUTIQUE</span>
           </Link>
         </div>
@@ -53,7 +53,7 @@ const Header = () => {
         <div className="wrapper-cart">
           <div style={{ width: "170px" }} className="wrapper-cart-userProfile">
 
-            <div className={"bubble-cart"} >
+            <div className={"bubble-cart rounded-full hover:text-white"} >
               {nrProducts > 0 ? <BubbleCart nrProducts={nrProducts} /> : null}
             </div>
 

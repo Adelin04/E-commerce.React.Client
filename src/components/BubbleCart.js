@@ -2,35 +2,15 @@ import React from "react";
 import styledComponents from "styled-components";
 
 
-// BubbleCart -> shows the number of products in the shopping cart
+// BubbleCart -> it shows the products number from the shopping cart
 const BubbleCart = ({ nrProducts }) => {
   return (
-    <Wrapper>
-      <p>{nrProducts}</p>
-    </Wrapper>
+    <div className="bubbleCart relative flex justify-center items-center w-[23px] h-[23px] rounded-full hover:text-white bg-[var(--baseColor)]">
+      <p className="absolute flex justify-center items-center w-max h-max font-bold text-[13px] text-center">
+        {nrProducts}
+      </p>
+    </div>
   );
 };
 
 export default BubbleCart;
-
-const Wrapper = styledComponents.div`
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 23px;
-    height: 23px;
-    
-    p { 
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-        width: auto;
-        height: auto;
-        font-size: 13px;
-        font-weight: bolder;
-        text-align: center;
-    }
-`;

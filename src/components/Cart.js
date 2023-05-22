@@ -107,12 +107,12 @@ const Cart = () => {
 
                                 </div>
 
-                                <div className="wrapper-price flex justify-center items-center min-w-11 p-1 m-1 text-[20px] font-bold">
-                                  <p className="price flex justify-center items-center p-1 w-auto">{<PriceFormated price={product.price * item.quantity} />}</p>
-                                  <p className="currency flex justify-center items-center p-1 w-auto">{currency}</p>
+                                <div className="wrapper-price flex justify-center items-center min-w-11 h-max p-1 m-1 text-[20px] font-bold">
+                                  <span className="price flex justify-center items-center p-1 w-auto">{<PriceFormated price={product.price * item.quantity} />}</span>
+                                  <span className="currency flex justify-center items-center p-1 w-auto">{currency}</span>
                                 </div>
 
-                                <button className="delete-btn-cart flex h-full w-auto m-2 p-1 justify-center items-center bg-[var(--sliderColor)] font-bold hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md"><FaTrash /></button>
+                                <button className="delete-btn-cart  justify-center items-center flex w-max h-full m-2 p-1 bg-[var(--sliderColor)] font-bold hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md"><FaTrash /></button>
                               </li>
                             }
                           </div>);

@@ -3,7 +3,6 @@ import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import styledComponents from "styled-components";
 import { getProductById, selectProduct } from "../Features/ProductSlice";
 import { addProductToShoppingCart, selectShoppingCart } from "../Features/ShoppingCartSlice";
 import { URI } from "../_Utils/Dependency";
@@ -142,57 +141,85 @@ const ProductDetails = () => {
       )}
 
       {productById && (
-        <div className="product-details-container flex justify-around items-center  w-[80%]h-full">
+        <div className="container-product-details flex justify-around items-center  w-[90%] h-full my-5 mx-auto">
 
-          <div className="product-img-wraper flex justify-center items-center w-[40%] h-max p-1 m-1">
+          <div className="wraper-images-product flex justify-center items-center w-[40%] h-max p-1 m-1">
             {productById &&
 
-              <div className="wrapper-carousel flex justify-center items-center w-[350px]">
-                <div className="multipleCarousel flex justify-center items-center w-full">
-                  <CarouselProductImages
-                    products={productById}
-                    slidesToShow={1}
-                    slidesToScroll={1}
-                  />
-                </div>
+              <div className="wrapper-carousel flex justify-center items-center w-[350px] ">
+                <CarouselProductImages
+                  products={productById}
+                  slidesToShow={1}
+                  slidesToScroll={1}
+                />
               </div>
 
             }
-
           </div>
 
+          <div className="wrapper-details-product flex flex-col justify-around items-center w-[40%] h-full p-1 m-1">
 
-          <div className="container-product-description flex flex-col justify-center items-center w-[40%] h-max p-1 m-1">
+            <div className="wrapper-title-price flex justify-around items-center w-full bg-[var(--sliderColor)]">
+              <h3 className="product-title text-[25px] font-bold p-1 m-1">{productById[0].name} </h3>
 
-            <div className="wrapper-title-price">
-              <h3 className="product-title">{productById[0].name} </h3>
-
-              <div className="product-details-price">
+              <div className="price-product-details flex justify-center items-center ">
                 {<PriceFormated price={productById[0].price} />}
-                <p className="currency">{productById[0].currency}</p>
+                <p className="currency flex justify-center items-center w-max font-bold text-lg decoration-textDescriptionAndPrice">{productById[0].currency}</p>
               </div>
             </div>
 
-            <hr style={{ width: "80%" }} />
+            <div className="wrapper-product-description flex flex-col justify-center items-start">
+              <h4 className="description flex justify-center items-center">{`${productById[0].description.split()[0].slice(0, 300)}...`}</h4>
+              <h4>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+              </h4>
 
-            <div className="wrapper-color">
-              <h3>Color</h3>{" "}
-              <p className="product-color">{productById[0].color}</p>
+              <hr className="hr w-full mx-auto my-3" />
             </div>
 
-            <div className="product-description">
-              <h4>{`${productById[0].description.split()[0].slice(0, 50)}...`}</h4>
-            </div>
+            <div className="container-counter-size flex justify-between items-center w-full flex-row m-1">
 
-            <hr style={{ width: "80%" }} />
+              <div className="wrapper-counter wrapper-counter-size flex justify-between items-center w-max flex-row m-1">
+                <Button
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "25px",
+                    height: "auto",
+                    margin: "5px",
+                  }}
+                  textBtn={"-"}
+                  onClick={() => {
+                    quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1);
+                  }}
+                />
 
-            <div>
-              <p>
+                <span className="quantity flex justify-center items-center w-10 p-1 font-bold">
+                  {quantity}
+                </span>
+
+                <Button
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "25px",
+                    height: "auto",
+                    margin: "5px",
+                  }}
+                  textBtn={"+"}
+                  onClick={() => {
+                    setQuantity(quantity + 1);
+                  }}
+                />
+              </div>
+
+              <div className="wrapper-dropdown-size-option flex justify-center items-center ">
                 <select
-                  onChange={(e) =>
-                    setSize(e.target.value)
-                  }
-                  className="select"
+                  className="select text-center w-max bg-[var(--sliderColor)] rounded-md hover:text-white cursor-pointer"
+                  onChange={(e) => setSize(e.target.value)}
                 >
                   <option value={"None"}>None</option>
                   <option value={"S"}>S</option>
@@ -201,59 +228,30 @@ const ProductDetails = () => {
                   <option value={"XL"}>XL</option>
                   <option value={"XXL"}>XXL</option>
                 </select>
-              </p>
-            </div>
-
-            <div className="wrapper-counter flex flex-row m-1">
+              </div>
 
               <Button
+                id={productById[0].id}
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  width: "25px",
+                  width: "auto",
+                  minWidth: "35%",
                   height: "auto",
                   margin: "5px",
                 }}
-                textBtn={"-"}
-                onClick={() => {
-                  quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1);
-                }}
+                disabled={size === '' ? true : false}
+                textBtn={"Add to cart"}
+                onClick={handleAddToCart}
               />
 
-              <Button
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "25px",
-                  height: "auto",
-                  margin: "5px",
-                }}
-                textBtn={"+"}
-                onClick={() => {
-                  setQuantity(quantity + 1);
-                }}
-              />
             </div>
-
-
-
-            <Button
-              id={productById[0].id}
-              style={{
-                widt: "auto",
-                height: "auto",
-                margin: "5px",
-              }}
-              disabled={size === '' ? true : false}
-              textBtn={"Add to cart"}
-              onClick={handleAddToCart}
-            />
 
           </div>
 
         </div>
-      )
-      }
+
+      )}
 
 
 
@@ -264,169 +262,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-const Wrapper = styledComponents.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items:center;
-    width: 100%;
-    height: 100%;
-
-    .wrapper-title-price {
-      display: flex;
-      justify-content: space-around;
-      margin: 0px;
-      align-items: flex-end;
-    }
-    
-    .wrapper-color {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .product-details-price{
-      display: flex;
-    }
-
-    .product-details-price p:first-child {
-      font-size: 30px;
-      font-weight: bold;
-      margin: 0px;
-      color: var(--sliderColor);
-    }
-    
-    .price-after-dot {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      margin: 0px;
-      height: 30px;
-      font-weight: bold;
-      color: var(--sliderColor);
-    }
-    
-      .product-details-price .currency {
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        margin: 0px 5px;
-        height: 30px;
-        font-weight: bold;
-        color: var(--sliderColor);
-    }
-
-    .product-details-container{
-      display: flex;
-      justify-content: space-between;
-      align-items:center;
-      width: 70%;
-    }
-
-    .product-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 20px auto;
-      padding: 10px;
-      min-height: 250px;
-      width: 50%;
-    }
-    
-    .product-img-wraper {
-      display:flex;
-      justify-content:center;
-      overflow: hidden;
-      border-radius: 15px;
-      align-item: center;
-      // width:150px;
-    }
-    
-    .product-img{
-      border-radius: 15px;
-      width: 250px;
-      min-height: 300px;
-      height: auto;
-      max-height: 300px;
-    }
-    
-    .product-img:hover{
-      transform: scale(1.2);
-      transition: 2s;
-    }
-    
-    .product-title {
-      color: #5f4d5d;
-      text-align: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    
-    .container-product-description {
-      display:flex;
-      justify-content: center;
-      flex-direction: column;
-      padding: 10px;
-      margin: 0px auto;
-      min-width: 250px;
-      width: 50%;
-      color: #5f4d5d;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      text-align: center;
-      font-size: small;
-    }
-    
-    .product-btn {
-      margin-left: 50%;
-      transform: translate(-50%);
-      width: 60px;
-      justify-content: space-around;
-      border: 1px solid #b08ead;
-      padding: 5px 10px;
-      border-radius: 20px;
-      cursor: pointer;
-      outline: none;
-      color: #d6bbd3;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    
-    
-    option{
-      outline: none;
-      color: #d6bbd3;
-    }
-
-    .quantity {
-      display: flex;
-      justify-content:center;
-      align-items:center;
-      width:auto;
-    }
-
-    .quantity span {
-      display: flex;
-      justify-content:center;
-      align-items:center;
-      width: 20px;
-      border: 1px solid black;
-    }
-
-
-    @media only screen and (max-width:600px) {
-      .product-details-container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items:center;
-        width: 100%;
-      // background:skyblue;
-    }
-
-    .container-product-description,
-    .product-content,
-    .product-description {
-      margin: 20px auto;
-    }
-
-`;

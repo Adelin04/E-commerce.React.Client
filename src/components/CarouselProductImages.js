@@ -7,100 +7,100 @@ import logoIcon from "../icons/herokuSleepIco.png";
 
 //  Carousel component used for home page products
 class CarouselProductImages extends React.Component {
-    constructor({ products, slidesToShow = 5, slidesToScroll = 1 }) {
-        super();
+  constructor({ products, slidesToShow = 5, slidesToScroll = 1 }) {
+    super();
 
-        this.state = {
-            loading: true,
-            redirect: false,
-            goToIdProduct: null,
-        };
+    this.state = {
+      loading: true,
+      redirect: false,
+      goToIdProduct: null,
+    };
 
-        this.products = products;
-        this.slidesToShow = slidesToShow;
-        this.slidesToScroll = slidesToScroll;
-        this.LoadingList = [];
+    this.products = products;
+    this.slidesToShow = slidesToShow;
+    this.slidesToScroll = slidesToScroll;
+    this.LoadingList = [];
+  }
+
+  componentDidMount = () => {
+    this.LoadingCarousel();
+  };
+
+  handleClicked = (e) => {
+    this.setState({ goToIdProduct: e.target.id });
+    this.setState({ redirect: true });
+  };
+
+  LoadingCarousel = () => {
+    for (let index = 0; index < this.slidesToShow; index++) {
+      this.LoadingList.push(
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <img style={{ width: "550px", height: "auto" }} src={logoIcon} />
+          {<LoadingSpin />}
+        </div>
+      );
     }
+  };
 
-    componentDidMount = () => {
-        this.LoadingCarousel();
+  render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      // fade: true,
+      cssEase: "linear",
+      autoplay: true,
+      autoplaySpeed: 5000,
+      slidesToShow: this.slidesToShow,
+      slidesToScroll: this.slidesToScroll,
     };
 
-    handleClicked = (e) => {
-        this.setState({ goToIdProduct: e.target.id });
-        this.setState({ redirect: true });
-    };
+    return (
+      <div style={{ width: "100%", margin: "auto" }}>
+        {this.state.redirect && (
+          <Navigate
+            to={`product-details/${this.state.goToIdProduct}`}
+            replace={true}
+          />
+        )}
 
-    LoadingCarousel = () => {
-        for (let index = 0; index < this.slidesToShow; index++) {
-            this.LoadingList.push(
-                <div
-                    key={index}
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                    }}
-                >
-                    <img style={{ width: "550px", height: "auto" }} src={logoIcon} />
-                    {<LoadingSpin />}
-                </div>
-            );
-        }
-    };
+        <Wrapper>
+          {this.products.length > 0 ? (
+            <Slider {...settings}>
 
-    render() {
-        const settings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            // fade: true,
-            cssEase: "linear",
-            autoplay: true,
-            autoplaySpeed: 5000,
-            slidesToShow: this.slidesToShow,
-            slidesToScroll: this.slidesToScroll,
-        };
-
-        return (
-            <div style={{ width: "100%", margin: "auto" }}>
-                {this.state.redirect && (
-                    <Navigate
-                        to={`product-details/${this.state.goToIdProduct}`}
-                        replace={true}
-                    />
-                )}
-
-                <Wrapper>
-                    {this.products.length > 0 ? (
-                        <Slider {...settings}>
-
-                            {this.products[0].productImages.map((productPath, index) => {
-                                return (
-                                    <div key={index} className="wrapper-img-carousel">
-                                        {productPath && (
-                                            <img
-                                                id={productPath.id}
-                                                className="img-carousel"
-                                                src={productPath.path}
-                                                alt={"This image is not available"}
-                                                onClick={this.handleClicked}
-                                            />
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </Slider>
-                    ) : (
-                        <div className="loading-spin">
-                            <LoadingSpin />
-                        </div>
+              {this.products[0].productImages.map((productPath, index) => {
+                return (
+                  <div key={index} className="wrapper-img-carousel">
+                    {productPath && (
+                      <img
+                        id={productPath.id}
+                        className="img-carousel"
+                        src={productPath.path}
+                        alt={"This image is not available"}
+                        onClick={this.handleClicked}
+                      />
                     )}
-                </Wrapper>
+                  </div>
+                );
+              })}
+            </Slider>
+          ) : (
+            <div className="loading-spin">
+              <LoadingSpin />
             </div>
-        );
-    }
+          )}
+        </Wrapper>
+      </div>
+    );
+  }
 }
 
 export default CarouselProductImages;
@@ -141,15 +141,19 @@ const Wrapper = styledComponents.div`
     align-items: center;
   }
   
+  .slick-prev ,
+  .slick-next {
+    top: 410px;
+  }
   
 .slick-next {
-  right: 2%;
+  right: 5%;
   width: auto;
   height: auto;
 }
 
 .slick-prev {
-  left: 2%;
+  left: 5%;
   width: auto;
   height: auto;
   z-index: 1;
@@ -162,15 +166,13 @@ const Wrapper = styledComponents.div`
 }
 
 .slick-dots {
-  // position: relative !important;
   display: flex !important;
   justify-content: center;
   align-items: center;
-  // bottom: 10px;
-  width: 100%;
+  width:60%;
   height: auto;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   bottom: -15px;
   list-style: none;
   text-align: center;
