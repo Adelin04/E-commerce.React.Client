@@ -134,7 +134,7 @@ const Cart = () => {
           </div>
 
           <div className="nextStep-link-cart flex w-auto h-auto mx-auto my-2 p-1 justify-center items-center " >
-            <Link to="/address" className="flex justify-center items-center w-[150px] h-10 font-bold bg-[var(--sliderColor)] hover:text-white hover:bg-[var(--baseColor)]" > Next step </Link>
+            <Link to="/address" className="flex justify-center items-center w-[150px] h-10 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]" > Next step </Link>
           </div>
         </div>
 

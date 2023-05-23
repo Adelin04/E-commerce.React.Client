@@ -44,7 +44,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         const { success, token, basketByUser } = data;
-       
+        console.log(data);
         let TMP_USER = [];
 
         if (success) {
@@ -74,9 +74,6 @@ const Login = () => {
           );
 
           goHome();
-        } else {
-          const { message } = data;
-          message && setError(message);
           setMsgButton("Login");
         }
       })
@@ -138,8 +135,8 @@ const Login = () => {
           type="password"
           id="password"
         />
-        <div className="button">
-          <Button textBtn={msgButton} />
+        <div className="wrapper-btn-login flex justify-center items-center m-1 p-1 w-max mx-auto ">
+          <Button textBtn={msgButton} className={'btn-login  className="flex justify-center items-center w-[100px] h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
         </div>
       </form>
     </Wrapper>
@@ -206,12 +203,7 @@ label{
   /*   margin-top: 250px; */
 }
 
-.button{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5px;
-}
+
 
 @media only screen and (max-width: 320px) {
   label{

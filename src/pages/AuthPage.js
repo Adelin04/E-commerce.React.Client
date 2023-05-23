@@ -29,7 +29,7 @@ const AuthPage = () => {
                   padding: "5px",
                 }}
               >
-                Ai cont ?{" "}
+                Do you have an acount ?{" "}
                 <span
                   onClick={() => {
                     setToggle(!toggle);
@@ -54,7 +54,7 @@ const AuthPage = () => {
                   padding: "5px",
                 }}
               >
-                Nu ai cont ?{" "}
+                Don't you have an account?{" "}
                 <span
                   onClick={() => {
                     setToggle(!toggle);
@@ -65,7 +65,7 @@ const AuthPage = () => {
                     cursor: "pointer",
                   }}
                 >
-                  Inscrie-te
+                  Register
                 </span>
               </p>{" "}
             </div>
