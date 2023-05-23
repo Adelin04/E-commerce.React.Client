@@ -16,7 +16,7 @@ const ProductTemplate = ({ product }) => {
 
     <div className="productTemplate flex flex-col justify-between items-center p-2 m-2 rounded-xl">
 
-      <h3 className="productTemplate-title flex justify-center items-center text-[20px] font-bold p-1 m-1">{product.name}</h3>
+      <h3 className="productTemplate-title flex justify-center items-center text-[20px] font-bold p-1 m-1 text-textDescriptionAndPrice">{product.name}</h3>
 
       {product ? (
         <div className="product flex flex-col justify-between items-center">
@@ -33,12 +33,12 @@ const ProductTemplate = ({ product }) => {
           </div>
 
           <div className="productTemplate-description flex justify-center items-center text-[15px] font-bold p-1 m-1">
-            <p className="description text-center decoration-textDescriptionAndPrice"> {`${product.description.split()[0].slice(0, 15)}...`}</p>
+            <p className="description text-center text-textDescriptionAndPrice"> {`${product.description.split()[0].slice(0, 15)}...`}</p>
           </div>
 
-          <div className="productTemplate-price flex justify-center items-center text-[15px] font-bold p-1 m-1 decoration-textDescriptionAndPrice">
+          <div className="productTemplate-price flex justify-center items-center text-[15px] font-bold p-1 m-1 text-textDescriptionAndPrice">
             {<PriceFormated price={product.price} />}
-            <p className="productTemplate-currency flex justify-center items-center my-0 mx-[5px] h-10  decoration-textDescriptionAndPrice"> {product.currency} </p>
+            <p className="productTemplate-currency flex justify-center items-center my-0 mx-[5px] h-10  text-textDescriptionAndPrice"> {product.currency} </p>
           </div>
 
         </div>

@@ -55,6 +55,7 @@ class CarouselProductImages extends React.Component {
       dots: true,
       infinite: true,
       speed: 500,
+      arrows : false,
       // fade: true,
       cssEase: "linear",
       autoplay: true,
@@ -143,26 +144,27 @@ const Wrapper = styledComponents.div`
   
   .slick-prev ,
   .slick-next {
-    top: 410px;
+    // top: 410px;
   }
   
-.slick-next {
-  right: 5%;
-  width: auto;
-  height: auto;
-}
-
-.slick-prev {
-  left: 5%;
-  width: auto;
-  height: auto;
-  z-index: 1;
+  .slick-next {
+    // right: 5%;
+    // width: auto;
+    // height: auto;
+  }
+  
+  .slick-prev {
+    // left: 5%;
+    // width: auto;
+    // height: auto;
+    // z-index: 1;
 }
 
 .slick-next::before,
 .slick-prev::before {
-  color: var(--baseColor) !important;
-  font-size: 30px;
+  // color: var(--baseColor) !important;
+  // font-size: 30px;
+  visibility: hidden !important;
 }
 
 .slick-dots {
@@ -170,9 +172,11 @@ const Wrapper = styledComponents.div`
   justify-content: center;
   align-items: center;
   width:60%;
+  left:0;
+  right:0;
   height: auto;
   padding: 0;
-  margin: 0 auto;
+  margin: auto;
   bottom: -15px;
   list-style: none;
   text-align: center;

@@ -7,7 +7,7 @@ const ProductsList = ({ products }) => {
       {products &&
         products.map((product, index) => {
           return (
-            <div className="product-card m-auto" key={index}>
+            <div className="product-card mx-auto my-2 " key={index}>
               <ProductTemplate product={product} />
             </div>
           );

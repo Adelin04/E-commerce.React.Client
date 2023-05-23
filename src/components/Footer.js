@@ -19,18 +19,18 @@ const Footer = () => {
       <div className="container-social-footer flex flex-col justify-center items-center w-[35%] p-2">
 
         <div className="wrapper-social-footer flex flex-row w-full h-[70%] justify-around items-center sm:flex-col flex-wrap">
-          <p className="w-auto h-auto">
+          <Link to={'/'} className="w-max h-max">
             <FaFacebook className="facebook-icon flex justify-center items-center w-8 h-max" />
-          </p>
-          <p>
+          </Link >
+          <Link to={'/'} className="w-max h-max">
             <FaInstagram className="instagram-icon flex justify-center items-center w-8 h-max" />
-          </p>
-          <p>
+          </Link >
+          <Link to={'/'} className="w-max h-max">
             <FaYoutube className="youtube-icon flex justify-center items-center w-8 h-max" />
-          </p>
-          <p>
+          </Link >
+          <Link to={'/'} className="w-max h-max">
             <FaMailBulk className="email-icon flex justify-center items-center w-8 h-max" />
-          </p>
+          </Link >
         </div>
 
         <div className="wrapper-copyright-footer flex flex-row w-full h-[30%] justify-center items-center">

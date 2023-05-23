@@ -11,17 +11,24 @@ const AuthPage = () => {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <Wrapper>
-      <div className="auth">
-        <div className="wrapper-login">
-          <NavLink className="title-login" to={"/"}>
-            {"BUTIQUE"}
-          </NavLink>
-          {/* <Logo /> */}
 
-          {toggle ? (
-            <div>
-              <Register />
+    <div className="auth flex flex-col justify-center items-center h-full w-full">
+
+      <div className="wrapper-auth flex flex-col justify-center items-center min-w-[300px] max-w-[400px]  h-max my-2 mx-auto 
+              border-2 border-[rgba(128, 128, 128, 0.597)] rounded-[10px] 
+              shadow-lg">
+
+        <NavLink className="title-login flex justify-center items-center m-1 p-1 font-bold text-[25px]" to={"/"}>
+          {"BOUTIQUE"}
+        </NavLink>
+        {/* <Logo /> */}
+
+        {toggle ? (
+          <div className=" flex flex-col justify-center items-center">
+
+            <Register />
+
+            <div className=" flex  justify-center items-center">
               <p
                 style={{
                   textAlign: "center",
@@ -30,104 +37,61 @@ const AuthPage = () => {
                 }}
               >
                 Do you have an acount ?{" "}
-                <span
-                  onClick={() => {
-                    setToggle(!toggle);
-                  }}
-                  style={{
-                    color: "skyBlue",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Login
-                </span>
-              </p>{" "}
-            </div>
-          ) : (
-            <div>
-              <Login />{" "}
-              <p
+              </p>
+
+              <button
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
                 style={{
-                  textAlign: "center",
-                  margin: "auto",
-                  padding: "5px",
+                  color: "skyBlue",
+                  textDecoration: "none",
+                  cursor: "pointer",
                 }}
               >
-                Don't you have an account?{" "}
-                <span
-                  onClick={() => {
-                    setToggle(!toggle);
-                  }}
-                  style={{
-                    color: "skyBlue",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Register
-                </span>
-              </p>{" "}
+                Login
+              </button>
+
             </div>
-          )}
-        </div>
+
+          </div>
+
+        ) : (
+
+          <div className=" flex flex-col justify-center items-center">
+
+            <Login />
+
+            <div className=" flex  justify-center items-center">
+              <p style={{
+                textAlign: "center",
+                margin: "auto",
+                padding: "5px",
+              }} > Don't you have an account?{" "}
+              </p>{" "}
+
+              <button
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+                style={{
+                  color: "skyBlue",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+              >
+                Register
+              </button>
+            </div>
+
+          </div>
+        )}
+
       </div>
-    </Wrapper>
+
+    </div >
+
   );
 };
 
 export default AuthPage;
-
-const Wrapper = styledComponents.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items : center;
-height:100%;
-
-  .auth {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: auto;
-    height: 100%;
-    margin: auto;
-    //  background-color: burlywood;
-  }
-
-  /* .header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: auto;
-  } */
-
-  .wrapper-login {
-    margin: auto;
-    max-width: 400px;
-    height: auto;
-    border: 1px solid rgba(128, 128, 128, 0.597);
-    border-radius: 10px;
-    box-shadow: -1px 0 rgba(0, 0, 0, 0.118), 0 3px rgba(0, 0, 0, 0.118), 3px 0 rgba(0, 0, 0, 0.118), 0 -1px rgba(0, 0, 0, 0.118);
-  }
-
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px auto;
-  }
-
-  .title-login {
-    display :flex;
-    justify-content: center;
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-    font-weight: bolder;
-    text-align: center;
-    font-size: 25px;
-    margin: 5px auto;
-    color:black;
-    text-decoration :none;
-}
-
-`;

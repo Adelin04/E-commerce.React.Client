@@ -12,7 +12,7 @@ import { selectUser } from "../Features/UserSlice";
 import { useState } from "react";
 import Button from "./Button";
 import { IconBase } from "react-icons";
-import { FaCocktail, FaGuitar, FaReact, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 //  Shopping Cart component
 const Cart = () => {
@@ -46,7 +46,6 @@ const Cart = () => {
           {shoppingCartList &&
             shoppingCartList.map((product, index) => {
               return (
-
                 <div className="product flex flex-col w-full h-full" key={index}>
 
                   <ul className="flex flex-col w-11/12 h-full p-1 mx-auto my-2">
@@ -130,7 +129,7 @@ const Cart = () => {
 
         <div className="wrapper-cardToPlay-cart flex flex-col justify-end" >
           <div className="nextStep-link-cart flex h-full w-auto mr-10 my-2 p-1 justify-end items-center " >
-            <CardTotalPay totalPrice={totalPrice} nrProducts={nrProducts} currency={currency.toString()} />
+            <CardTotalPay totalPrice={totalPrice} nrProducts={nrProducts} currency={currency} />
           </div>
 
           <div className="nextStep-link-cart flex w-auto h-auto mx-auto my-2 p-1 justify-center items-center " >

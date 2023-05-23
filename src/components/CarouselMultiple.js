@@ -143,25 +143,30 @@ const Wrapper = styledComponents.div`
     justify-content: center;
     align-items: center;
   }
-  
+
+  .slick-prev ,
+  .slick-next {
+    // top: 104%;
+  }  
   
 .slick-next {
-  right: 2%;
-  width: auto;
-  height: auto;
+  // right: 2%;
+  // width: auto;
+  // height: auto;
 }
 
 .slick-prev {
-  left: 2%;
-  width: auto;
-  height: auto;
-  z-index: 1;
+  // left: 2%;
+  // width: auto;
+  // height: auto;
+  // z-index: 1;
 }
 
 .slick-next::before,
 .slick-prev::before {
-  color: var(--baseColor) !important;
-  font-size: 30px;
+  // color: var(--baseColor) !important;
+  // font-size: 30px;
+  visibility: hidden !important;
 }
 
 .slick-dots {
@@ -169,11 +174,12 @@ const Wrapper = styledComponents.div`
   display: flex !important;
   justify-content: center;
   align-items: center;
-  // bottom: 10px;
-  width: 100%;
+  left:0;
+  right:0;
+  width: 70%;
   height: auto;
   padding: 0;
-  margin: 0;
+  margin: auto;
   bottom: -15px;
   list-style: none;
   text-align: center;

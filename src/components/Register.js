@@ -62,24 +62,17 @@ const Register = () => {
   };
 
   return (
-    <Wrapper>
+    <div className="login flex flex-col justify-center items-center w-full h-full">
+
       <div
-        className="msg-response"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          margin: "auto",
-          color: "red",
-          padding: "15px",
-        }}
-      >
+        className="msg-response flex justify-center items-center p-1 m-auto w-full h-auto font-bold text-[18px] text-error ">
         {error && error}
       </div>
 
-      <form className="form-content" onSubmit={handleSubmit}>
-        <label htmlFor="firstName">First Name</label>
+      <form className="form-content flex- justify-center items-center w-full" onSubmit={handleSubmit}>
+        <label htmlFor="firstName" className="firstName  flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">First Name</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser firstName flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)]"
           onChange={(e) => setFirstName(e.target.value)}
           value={firstName}
           autoFocus={true}
@@ -88,9 +81,9 @@ const Register = () => {
           id="firstName"
         />
 
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName" className="lastName  flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Last Name</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser lastName flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)]"
           onChange={(e) => setLastName(e.target.value)}
           value={lastName}
           autoFocus={true}
@@ -99,9 +92,9 @@ const Register = () => {
           id="lastName"
         />
 
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" className="email flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Email</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser  email flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)]"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           autoFocus={true}
@@ -110,9 +103,9 @@ const Register = () => {
           id="email"
         />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className="password  flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Password</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser  password flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)] "
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           required
@@ -120,9 +113,9 @@ const Register = () => {
           id="password"
         />
 
-        <label htmlFor="password">Confirm Password</label>
+        <label htmlFor="confirmPassword" className="confirmPassword  flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Confirm Password</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser confirmPassword flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)] "
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword}
           required
@@ -130,12 +123,14 @@ const Register = () => {
           id="confirmPassword"
         />
 
+
         <div className="wrapper-btn-login flex justify-center items-center m-1 p-1 w-max mx-auto ">
           <Button textBtn={msgButton} className={'btn-login  className="flex justify-center items-center w-[100px] h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
         </div>
 
       </form>
-    </Wrapper>
+
+    </div>
   );
 };
 

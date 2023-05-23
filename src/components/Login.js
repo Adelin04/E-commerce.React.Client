@@ -44,7 +44,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         const { success, token, basketByUser } = data;
-        console.log(data);
+
         let TMP_USER = [];
 
         if (success) {
@@ -101,23 +101,18 @@ const Login = () => {
   };
 
   return (
-    <Wrapper>
+    <div className="login flex flex-col justify-center items-center">
+
       <div
-        className="msg-response"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          margin: "auto",
-          color: "red",
-          padding: "15px",
-        }}
-      >
+        className="msg-response flex justify-center items-center p-1 m-auto w-full h-auto font-bold text-[18px] text-error ">
         {error && error}
       </div>
-      <form className="form-content" onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
+
+      <form className="form-content flex flex-col w-full max-w-[400px] h-full" onSubmit={handleSubmit}>
+
+        <label htmlFor="email" className="email flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Email</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser email flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)]"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           autoFocus={true}
@@ -126,20 +121,23 @@ const Login = () => {
           id="email"
         />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className="password flex justify-center items-center p-1 my-1 mx-auto font-bold text-[15px]">Password</label>
         <input
-          className="input-dataUser"
+          className="input-dataUser password flex justify-center items-center my-0 mx-auto w-full text-[15px] text-center font-bold outline-none border-b-2 border-[var(--baseColor)]"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           required
           type="password"
           id="password"
         />
-        <div className="wrapper-btn-login flex justify-center items-center m-1 p-1 w-max mx-auto ">
+
+        <div className="wrapper-btn-login flex justify-center items-center m-1 p-2 w-max mx-auto ">
           <Button textBtn={msgButton} className={'btn-login  className="flex justify-center items-center w-[100px] h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
         </div>
+
       </form>
-    </Wrapper>
+
+    </div>
   );
 };
 

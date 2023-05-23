@@ -164,7 +164,7 @@ const ProductDetails = () => {
 
               <div className="price-product-details flex justify-center items-center ">
                 {<PriceFormated price={productById[0].price} />}
-                <p className="currency flex justify-center items-center w-max font-bold text-lg decoration-textDescriptionAndPrice">{productById[0].currency}</p>
+                <p className="currency flex justify-center items-center w-max font-bold text-lg">{productById[0].currency}</p>
               </div>
             </div>
 
@@ -218,7 +218,7 @@ const ProductDetails = () => {
 
               <div className="wrapper-dropdown-size-option flex justify-center items-center ">
                 <select
-                  className="select text-center w-max bg-[var(--sliderColor)] rounded-md hover:text-white cursor-pointer"
+                  className="select text-center w-max bg-[var(--sliderColor)] rounded-md outline-none hover:text-white cursor-pointer"
                   onChange={(e) => setSize(e.target.value)}
                 >
                   <option value={"None"}>None</option>
