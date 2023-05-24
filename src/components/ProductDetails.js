@@ -141,12 +141,12 @@ const ProductDetails = () => {
       )}
 
       {productById && (
-        <div className="container-product-details flex justify-around items-center  w-[90%] h-full my-5 mx-auto">
+        <div className="container-product-details flex flex-row justify-around items-center  w-[90%] h-full my-5 mx-auto md:flex flex-col justify-around items-center">
 
-          <div className="wraper-images-product flex justify-center items-center w-[40%] h-max p-1 m-1">
+          <div className="wraper-images-product flex justify-center items-center max-w-[40%] h-max p-1 m-1 md:flex flex-col max-w-[100%]">
             {productById &&
 
-              <div className="wrapper-carousel flex justify-center items-center w-[350px] ">
+              <div className="wrapper-carousel flex justify-center items-center min-w-[150px] max-w-[350px] h-max md:flex flex-col w-max">
                 <CarouselProductImages
                   products={productById}
                   slidesToShow={1}
@@ -157,9 +157,9 @@ const ProductDetails = () => {
             }
           </div>
 
-          <div className="wrapper-details-product flex flex-col justify-around items-center w-[40%] h-full p-1 m-1">
+          <div className="wrapper-details-product flex flex-col justify-around items-center h-full p-1 mx-1  md:flex w-auto ">
 
-            <div className="wrapper-title-price flex justify-around items-center w-full bg-[var(--sliderColor)]">
+            <div className="wrapper-title-price flex justify-around items-center w-full text-center min-w-[250px] bg-[var(--sliderColor)]" >
               <h3 className="product-title text-[25px] font-bold p-1 m-1">{productById[0].name} </h3>
 
               <div className="price-product-details flex justify-center items-center ">
@@ -170,7 +170,7 @@ const ProductDetails = () => {
 
             <div className="wrapper-product-description flex flex-col justify-center items-start">
               <h4 className="description flex justify-center items-center">{`${productById[0].description.split()[0].slice(0, 300)}...`}</h4>
-              <h4>
+              <h4 className="text-center min-w-[250px]">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.

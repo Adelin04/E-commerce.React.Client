@@ -55,7 +55,7 @@ class CarouselProductImages extends React.Component {
       dots: true,
       infinite: true,
       speed: 500,
-      arrows : false,
+      arrows: false,
       // fade: true,
       cssEase: "linear",
       autoplay: true,
@@ -82,8 +82,8 @@ class CarouselProductImages extends React.Component {
                   <div key={index} className="wrapper-img-carousel">
                     {productPath && (
                       <img
-                        id={productPath.id}
                         className="img-carousel"
+                        id={productPath.id}
                         src={productPath.path}
                         alt={"This image is not available"}
                         onClick={this.handleClicked}
@@ -118,7 +118,7 @@ const Wrapper = styledComponents.div`
 
 .img-carousel {
   margin: auto;
-  width: 90%;
+  width: auto;
   height: auto;
   // max-height: 290px;
   border-radius: 10px;
