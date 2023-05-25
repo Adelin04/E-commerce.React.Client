@@ -46,7 +46,7 @@ const Footer = () => {
         <h3 className="title-newsletter-footer flex justify-center items-center text-lg font-bold p-2"> Newsletter </h3>
 
         <input
-          className="input-abonare-footer flex bg-[var(--baseColor)] w-[35%] text-center outline-none border-b-2 border-red-400"
+          className="input-abonare-footer flex bg-[var(--baseColor)] w-max text-center outline-none border-b-2 border-red-400"
           placeholder="Email address"
           value={emailSubscriber}
           id={emailSubscriber}
@@ -55,9 +55,13 @@ const Footer = () => {
         />
 
         <div className="acord-terms-footer flex flex-col justify-center items-center text-center">
-          <input className="input-checkbox-footer m-2" type="checkbox" />
-          <p>I agree to all terms and conditions</p>
-          <p className="termsAndCondition flex justify-center items-start w-max h-7 hover:border-b-2 border-red-400">
+          <p className="flex justify-center items-center">
+            <input className="input-checkbox-footer flex justify-center items-center m-2 w-4 h-4" type="checkbox" />
+            <span>
+              I agree to all terms and conditions
+            </span>
+          </p>
+          <p className="termsAndCondition flex justify-center items-center w-max h-7 hover:border-b-2 border-red-400">
             <Link to={'/termsAndCondition'} className="text-red-400">Read the terms and conditions</Link>
           </p>
         </div>
