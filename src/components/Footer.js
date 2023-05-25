@@ -58,7 +58,7 @@ const Footer = () => {
           <input className="input-checkbox-footer m-2" type="checkbox" />
           <p>I agree to all terms and conditions</p>
           <p className="termsAndCondition flex justify-center items-start w-max h-7 hover:border-b-2 border-red-400">
-            <Link to={'/termsAndCondition'}>Read the terms and conditions</Link>
+            <Link to={'/termsAndCondition'} className="text-red-400">Read the terms and conditions</Link>
           </p>
         </div>
 

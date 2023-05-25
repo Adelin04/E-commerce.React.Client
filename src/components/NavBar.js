@@ -4,7 +4,6 @@ import styledComponents from "styled-components";
 import SliderMenu from "./SliderMenu";
 import { useDispatch } from "react-redux";
 import { resetFilterCategory } from "../Features/ProductSlice";
-import { LinksMenu } from './LinksMenu';
 
 //  NavBar component
 const NavBar = ({ links }) => {

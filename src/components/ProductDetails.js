@@ -25,7 +25,8 @@ const ProductDetails = () => {
 
   const [productById, setProductById] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState(null);
+  const [msg, setMsg] = useState(null);
   const [loading, setLoading] = useState(true);
   let { id } = useParams();
 
@@ -109,22 +110,22 @@ const ProductDetails = () => {
 
   //  Add new product to basket
   const handleAddToCart = () => {
+    if (size === null) setMsg('Please select a size')
+    console.log('buy');
+    // dispatch(
+    //   addProductToShoppingCart({
+    //     newPorduct: SerializeProduct(productById[0]),
+    //     quantity,
+    //     size,
+    //   })
+    // );
 
-    dispatch(
-      addProductToShoppingCart({
-        newPorduct: SerializeProduct(productById[0]),
-        quantity,
-        size,
-      })
-    );
-
-    handleBasket();
+    // handleBasket();
   };
 
   return (
     <div className="productDetails flex flex-col justify-between items-center w-full h-full">
       <Header />
-
 
       {loading && (
         <div
@@ -141,10 +142,11 @@ const ProductDetails = () => {
       )}
 
       {productById && (
-        <div className="container-product-details flex-col flex  justify-around items-center w-[90%] h-full my-5 mx-auto sm:flex-row">
+        <div className="container-product-details relative flex-col flex  justify-around items-center w-[90%] h-full my-5 mx-auto sm:flex-row">
+          {msg && <div className="msg absolute flex justify-center items-center top-0 left-0 right-0 w-max h-max">{msg}</div>}
 
           {/* Carousel */}
-          <div className="wraper-images-product flex justify-center items-center max-w-[40%] h-max p-1 m-1">
+          <div className="wraper-images-product flex justify-center items-center max-w-[40%] h-max p-1 m-1 ">
             {productById &&
 
               <div className="wrapper-carousel flex justify-center items-center min-w-[150px] max-w-[350px] h-max ">
@@ -158,10 +160,10 @@ const ProductDetails = () => {
             }
           </div>
 
-          <div className="wrapper-details-product flex flex-col justify-between items-center max-w-[80%] h-full p-1 m-1 sm:max-w-[40%] ">
+          <div className="wrapper-details-product flex flex-col justify-between items-center max-w-[80%] h-max p-1 m-1 sm:max-w-[40%] ">
 
             {/* Title & Price */}
-            <div className="wrapper-title-price flex justify-around items-center w-full p-1 my-2 text-center bg-[var(--sliderColor)] max-[350px]:m-7 " >
+            <div className="wrapper-title-price flex justify-around items-center w-full p-1 my-2 text-center bg-[var(--sliderColor)] max-[350px]:m-7" >
               <h3 className="product-title text-[25px] font-bold p-1 m-1 max-[300px]:text-[17px]">{productById[0].name} </h3>
 
               <div className="price-product-details flex justify-center items-center ">
@@ -227,7 +229,7 @@ const ProductDetails = () => {
                   className="select text-center w-max bg-[var(--sliderColor)] rounded-md outline-none hover:text-white cursor-pointer"
                   onChange={(e) => setSize(e.target.value)}
                 >
-                  <option value={"None"}>None</option>
+                  <option value={"Size"}>Size</option>
                   <option value={"S"}>S</option>
                   <option value={"M"}>M</option>
                   <option value={"L"}>L</option>
@@ -237,7 +239,7 @@ const ProductDetails = () => {
               </div>
 
               <Button
-              className={"h-11 font-bold text-[18px]"}
+                className={"h-11 font-bold text-[18px]"}
                 id={productById[0].id}
                 style={{
                   display: "flex",
@@ -246,7 +248,7 @@ const ProductDetails = () => {
                   height: "auto",
                   margin: "5px",
                 }}
-                disabled={size === '' ? true : false}
+                disabled={size === null ? true : false}
                 textBtn={"Buy"}
                 onClick={handleAddToCart}
               />

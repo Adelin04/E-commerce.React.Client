@@ -25,14 +25,14 @@ const Cart = () => {
   const [error, setError] = useState();
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full justify-between items-center">
 
 
       <Header />
 
       {error && error.toString()}
 
-      <div className="flex flex-col w-full ">
+      <div className="flex flex-col w-full justify-between items-center h-full">
 
         <div className="wrpper-title min-[450px]:flex w-full m-auto justify-center items-center text-center">
           <h3 className="title-1st-child text-[35px] font-semibold my-1" >Shopping Cart </h3>
@@ -127,7 +127,7 @@ const Cart = () => {
         </div>
 
 
-        <div className="wrapper-cardToPlay-cart flex flex-col justify-end" >
+        <div className="wrapper-cardToPlay-cart flex flex-col justify-end w-full" >
           <div className="nextStep-link-cart flex h-full w-auto mr-10 my-2 p-1 justify-end items-center " >
             <CardTotalPay totalPrice={totalPrice} nrProducts={nrProducts} currency={currency} />
           </div>
