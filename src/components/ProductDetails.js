@@ -141,12 +141,13 @@ const ProductDetails = () => {
       )}
 
       {productById && (
-        <div className="container-product-details flex flex-row justify-around items-center  w-[90%] h-full my-5 mx-auto md:flex flex-col justify-around items-center">
+        <div className="container-product-details flex-col flex  justify-around items-center w-[90%] h-full my-5 mx-auto sm:flex-row">
 
-          <div className="wraper-images-product flex justify-center items-center max-w-[40%] h-max p-1 m-1 md:flex flex-col max-w-[100%]">
+          {/* Carousel */}
+          <div className="wraper-images-product flex justify-center items-center max-w-[40%] h-max p-1 m-1">
             {productById &&
 
-              <div className="wrapper-carousel flex justify-center items-center min-w-[150px] max-w-[350px] h-max md:flex flex-col w-max">
+              <div className="wrapper-carousel flex justify-center items-center min-w-[150px] max-w-[350px] h-max ">
                 <CarouselProductImages
                   products={productById}
                   slidesToShow={1}
@@ -157,10 +158,11 @@ const ProductDetails = () => {
             }
           </div>
 
-          <div className="wrapper-details-product flex flex-col justify-around items-center h-full p-1 mx-1  md:flex w-auto ">
+          <div className="wrapper-details-product flex flex-col justify-between items-center max-w-[80%] h-full p-1 m-1 sm:max-w-[40%] ">
 
-            <div className="wrapper-title-price flex justify-around items-center w-full text-center min-w-[250px] bg-[var(--sliderColor)]" >
-              <h3 className="product-title text-[25px] font-bold p-1 m-1">{productById[0].name} </h3>
+            {/* Title & Price */}
+            <div className="wrapper-title-price flex justify-around items-center w-full p-1 my-2 text-center bg-[var(--sliderColor)] max-[350px]:m-7 " >
+              <h3 className="product-title text-[25px] font-bold p-1 m-1 max-[300px]:text-[17px]">{productById[0].name} </h3>
 
               <div className="price-product-details flex justify-center items-center ">
                 {<PriceFormated price={productById[0].price} />}
@@ -168,7 +170,8 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <div className="wrapper-product-description flex flex-col justify-center items-start">
+            {/* Description */}
+            <div className="wrapper-product-description text-lg flex flex-col justify-center items-center w-auto h-max p-1 m-1 sm:text-[15px]">
               <h4 className="description flex justify-center items-center">{`${productById[0].description.split()[0].slice(0, 300)}...`}</h4>
               <h4 className="text-center min-w-[250px]">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -180,7 +183,10 @@ const ProductDetails = () => {
               <hr className="hr w-full mx-auto my-3" />
             </div>
 
-            <div className="container-counter-size flex justify-between items-center w-full flex-row m-1">
+
+
+            {/* Quantity, Size & AddToCart Function */}
+            <div className="container-counter-size flex justify-between items-center w-full h-max flex-row m-1">
 
               <div className="wrapper-counter wrapper-counter-size flex justify-between items-center w-max flex-row m-1">
                 <Button
@@ -197,7 +203,7 @@ const ProductDetails = () => {
                   }}
                 />
 
-                <span className="quantity flex justify-center items-center w-10 p-1 font-bold">
+                <span className="quantity flex justify-center items-center w-max p-1 font-bold">
                   {quantity}
                 </span>
 
@@ -216,7 +222,7 @@ const ProductDetails = () => {
                 />
               </div>
 
-              <div className="wrapper-dropdown-size-option flex justify-center items-center ">
+              <div className="wrapper-dropdown-size-option flex justify-center items-center p-1 ">
                 <select
                   className="select text-center w-max bg-[var(--sliderColor)] rounded-md outline-none hover:text-white cursor-pointer"
                   onChange={(e) => setSize(e.target.value)}
@@ -231,17 +237,17 @@ const ProductDetails = () => {
               </div>
 
               <Button
+              className={"h-11 font-bold text-[18px]"}
                 id={productById[0].id}
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  width: "auto",
-                  minWidth: "35%",
+                  minWidth: "30%",
                   height: "auto",
                   margin: "5px",
                 }}
                 disabled={size === '' ? true : false}
-                textBtn={"Add to cart"}
+                textBtn={"Buy"}
                 onClick={handleAddToCart}
               />
 
