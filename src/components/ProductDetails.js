@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import PriceFormated from "./PriceFormated";
 import CarouselMultiple from "../components/CarouselMultiple";
+import ResponsiveCarousel from "../components/ResponsiveCarousel";
 import CarouselProductImages from "./CarouselProductImages";
 import { selectUser } from "../Features/UserSlice";
 
@@ -28,6 +29,7 @@ const ProductDetails = () => {
   const [size, setSize] = useState(null);
   const [msg, setMsg] = useState(null);
   const [loading, setLoading] = useState(true);
+
   let { id } = useParams();
 
 
@@ -112,15 +114,15 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     if (size === null) setMsg('Please select a size')
     console.log('buy');
-    // dispatch(
-    //   addProductToShoppingCart({
-    //     newPorduct: SerializeProduct(productById[0]),
-    //     quantity,
-    //     size,
-    //   })
-    // );
+    dispatch(
+      addProductToShoppingCart({
+        newPorduct: SerializeProduct(productById[0]),
+        quantity,
+        size,
+      })
+    );
 
-    // handleBasket();
+    handleBasket();
   };
 
   return (
@@ -151,6 +153,7 @@ const ProductDetails = () => {
 
               <div className="wrapper-carousel flex justify-center items-center min-w-[150px] max-w-[350px] h-max ">
                 <CarouselProductImages
+                  onclickProductEvent={false}
                   products={productById}
                   slidesToShow={1}
                   slidesToScroll={1}

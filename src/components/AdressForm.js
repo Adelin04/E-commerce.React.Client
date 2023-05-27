@@ -14,6 +14,14 @@ const AddressForm = () => {
         useSelector(selectShoppingCart);
 
     const [validated, setValidated] = useState(false);
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [zipCode, setZipCode] = useState(null);
+    const [phone, setPhone] = useState(null);
+    const [notes, setNotes] = useState(null);
+    const [checkTermsAndConditions, setCheckTermsAndConditions] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,6 +35,7 @@ const AddressForm = () => {
 
     return (
         <div className=' flex justify-center items-center w-full h-full m-2'>
+            {console.log(firstName)}
             <Form className='flex flex-col justify-between items-center w-full h-full p-1' noValidate validated={validated} onSubmit={handleSubmit}>
 
                 <div className='flex flex-col w-[80%]'>
@@ -38,7 +47,7 @@ const AddressForm = () => {
 
                     <Form.Group as={Col} md="4" controlId="validationCustom01" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
                         <Form.Control.Feedback > Looks good!</Form.Control.Feedback>
-                        <Form.Control required type="text" placeholder="First name" defaultValue="Mark" className='flex justify-center items-center  w-full my-auto mx-2 p-1' />
+                        <Form.Control required type="text" placeholder="First name" defaultValue={'Mark'} className='flex justify-center items-center  w-full my-auto mx-2 p-1' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group as={Col} md="4" controlId="validationCustom02" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
@@ -71,7 +80,7 @@ const AddressForm = () => {
                         {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Please provide a valid zip.</Form.Control.Feedback> */}
                         <Form.Control type="number" placeholder="Phone" required className='flex flex-col justify-center items-center  w-full my-auto mx-2 p-1' />
                     </Form.Group>
-                    
+
                     <Form.Group as={Col} md="3" controlId="validationCustom07" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
                         {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Please provide a valid zip.</Form.Control.Feedback> */}
                         <textarea type="text" placeholder="Notes" required className='flex flex-col justify-center items-center  w-full my-auto mx-2 p-1  border-gray-200 border-[1px] rounded-lg outline-none' />
@@ -86,7 +95,7 @@ const AddressForm = () => {
                     </Form.Group>
 
                 </Row>
-                <Button className="flex justify-center items-center w-[150px] h-10 font-bold text-textBlack bg-[var(--sliderColor)]  border-none rounded-md  hover:bg-[var(--baseColor)] hover:text-white " type="submit">Submit form</Button>
+                <Button className="flex justify-center items-center w-[150px] h-10 font-bold text-textBlack bg-[var(--sliderColor)]  border-none rounded-md  hover:bg-[var(--baseColor)] hover:text-white " type="submit">Next step</Button>
 
             </Form>
 

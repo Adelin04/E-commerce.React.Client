@@ -7,7 +7,7 @@ import logoIcon from "../icons/herokuSleepIco.png";
 
 //  Carousel component used for home page products
 class CarouselProductImages extends React.Component {
-  constructor({ products, slidesToShow = 5, slidesToScroll = 1 }) {
+  constructor({ products, slidesToShow = 5, slidesToScroll = 1, onclickProductEvent = true }) {
     super();
 
     this.state = {
@@ -19,6 +19,7 @@ class CarouselProductImages extends React.Component {
     this.products = products;
     this.slidesToShow = slidesToShow;
     this.slidesToScroll = slidesToScroll;
+    this.onclickProductEvent = onclickProductEvent;
     this.LoadingList = [];
   }
 
@@ -27,8 +28,11 @@ class CarouselProductImages extends React.Component {
   };
 
   handleClicked = (e) => {
-    this.setState({ goToIdProduct: e.target.id });
-    this.setState({ redirect: true });
+    if (this.onclickProductEvent) {
+      this.setState({ goToIdProduct: e.target.id });
+      this.setState({ redirect: true });
+    }
+    else return null
   };
 
   LoadingCarousel = () => {
