@@ -19,7 +19,7 @@ import { getAllProducts, selectProduct } from "./Features/ProductSlice";
 import ProductDetails from "./components/ProductDetails";
 import LoadingSpin from "react-loading-spin";
 import UserSetting from "./components/UserSetting";
-import Address from "./pages/Address";
+import AddressPage from "./pages/AddressPage";
 import { addProductToShoppingCart } from "./Features/ShoppingCartSlice";
 import { SerializeProduct } from "./_Utils/SerializeProduct";
 
@@ -115,7 +115,7 @@ function App() {
           <Route path="/Accessory" element={<AccesoryPage />} />
           <Route path="/Collections" element={<CollectionsPage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/address" element={<Address />} />
+          <Route path="/address" element={<AddressPage />} />
           <Route path="/user/setting" element={<UserSetting />} />
           <Route
             path="/admin/dashboard"
