@@ -66,7 +66,6 @@ const ProductDetails = () => {
   const handleBasket = async () => {
     const TMP_BasketList = [];
 
-    console.log('productById ---> ', productById);
     shoppingCartList && shoppingCartList.map(product => {
       const TMP_BasketObj = {};
 
@@ -113,7 +112,7 @@ const ProductDetails = () => {
   //  Add new product to basket
   const handleAddToCart = () => {
     if (size === null) setMsg('Please select a size')
-    console.log('buy');
+
     dispatch(
       addProductToShoppingCart({
         newPorduct: SerializeProduct(productById[0]),

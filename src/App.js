@@ -29,7 +29,6 @@ function App() {
   const dispatch = useDispatch();
   let userLogged = useSelector(selectUser).user;
 
-  let navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +36,7 @@ function App() {
 
 
   useEffect(async () => {
+
 
     await fetch(`${URI}Product/v1/get/allProducts`, {
       headers: {
@@ -55,24 +55,23 @@ function App() {
           );
 
 
-          const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
-          basketByUser && basketByUser.map(productBasket => {
+          if ('BASKET' in localStorage) {
+            const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
+            basketByUser && basketByUser.map(productBasket => {
 
-            dispatch(
-              addProductToShoppingCart({
-                newPorduct: SerializeProduct(products.filter(product => product.id === productBasket[0].productId)[0]),
-                quantity: productBasket[0].quantity,
-                size: productBasket[0].size,
-              })
-            );
+              dispatch(
+                addProductToShoppingCart({
+                  newPorduct: SerializeProduct(products.filter(product => product.id === productBasket[0].productId)[0]),
+                  quantity: productBasket[0].quantity,
+                  size: productBasket[0].size,
+                })
+              );
 
-          })
+            })
 
-
+          }
         }
-      })
-      .catch((error) => console.log(error))
-      .finally(() => {
+
         if ("TOKEN_ACCES" in localStorage) {
           const token = localStorage.getItem("TOKEN_ACCES");
           let TMP_USER = [];
@@ -98,10 +97,41 @@ function App() {
           );
 
         }
-      });
 
-    return setLoading(false);
-  }, []);
+
+      })
+      .catch((error) => console.log(error))
+    // .finally(() => {
+    //   if ("TOKEN_ACCES" in localStorage) {
+    //     const token = localStorage.getItem("TOKEN_ACCES");
+    //     let TMP_USER = [];
+
+    //     const decoded_user = jwt_decode(token); // decode token
+
+    //     for (const claim in decoded_user) {
+    //       if (Object.hasOwnProperty.call(decoded_user, claim)) {
+    //         TMP_USER.push(decoded_user[claim]);
+    //       }
+    //     }
+
+    //     dispatch(
+    //       login({
+    //         user: {
+    //           email: TMP_USER[2],
+    //           firstName: TMP_USER[0],
+    //           lastName: TMP_USER[1],
+    //           role: [TMP_USER[3]],
+    //           timeExpirationsToken: TMP_USER[4],
+    //         },
+    //       })
+    //     );
+
+    //   }
+    // });
+
+    setLoading(false);
+
+  }, [localStorage.getItem('TOKEN_ACCES') || localStorage.getItem('BASKET')]);
 
 
   return (
@@ -109,7 +139,7 @@ function App() {
       {!loading ? (
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth" element={userLogged ? <HomePage /> : <AuthPage />} exact />
+          <Route path="/auth" element={!userLogged ? <AuthPage /> : <HomePage />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/Clothes" element={<ClothesPage />} />
           <Route path="/Accessory" element={<AccesoryPage />} />

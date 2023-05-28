@@ -40,7 +40,6 @@ const Register = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('data', data);
           const { message, success } = data;
 
           if (success) {

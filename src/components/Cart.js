@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styledComponents from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { decreaseCounter, increaseCounter, selectShoppingCart } from "../Features/ShoppingCartSlice";
+import { decrementCounter, incrementCounter, removeProductFromCart, selectShoppingCart } from "../Features/ShoppingCartSlice";
 import PriceFormated from "./PriceFormated";
 import CardTotalPay from "./CardTotalPay";
 import { URI } from "../_Utils/Dependency";
@@ -23,6 +23,20 @@ const Cart = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState();
+
+  const handleDeleteProduct = async (productId) => {
+
+    await fetch(`${URI}BasketItem/v1/delete/basketById/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+
+    // dispatch(removeProductFromCart({ productId: product.id }))
+  }
 
   return (
     <div className="flex flex-col h-full w-full justify-between items-center">
@@ -81,7 +95,7 @@ const Cart = () => {
                                       textBtn={"-"}
                                       id={indexItem}
                                       onClick={(e) => {
-                                        dispatch(decreaseCounter({ productId: product.id, indexItem: indexItem }))
+                                        dispatch(decrementCounter({ productId: product.id, indexItem: indexItem }))
                                       }}
                                     />
 
@@ -99,7 +113,7 @@ const Cart = () => {
                                       }}
                                       textBtn={"+"}
                                       onClick={() => {
-                                        dispatch(increaseCounter({ productId: product.id, indexItem: indexItem }))
+                                        dispatch(incrementCounter({ productId: product.id, indexItem: indexItem }))
                                       }}
                                     />
                                   </div>
@@ -111,7 +125,7 @@ const Cart = () => {
                                   <span className="currency flex justify-center items-center p-1 w-auto">{currency}</span>
                                 </div>
 
-                                <button className="delete-btn-cart  justify-center items-center flex w-max h-full m-2 p-1 bg-[var(--sliderColor)] font-bold hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md"><FaTrash /></button>
+                                <button className="delete-btn-cart  justify-center items-center flex w-max h-full m-2 p-1 bg-[var(--sliderColor)] font-bold outline-none hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md" onClick={() => handleDeleteProduct(product.id)}><FaTrash /></button>
                               </li>
                             }
                           </div>);

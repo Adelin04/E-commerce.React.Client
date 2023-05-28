@@ -1,4 +1,5 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { URI } from "../_Utils/Dependency";
 
 const ShoppingCartSlice = createSlice({
   name: "shoppingCart",
@@ -84,7 +85,7 @@ const ShoppingCartSlice = createSlice({
       state.currency = ''
     },
 
-    increaseCounter: (state, action) => {
+    incrementCounter: (state, action) => {
       const filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
 
       filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] += 1;
@@ -93,7 +94,7 @@ const ShoppingCartSlice = createSlice({
       state.totalPrice += filteredShoppingCart[0].price;
     },
 
-    decreaseCounter: (state, action) => {
+    decrementCounter: (state, action) => {
       let filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
 
       let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
@@ -107,6 +108,10 @@ const ShoppingCartSlice = createSlice({
 
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
+    },
+
+    removeProductFromCart: (state, action) => {
+      state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
     }
 
 
@@ -125,7 +130,7 @@ const calculateTotalPrice = (shoppingCartList) => {
   return totalPrice;
 };
 
-export const { addProductToShoppingCart, resetBasket, increaseCounter, decreaseCounter } = ShoppingCartSlice.actions;
+export const { addProductToShoppingCart, resetBasket, incrementCounter, decrementCounter, removeProductFromCart } = ShoppingCartSlice.actions;
 export const selectShoppingCart = (state) => state.shoppingCart;
 export default ShoppingCartSlice.reducer;
 

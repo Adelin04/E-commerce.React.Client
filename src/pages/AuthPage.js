@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styledComponents from "styled-components";
+import { NavLink, useNavigate } from "react-router-dom";
 
 //Components
 import Login from "../components/Login";
 import Register from "../components/Register";
 
 const AuthPage = () => {
+
   //Fields
   const [toggle, setToggle] = useState(false);
+
+
 
   return (
 
@@ -92,6 +94,7 @@ const AuthPage = () => {
     </div >
 
   );
+
 };
 
 export default AuthPage;
