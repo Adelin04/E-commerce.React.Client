@@ -48,6 +48,7 @@ function App() {
         const { success, products } = data;
 
         if (success) {
+          
           dispatch(
             getAllProducts({
               products: products,
@@ -57,19 +58,18 @@ function App() {
 
           if ('BASKET' in localStorage) {
             const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
-            basketByUser && basketByUser.map(productBasket => {
 
+            basketByUser && basketByUser.map(productBasket => {
               dispatch(
                 addProductToShoppingCart({
-                  newPorduct: SerializeProduct(products.filter(product => product.id === productBasket[0].productId)[0]),
-                  quantity: productBasket[0].quantity,
-                  size: productBasket[0].size,
+                  newProduct: SerializeProduct(products.filter(product => product.id === productBasket.productId)[0]),
+                  quantity: productBasket.quantity,
+                  size: productBasket.size,
                 })
               );
-
             })
-
           }
+
         }
 
         if ("TOKEN_ACCES" in localStorage) {

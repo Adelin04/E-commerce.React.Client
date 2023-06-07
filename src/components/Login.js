@@ -49,12 +49,21 @@ const Login = () => {
 
         console.log(data);
         let TMP_USER = [];
+        let TMP_BASKET = [];
 
         if (success) {
           token && localStorage.setItem("TOKEN_ACCES", `Bearer ${token}`);
 
-          basketByUser && localStorage.setItem("BASKET", `${JSON.stringify(basketByUser.items.map(product =>
-            [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
+          basketByUser && JSON.stringify(basketByUser.items.map(product => {
+            TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
+          }
+          ))
+          localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+          // basketByUser && localStorage.setItem("BASKET", `${JSON.stringify(basketByUser.items.map(product =>
+
+          //   [{ productId: product.productId, quantity: product.quantity, size: product.size }]))
+
+          //   }`)
 
           const decoded_user = jwt_decode(token); // decode your token here
           for (const claim in decoded_user) {

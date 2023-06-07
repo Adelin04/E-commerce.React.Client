@@ -86,6 +86,7 @@ const ProductDetails = () => {
 
     //  Set the payload for backend
     let payload = { userEmail: user.email || null, products: TMP_BasketList }
+    let TMP_BASKET = [];
 
     //  Check the basket and send the payload
     if (shoppingCartList !== null)
@@ -102,9 +103,13 @@ const ProductDetails = () => {
 
           //  Update the localStorage BASKET 
           if (success)
-            localStorage.setItem("BASKET",
-              `${JSON.stringify(newBasketCreated.items.map(product =>
-                [{ productId: product.productId, quantity: product.quantity, size: product.size }]))}`)
+            newBasketCreated && JSON.stringify(newBasketCreated.items.map(product => {
+              TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
+            }
+            ))
+            
+          localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+
         })
         .catch(error => setError(error.toString()))
   }
@@ -115,7 +120,7 @@ const ProductDetails = () => {
 
     dispatch(
       addProductToShoppingCart({
-        newPorduct: SerializeProduct(productById[0]),
+        newProduct: SerializeProduct(productById[0]),
         quantity,
         size,
       })

@@ -12,7 +12,8 @@ const ShoppingCartSlice = createSlice({
   reducers: {
     addProductToShoppingCart: (state, action) => {
       const currentState = current(state);
-      let newProduct = action.payload.newPorduct;
+      let newProduct = action.payload.newProduct;
+
 
       state.nrProducts += action.payload.quantity;
 
@@ -96,22 +97,59 @@ const ShoppingCartSlice = createSlice({
 
     decrementCounter: (state, action) => {
       let filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
+      let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET'));
 
       let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
       let indexOf = tmpArray[action.payload.indexItem]
-
+      
       filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 2 ?
-        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
-        // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
-        :
-        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
+      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
+      // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
+      :
+      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
+
+      TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
+      //  update localStorage BASKET
+      console.log('index',TMP_localStorage);
+      TMP_localStorage[action.payload.indexItem]['quantity'] < 1 ? TMP_localStorage = TMP_localStorage.splice(indexOf, 1) : null
+      localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
+      // TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
+      // console.log(TMP_localStorage);
+      // TMP_localStorage[action.payload.indexItem]['quantity'] < 1 ? TMP_localStorage = TMP_localStorage.splice(indexOf, 1) : null
+      // localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
 
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
     },
 
     removeProductFromCart: (state, action) => {
-      state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
+
+      let TMP_BASKET = [];
+
+      console.log('1', current(state).shoppingCartList);
+      current(state).shoppingCartList.filter(product =>
+        product.quantityPerSize.map(
+          sizeQuantity => {
+            if (sizeQuantity.size !== action.payload.size) {
+              TMP_BASKET.push(sizeQuantity)
+            }
+          }
+        )
+      )
+
+      state.shoppingCartList.map(
+        product => {
+          if (product.id === action.payload.productId) {
+            product.quantityPerSize = TMP_BASKET
+          }
+        }
+      )
+
+      // state.shoppingCartList[0].quantityPerSize = TMP_BASKET
+      // console.log('2', current(state).shoppingCartList);
+      state.nrProducts -= action.payload.decrementQuantity;
+      state.totalPrice = calculateTotalPrice(current(state).shoppingCartList);
+
     }
 
 

@@ -23,19 +23,35 @@ const Cart = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState();
+  let TMP_BASKET = []
 
-  const handleDeleteProduct = async (productId) => {
+  const handleDeleteProduct = async (productId, decrementQuantity, size) => {
 
-    await fetch(`${URI}BasketItem/v1/delete/basketById/${productId}`, {
+    const basketByUser = JSON.parse(localStorage.getItem("BASKET"))
+    TMP_BASKET.push(basketByUser.filter(item => item.productId !== productId))
+
+
+    await fetch(`${URI}BasketItem/v1/delete/basketItemById/${productId}`, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        const { success } = data
 
-    // dispatch(removeProductFromCart({ productId: product.id }))
+        if (success) {
+          dispatch(removeProductFromCart({ productId: productId, decrementQuantity: decrementQuantity, size: size }))
+
+          if (basketByUser.length === 1) { localStorage.removeItem('BASKET'); }
+          else localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+
+        }
+      })
+      .catch(error => setError(error.message))
+
+
   }
 
   return (
@@ -46,7 +62,7 @@ const Cart = () => {
 
       {error && error.toString()}
 
-      <div className="flex flex-col w-full justify-between items-center h-full">
+      <div className="flex flex-col w-full h-max justify-between items-center">
 
         <div className="wrpper-title min-[450px]:flex w-full m-auto justify-center items-center text-center">
           <h3 className="title-1st-child text-[35px] font-semibold my-1" >Shopping Cart </h3>
@@ -66,7 +82,6 @@ const Cart = () => {
                     {product &&
                       product.quantityPerSize.map((item, indexItem) => {
                         return (
-
                           <div key={indexItem} className="wrapper-product flex flex-row justify-center items-center w-full h-full m-1 p-1">
 
                             {item.quantity &&
@@ -95,7 +110,7 @@ const Cart = () => {
                                       textBtn={"-"}
                                       id={indexItem}
                                       onClick={(e) => {
-                                        dispatch(decrementCounter({ productId: product.id, indexItem: indexItem }))
+                                        dispatch(decrementCounter({ productId: product.id, indexItem: e.target.id }))
                                       }}
                                     />
 
@@ -125,7 +140,9 @@ const Cart = () => {
                                   <span className="currency flex justify-center items-center p-1 w-auto">{currency}</span>
                                 </div>
 
-                                <button className="delete-btn-cart  justify-center items-center flex w-max h-full m-2 p-1 bg-[var(--sliderColor)] font-bold outline-none hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md" onClick={() => handleDeleteProduct(product.id)}><FaTrash /></button>
+                                <button
+                                  className="delete-btn-cart  justify-center items-center flex w-max h-full m-2 p-1 bg-[var(--sliderColor)] font-bold outline-none hover:text-red-700 hover:bg-[var(--baseColor)] rounded-md"
+                                  onClick={() => handleDeleteProduct(product.id, item.quantity, item.size)}><FaTrash /></button>
                               </li>
                             }
                           </div>);
