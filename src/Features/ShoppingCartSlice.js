@@ -101,22 +101,22 @@ const ShoppingCartSlice = createSlice({
 
       let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
       let indexOf = tmpArray[action.payload.indexItem]
-      
-      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 2 ?
-      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
-      // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
-      :
-      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
 
-      TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
+      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 2 ?
+        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
+        // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
+        :
+        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
+
+TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
+
       //  update localStorage BASKET
-      console.log('index',TMP_localStorage);
-      TMP_localStorage[action.payload.indexItem]['quantity'] < 1 ? TMP_localStorage = TMP_localStorage.splice(indexOf, 1) : null
+      console.log('TMP_localStorage', TMP_localStorage);
+
+      TMP_localStorage.map(item => item.quantity === 0 ? TMP_localStorage.splice(TMP_localStorage.indexOf(item),0) : console.log(item) )
       localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
-      // TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
-      // console.log(TMP_localStorage);
       // TMP_localStorage[action.payload.indexItem]['quantity'] < 1 ? TMP_localStorage = TMP_localStorage.splice(indexOf, 1) : null
-      // localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
+
 
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
