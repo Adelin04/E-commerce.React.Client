@@ -54,6 +54,17 @@ const Cart = () => {
 
   }
 
+  const handleDecrementItemQuantity = async (productId) => {
+    await fetch(`${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .catch(error => console.log(error.message))
+  }
+
   return (
     <div className="flex flex-col h-full w-full justify-between items-center">
 
@@ -84,7 +95,7 @@ const Cart = () => {
                         return (
                           <div key={indexItem} className="wrapper-product flex flex-row justify-center items-center w-full h-full m-1 p-1">
 
-                            {item.quantity > 0  &&
+                            {item.quantity > 0 &&
                               <li className="list list-none flex flex-row justify-between items-center w-11/12 h-full my-3">
 
                                 <Link to={`/product-details/${product.id}`} >
@@ -111,6 +122,7 @@ const Cart = () => {
                                       id={indexItem}
                                       onClick={(e) => {
                                         dispatch(decrementCounter({ productId: product.id, indexItem: e.target.id }))
+                                        handleDecrementItemQuantity(product.id)
                                       }}
                                     />
 

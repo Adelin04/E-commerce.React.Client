@@ -47,7 +47,6 @@ const Login = () => {
       .then((data) => {
         const { success, token, basketByUser } = data;
 
-        console.log(data);
         let TMP_USER = [];
         let TMP_BASKET = [];
 
