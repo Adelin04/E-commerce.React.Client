@@ -54,8 +54,8 @@ const Cart = () => {
 
   }
 
-  const handleDecrementItemQuantity = async (productId) => {
-    await fetch(`${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}`, {
+  const handleDecrementItemQuantity = async (productId, size) => {
+    await fetch(`${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}/${size}`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +122,7 @@ const Cart = () => {
                                       id={indexItem}
                                       onClick={(e) => {
                                         dispatch(decrementCounter({ productId: product.id, indexItem: e.target.id }))
-                                        handleDecrementItemQuantity(product.id)
+                                        handleDecrementItemQuantity(product.id, item.size)
                                       }}
                                     />
 

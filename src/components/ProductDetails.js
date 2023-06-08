@@ -89,7 +89,8 @@ const ProductDetails = () => {
     let TMP_BASKET = [];
 
     //  Check the basket and send the payload
-    if (shoppingCartList !== null)
+    // if (shoppingCartList !== null)
+    console.log(payload);
       await fetch(`${URI}basket/v1/add/newBasket`, {
         method: 'POST',
         body: JSON.stringify(payload),
