@@ -1,4 +1,5 @@
 # E-commerce.Net.React
+https://e-commerce-boutique.netlify.app
 
  "E-commerce" as the name implies is an online store. 
 
