@@ -88,9 +88,15 @@ const ShoppingCartSlice = createSlice({
 
     incrementCounter: (state, action) => {
       const filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
+      let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET'));
 
       filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] += 1;
 
+      //  update localStorage BASKET
+      TMP_localStorage[action.payload.indexItem]['quantity'] += 1
+      localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
+
+      //  update the state
       state.nrProducts += 1;
       state.totalPrice += filteredShoppingCart[0].price;
     },
@@ -108,16 +114,12 @@ const ShoppingCartSlice = createSlice({
         :
         filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
 
-TMP_localStorage[action.payload.indexItem]['quantity'] -= 1
 
       //  update localStorage BASKET
-      console.log('TMP_localStorage', TMP_localStorage);
-
-      TMP_localStorage.map(item => item.quantity === 0 ? TMP_localStorage.splice(TMP_localStorage.indexOf(item),0) : console.log(item) )
+      TMP_localStorage[action.payload.indexItem]['quantity'] > 0 ? TMP_localStorage[action.payload.indexItem]['quantity'] -= 1 : TMP_localStorage.splice(TMP_localStorage[action.payload.indexItem], 1)
       localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
-      // TMP_localStorage[action.payload.indexItem]['quantity'] < 1 ? TMP_localStorage = TMP_localStorage.splice(indexOf, 1) : null
 
-
+      //  update the state
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
     },

@@ -84,7 +84,7 @@ const Cart = () => {
                         return (
                           <div key={indexItem} className="wrapper-product flex flex-row justify-center items-center w-full h-full m-1 p-1">
 
-                            {item.quantity &&
+                            {item.quantity > 0  &&
                               <li className="list list-none flex flex-row justify-between items-center w-11/12 h-full my-3">
 
                                 <Link to={`/product-details/${product.id}`} >
