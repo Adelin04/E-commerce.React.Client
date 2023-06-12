@@ -123,7 +123,6 @@ const ProductDetails = () => {
         })
       );
 
-      console.log(shoppingCartList);
       if (shoppingCartList !== null || shoppingCartList !== [])
         AddNewBasket();
 
