@@ -105,6 +105,7 @@ const ShoppingCartSlice = createSlice({
       let filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
       let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET'));
 
+      //  update the state
       let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
       let indexOf = tmpArray[action.payload.indexItem]
 
@@ -114,14 +115,18 @@ const ShoppingCartSlice = createSlice({
         :
         filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
 
-
-      //  update localStorage BASKET
-      TMP_localStorage[action.payload.indexItem]['quantity'] > 0 ? TMP_localStorage[action.payload.indexItem]['quantity'] -= 1 : TMP_localStorage.splice(TMP_localStorage[action.payload.indexItem], 1)
-      localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
-
-      //  update the state
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
+
+      //  update localStorage BASKET
+      TMP_localStorage.map(item => {
+        if (item.productId === action.payload.productId && item.size === action.payload.size) {
+          (item.quantity - 1) === 0 ? TMP_localStorage.splice(TMP_localStorage.indexOf(item), 1) : item.quantity -= 1
+        }
+      }
+      );
+      localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
+
     },
 
     removeProductFromCart: (state, action) => {

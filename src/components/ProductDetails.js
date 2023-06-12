@@ -11,8 +11,6 @@ import Button from "./Button";
 import Footer from "./Footer";
 import Header from "./Header";
 import PriceFormated from "./PriceFormated";
-import CarouselMultiple from "../components/CarouselMultiple";
-import ResponsiveCarousel from "../components/ResponsiveCarousel";
 import CarouselProductImages from "./CarouselProductImages";
 import { selectUser } from "../Features/UserSlice";
 
@@ -61,9 +59,8 @@ const ProductDetails = () => {
   }, [products]);
 
 
-  // Function that handles the product that was clicked to add to shopping cart
-
-  const handleBasket = async () => {
+  //  Add new Basket
+  const AddNewBasket = async () => {
     const TMP_BasketList = [];
 
     shoppingCartList && shoppingCartList.map(product => {
@@ -88,46 +85,52 @@ const ProductDetails = () => {
     let payload = { userEmail: user.email || null, products: TMP_BasketList }
     let TMP_BASKET = [];
 
-    //  Check the basket and send the payload
-    // if (shoppingCartList !== null)
-    console.log(payload);
-      await fetch(`${URI}basket/v1/add/newBasket`, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        }
+    //  Add new basket
+    await fetch(`${URI}basket/v1/add/newBasket`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        let { success, newBasketCreated } = data;
+
+        //  Update the localStorage BASKET 
+        if (success)
+          newBasketCreated && JSON.stringify(newBasketCreated.items.map(product => {
+            TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
+          }
+          ))
+
+        localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+
       })
-        .then(response => response.json())
-        .then(data => {
-          let { success, newBasketCreated } = data;
-
-          //  Update the localStorage BASKET 
-          if (success)
-            newBasketCreated && JSON.stringify(newBasketCreated.items.map(product => {
-              TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
-            }
-            ))
-            
-          localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
-
-        })
-        .catch(error => setError(error.toString()))
+      .catch(error => setError(error.toString()))
   }
 
   //  Add new product to basket
-  const handleAddToCart = () => {
+  const AddNewItemToCart = () => {
     if (size === null) setMsg('Please select a size')
+    try {
 
-    dispatch(
-      addProductToShoppingCart({
-        newProduct: SerializeProduct(productById[0]),
-        quantity,
-        size,
-      })
-    );
+      dispatch(
+        addProductToShoppingCart({
+          newProduct: SerializeProduct(productById[0]),
+          quantity,
+          size,
+        })
+      );
 
-    handleBasket();
+      console.log(shoppingCartList);
+      if (shoppingCartList !== null || shoppingCartList !== [])
+        AddNewBasket();
+
+
+    } catch (error) {
+      throw Error(error.message)
+    }
   };
 
   return (
@@ -258,7 +261,7 @@ const ProductDetails = () => {
                 }}
                 disabled={size === null ? true : false}
                 textBtn={"Buy"}
-                onClick={handleAddToCart}
+                onClick={AddNewItemToCart}
               />
 
             </div>

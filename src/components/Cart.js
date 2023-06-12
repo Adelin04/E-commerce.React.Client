@@ -121,7 +121,7 @@ const Cart = () => {
                                       textBtn={"-"}
                                       id={indexItem}
                                       onClick={(e) => {
-                                        dispatch(decrementCounter({ productId: product.id, indexItem: e.target.id }))
+                                        dispatch(decrementCounter({ productId: product.id, indexItem: e.target.id, size: item.size }))
                                         handleDecrementItemQuantity(product.id, item.size)
                                       }}
                                     />
@@ -140,7 +140,7 @@ const Cart = () => {
                                       }}
                                       textBtn={"+"}
                                       onClick={() => {
-                                        dispatch(incrementCounter({ productId: product.id, indexItem: indexItem }))
+                                        dispatch(incrementCounter({ productId: product.id, indexItem: indexItem, size: item.size }))
                                       }}
                                     />
                                   </div>
