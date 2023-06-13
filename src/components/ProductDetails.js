@@ -72,29 +72,30 @@ const ProductDetails = () => {
     let payload = { userEmail: user ? user.email : null, products: TMP_BasketList }
     let TMP_BASKET = [];
 
-    //  Add new basket
-    await fetch(`${URI}basket/v1/add/newBasket`, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        let { success, newBasketCreated } = data;
-
-        //  Update the localStorage BASKET 
-        if (success)
-          newBasketCreated && JSON.stringify(newBasketCreated.items.map(product => {
-            TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
-          }
-          ))
-
-        // localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
-
+    //  Add new basket if exist user login else just save the product on localstorage
+    user &&
+      await fetch(`${URI}basket/v1/add/newBasket`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        }
       })
-      .catch(error => setError(error.toString()))
+        .then(response => response.json())
+        .then(data => {
+          let { success, newBasketCreated } = data;
+
+          //  Update the localStorage BASKET 
+          if (success)
+            newBasketCreated && JSON.stringify(newBasketCreated.items.map(product => {
+              TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })
+            }
+            ))
+
+          // localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+
+        })
+        .catch(error => setError(error.toString()))
   }
 
   //  Add new product to basket

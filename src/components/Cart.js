@@ -55,14 +55,15 @@ const Cart = () => {
   }
 
   const handleDecrementItemQuantity = async (productId, size) => {
-    await fetch(`${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}/${size}`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error.message))
+    user &&
+      await fetch(`${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}/${size}`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(response => response.json())
+        .catch(error => console.log(error.message))
   }
 
   return (
