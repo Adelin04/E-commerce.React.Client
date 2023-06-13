@@ -71,7 +71,7 @@ const ProductDetails = () => {
     //  Set the payload for backend
     let payload = { userEmail: user.email || null, products: TMP_BasketList }
     let TMP_BASKET = [];
-    console.log('payload', payload);
+
     //  Add new basket
     await fetch(`${URI}basket/v1/add/newBasket`, {
       method: 'POST',

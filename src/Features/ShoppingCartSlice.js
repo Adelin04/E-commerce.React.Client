@@ -106,14 +106,6 @@ const ShoppingCartSlice = createSlice({
       let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET'));
 
       //  update the state
-      let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
-      let indexOf = tmpArray[action.payload.indexItem]
-
-      /*       filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 1 ?
-              filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
-              // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
-              :
-              filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1; */
       state.shoppingCartList.map(item => {
         item.quantityPerSize.map(quantity_size => {
 
@@ -137,14 +129,12 @@ const ShoppingCartSlice = createSlice({
       }
       );
       localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
-      // console.log('state.cart', current(state.shoppingCartList));
     },
 
     removeProductFromCart: (state, action) => {
 
       let TMP_BASKET = [];
 
-      console.log('1', current(state).shoppingCartList);
       current(state).shoppingCartList.filter(product =>
         product.quantityPerSize.map(
           sizeQuantity => {
