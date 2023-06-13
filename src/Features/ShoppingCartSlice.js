@@ -11,6 +11,7 @@ const ShoppingCartSlice = createSlice({
   },
   reducers: {
     addProductToShoppingCart: (state, action) => {
+
       const currentState = current(state);
       let newProduct = action.payload.newProduct;
 
@@ -61,7 +62,8 @@ const ShoppingCartSlice = createSlice({
                     size: productQtySize.size,
                   },
                 ]
-                : [
+                :
+                [
                   ...existProduct[0].quantityPerSize,
                   {
                     quantity: productQtySize.quantity,
@@ -74,7 +76,8 @@ const ShoppingCartSlice = createSlice({
         state.shoppingCartList = [...restOfList, TMP_PRODUCT];
       }
 
-      const totalPrice = state.shoppingCartList && calculateTotalPrice(state.shoppingCartList);
+      const totalPrice = (state.shoppingCartList !== null || state.shoppingCartList !== null) && calculateTotalPrice(current(state).shoppingCartList);
+
       state.totalPrice = totalPrice;
       state.currency = state.shoppingCartList[0].currency;
     },
@@ -109,9 +112,18 @@ const ShoppingCartSlice = createSlice({
       state.shoppingCartList.map(item => {
         item.quantityPerSize.map(quantity_size => {
 
+          //  I check if the product ID and size you clicked exists in the shopping cart and after that I will update the status
           if (item.id === action.payload.productId && quantity_size.size === action.payload.size) {
-            let indexOfCurrentQuantity_size = current(item.quantityPerSize).indexOf(current(quantity_size));
+            let indexOfCurrentItem = current(state.shoppingCartList).indexOf(current(item));  //  extract the index of current item
+            let indexOfCurrentQuantity_size = current(item.quantityPerSize).indexOf(current(quantity_size));  //  extract the index of current array of quantity and size
+
+            //  if quantity - 1 = 0 I will remove current obj with size and quantity else I will subtract a piece
             (quantity_size.quantity - 1) === 0 ? item.quantityPerSize.splice(indexOfCurrentQuantity_size, 1) : quantity_size.quantity -= 1
+
+            //  remove product from shopping cart if list of size and quntity is empty for current product
+            if (current(item.quantityPerSize).length === 0) {
+              state.shoppingCartList.splice(indexOfCurrentItem, 1);
+            }
           }
         })
 
@@ -153,8 +165,6 @@ const ShoppingCartSlice = createSlice({
         }
       )
 
-      // state.shoppingCartList[0].quantityPerSize = TMP_BASKET
-      // console.log('2', current(state).shoppingCartList);
       state.nrProducts -= action.payload.decrementQuantity;
       state.totalPrice = calculateTotalPrice(current(state).shoppingCartList);
 
@@ -167,7 +177,7 @@ const ShoppingCartSlice = createSlice({
 const calculateTotalPrice = (shoppingCartList) => {
   let totalPrice = 0;
 
-  shoppingCartList.map((product) => {
+  shoppingCartList && shoppingCartList.map((product) => {
     product &&
       product.quantityPerSize.map((detailProduct) => {
         totalPrice += product.price * detailProduct.quantity;

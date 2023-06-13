@@ -100,23 +100,19 @@ const ProductDetails = () => {
   //  Add new product to basket
   const AddNewItemToCart = () => {
     if (size === null) setMsg('Please select a size')
-    try {
-
+    
       dispatch(
         addProductToShoppingCart({
           newProduct: SerializeProduct(productById[0]),
           quantity,
           size,
         })
-      );
+        );
 
-      if (shoppingCartList !== null || shoppingCartList !== [])
-        AddNewBasket();
+      // if (shoppingCartList !== null || shoppingCartList !== [])
+      AddNewBasket();
 
 
-    } catch (error) {
-      throw Error(error.message)
-    }
   };
 
   return (
