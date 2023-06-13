@@ -102,18 +102,29 @@ const ShoppingCartSlice = createSlice({
     },
 
     decrementCounter: (state, action) => {
-      let filteredShoppingCart = state.shoppingCartList.filter(product => action.payload.productId === product.id)
+      let filteredShoppingCart = Array.from(current(state).shoppingCartList).filter(product => action.payload.productId === product.id)
       let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET'));
 
       //  update the state
       let tmpArray = Array.from(current(state).shoppingCartList.filter(product => action.payload.productId === product.id)[0].quantityPerSize);
       let indexOf = tmpArray[action.payload.indexItem]
 
-      filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 2 ?
-        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
-        // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
-        :
-        filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1;
+      /*       filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] < 1 ?
+              filteredShoppingCart[0].quantityPerSize[action.payload.indexItem] = tmpArray.splice(indexOf, 1)
+              // state.shoppingCartList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
+              :
+              filteredShoppingCart[0].quantityPerSize[action.payload.indexItem]['quantity'] -= 1; */
+      state.shoppingCartList.map(item => {
+        item.quantityPerSize.map(quantity_size => {
+
+          if (item.id === action.payload.productId && quantity_size.size === action.payload.size) {
+            let indexOfCurrentQuantity_size = current(item.quantityPerSize).indexOf(current(quantity_size));
+            (quantity_size.quantity - 1) === 0 ? item.quantityPerSize.splice(indexOfCurrentQuantity_size, 1) : quantity_size.quantity -= 1
+          }
+        })
+
+      }
+      );
 
       state.nrProducts -= 1;
       state.totalPrice -= filteredShoppingCart[0].price;
@@ -126,7 +137,7 @@ const ShoppingCartSlice = createSlice({
       }
       );
       localStorage.setItem('BASKET', JSON.stringify(TMP_localStorage))
-
+      // console.log('state.cart', current(state.shoppingCartList));
     },
 
     removeProductFromCart: (state, action) => {

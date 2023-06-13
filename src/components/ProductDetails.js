@@ -40,22 +40,9 @@ const ProductDetails = () => {
       setProductById(res)
     } else return null
 
-    //  set loading field false after setting the product  
+    //  set the load field to false
     setLoading(false)
 
-
-    // alternative if I hadn't used redux -> request to server
-
-    // fetch(`${URI}api/product/v1/get/productById/${id}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const { success, productById } = data;
-
-    //     if (success)
-    //     setProductById(productById);
-    //   })
-    //   .catch((error) => console.log(error))
-    //   .finally(() => setLoading(false));
   }, [products]);
 
 
@@ -84,7 +71,7 @@ const ProductDetails = () => {
     //  Set the payload for backend
     let payload = { userEmail: user.email || null, products: TMP_BasketList }
     let TMP_BASKET = [];
-
+    console.log('payload', payload);
     //  Add new basket
     await fetch(`${URI}basket/v1/add/newBasket`, {
       method: 'POST',
