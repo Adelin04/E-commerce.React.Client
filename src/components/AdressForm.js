@@ -35,7 +35,7 @@ const AddressForm = () => {
 
     return (
         <div className=' flex justify-center items-center w-full h-full m-2'>
-            {console.log(firstName)}
+    
             <Form className='flex flex-col justify-between items-center w-full h-full p-1' noValidate validated={validated} onSubmit={handleSubmit}>
 
                 <div className='flex flex-col w-[80%]'>

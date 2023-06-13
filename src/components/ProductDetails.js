@@ -58,7 +58,6 @@ const ProductDetails = () => {
 
       TMP_BasketList.push(TMP_BasketObj)
     })
-
     //  Push to list the product clicked
     TMP_BasketList.push({
       productId: productById[0].id,
@@ -68,8 +67,9 @@ const ProductDetails = () => {
       }]
     })
 
+
     //  Set the payload for backend
-    let payload = { userEmail: user.email || null, products: TMP_BasketList }
+    let payload = { userEmail: user ? user.email : null, products: TMP_BasketList }
     let TMP_BASKET = [];
 
     //  Add new basket
@@ -91,7 +91,7 @@ const ProductDetails = () => {
           }
           ))
 
-        localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
+        // localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
 
       })
       .catch(error => setError(error.toString()))
@@ -99,18 +99,21 @@ const ProductDetails = () => {
 
   //  Add new product to basket
   const AddNewItemToCart = () => {
-    if (size === null) setMsg('Please select a size')
-    
-      dispatch(
-        addProductToShoppingCart({
-          newProduct: SerializeProduct(productById[0]),
-          quantity,
-          size,
-        })
-        );
+    let TMP_BASKET = localStorage.getItem('BASKET') !== null ? JSON.parse(localStorage.getItem('BASKET')) : [];
 
-      // if (shoppingCartList !== null || shoppingCartList !== [])
-      AddNewBasket();
+    if (size === null) setMsg('Please select a size')
+
+    dispatch(
+      addProductToShoppingCart({
+        newProduct: SerializeProduct(productById[0]),
+        quantity,
+        size,
+      })
+    );
+    TMP_BASKET.push({ productId: SerializeProduct(productById[0]).id, quantity: quantity, size: size })
+    localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET))
+    // if (shoppingCartList !== null || shoppingCartList !== [])
+    AddNewBasket();
 
 
   };
