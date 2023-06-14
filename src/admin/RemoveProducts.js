@@ -8,8 +8,7 @@ import { selectProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 
 
-const AddProducts = ({ close }) =>
-{
+const AddProducts = ({ close }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -23,47 +22,43 @@ const AddProducts = ({ close }) =>
     const [msg, setMsg] = useState('Remove Product By Id')
 
 
-    const handleClickCloseButton = (e) =>
-    {
+    const handleClickCloseButton = (e) => {
         e.preventDefault();
         // resetFields();
         close();
         setMsg('Create New Product')
     }
 
-    const handleOnChange = (idSelected) =>
-    {
+    const handleOnChange = (idSelected) => {
         setIdToRemove(idSelected);
         const TMP_productToRemove = products.filter(product => product.id.toString() === idSelected.toString());
 
         setProductToRemove(TMP_productToRemove);
     }
 
-    const handleClickAddToDeleteListButton = () =>
-    {
+    const handleClickAddToDeleteListButton = () => {
         // logic
 
     }
 
-    const handleClickDeleteButton = async () =>
-    {
+    const handleClickDeleteButton = async () => {
         //logic delete button
         await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+            }
         })
             .then(response => response.json())
-            .then(data =>
-            {
+            .then(data => {
                 const { success } = data
 
-                if (success)
-                {
+                if (success) {
                     dispatch(deleteProductById({ idTarget: idToRemove }))
                     setMsg(`The product with id ${idToRemove} has been removed successfully`)
                 }
             })
-            .catch(error =>
-            {
+            .catch(error => {
                 console.log(error.toString())
                 setMsg(error.toString())
             })
@@ -71,8 +66,7 @@ const AddProducts = ({ close }) =>
 
     }
 
-    setTimeout(() =>
-    {
+    setTimeout(() => {
         setMsg('Remove Product By Id')
     }, 5000);
 
@@ -99,8 +93,7 @@ const AddProducts = ({ close }) =>
                     <select className="select-size" value={idToRemove} onChange={(e) => handleOnChange(e.target.value)} >
                         < option value={'None'} > None</option>
                         {
-                            products && products.map((product, index) =>
-                            {
+                            products && products.map((product, index) => {
                                 return (
                                     < option key={index} value={product.id} > {product.id}</option>
                                 )

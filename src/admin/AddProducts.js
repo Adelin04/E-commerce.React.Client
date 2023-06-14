@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import UploadImage from "../components/UploadImage";
 import logoIcon from '../icons/logoIcon.svg'
 import styledComponents from "styled-components";
-import {  selectProduct, addListOfNewProduct, addNewProduct } from "../Features/ProductSlice";
+import { selectProduct, addListOfNewProduct, addNewProduct } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
 import LoadingSpin from "react-loading-spin";
@@ -115,13 +115,12 @@ const AddProducts = ({ close }) => {
         formData.append(`files`, image);
       }
 
-      
       await fetch(`${URI}Product/v1/create/newProduct`, {
         method: "POST",
         body: formData,
         headers: {
-          'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES').split(' ')[1]}`
-        },
+          'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+        }
       })
         .then(response => response.json())
         .then(data => {
@@ -149,7 +148,7 @@ const AddProducts = ({ close }) => {
       setLoadind(false)
       setMsg('The product was successfully created')
       resetFields()
-      
+
     } else { setMsg('Empty field(s)') }
   }
 

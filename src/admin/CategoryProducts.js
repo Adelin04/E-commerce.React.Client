@@ -40,6 +40,9 @@ const CategoryProducts = ({ close }) => {
         //logic delete button
         await fetch(`${URI}categoryProduct/v1/delete/categoryProductByName/${nameToRemove}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+            }
         })
             .then(response => response.json())
             .then(data => {
