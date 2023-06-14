@@ -160,7 +160,7 @@ const ProductDetails = () => {
           <div className="wrapper-details-product flex flex-col justify-between items-center max-w-[80%] h-max p-1 m-1 sm:max-w-[40%] ">
 
             {/* Title & Price */}
-            <div className="wrapper-title-price flex justify-around items-center w-full p-1 my-2 text-center bg-[var(--sliderColor)] max-[350px]:m-7" >
+            <div className="wrapper-title-price flex justify-around items-center w-full p-1 my-2 text-center bg-[var(--sliderColor)] rounded-md max-[350px]:m-7" >
               <h3 className="product-title text-[25px] font-bold p-1 m-1 max-[300px]:text-[17px]">{productById[0].name} </h3>
 
               <div className="price-product-details flex justify-center items-center ">
@@ -257,8 +257,6 @@ const ProductDetails = () => {
         </div>
 
       )}
-
-
 
       <Footer />
 

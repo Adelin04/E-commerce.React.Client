@@ -14,7 +14,7 @@ const AddressForm = () => {
         useSelector(selectShoppingCart);
 
     const [validated, setValidated] = useState(false);
-    const [firstName, setFirstName] = useState(null);
+    const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
     const [country, setCountry] = useState(null);
@@ -47,17 +47,17 @@ const AddressForm = () => {
 
                     <Form.Group as={Col} md="4" controlId="validationCustom01" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
                         <Form.Control.Feedback > Looks good!</Form.Control.Feedback>
-                        <Form.Control required type="text" placeholder="First name" defaultValue={'Mark'} className='flex justify-center items-center  w-full my-auto mx-2 p-1' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                        <Form.Control required type="text" placeholder="First name" className='flex justify-center items-center  w-full my-auto mx-2 p-1' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group as={Col} md="4" controlId="validationCustom02" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
                         {/* <Form.Control.Feedback className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Looks good!</Form.Control.Feedback> */}
-                        <Form.Control required type="text" placeholder="Last name" defaultValue="Otto" className='flex justify-center items-center  w-full my-auto mx-2 p-1' />
+                        <Form.Control required type="text" placeholder="Last name"  className='flex justify-center items-center  w-full my-auto mx-2 p-1' />
                     </Form.Group>
 
                     <Form.Group as={Col} md="4" controlId="validationCustom03" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>
                         {/* <Form.Control.Feedback className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Looks good!</Form.Control.Feedback> */}
-                        <Form.Control required type="email" placeholder="Email" defaultValue="Mark.Otto@mail.com" className='flex justify-center items-center  w-full my-auto mx-2 p-1' />
+                        <Form.Control required type="email" placeholder="Email"  className='flex justify-center items-center  w-full my-auto mx-2 p-1' />
                     </Form.Group>
 
                     <Form.Group as={Col} md="6" controlId="validationCustom03" className='flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1'>

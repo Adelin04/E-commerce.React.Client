@@ -119,6 +119,9 @@ const AddProducts = ({ close }) => {
       await fetch(`${URI}Product/v1/create/newProduct`, {
         method: "POST",
         body: formData,
+        headers: {
+          'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES').split(' ')[1]}`
+        },
       })
         .then(response => response.json())
         .then(data => {
