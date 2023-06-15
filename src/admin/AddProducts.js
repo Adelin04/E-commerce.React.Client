@@ -224,8 +224,6 @@ const AddProducts = ({ close }) => {
 
 
           <div className="right-side">
-            {/*             <label>Picture Link</label>
-            <input type={'text'} value={picturePath} placeholder={'optional'} id={'picturePath'} onChange={(e) => { setPicturePath(e.target.value) }} /> */}
             <label>Picture Product</label>
             <div className="box-add-new-procudct-component">
               <UploadImage imgsSelected={(imgs) => setSelectedPictures(imgs)} />

@@ -4,15 +4,14 @@ import AddProducts from "./AddProducts";
 import logoIcon from '../icons/logoIcon.svg'
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {  getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
+import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
 import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
 import CategoryProducts from "./CategoryProducts";
 
-const DashboardAdmin = () =>
-{
+const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
   const admin = useSelector(selectUser).user;
   const { newProductsAdded } = useSelector(selectProduct);
@@ -25,12 +24,10 @@ const DashboardAdmin = () =>
   const [goToRemoveProduct, setGoToRemoveProduct] = useState(false)
   const [msg, setMsg] = useState('Create New Product')
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
       .then(response => response.json())
-      .then(data =>
-      {
+      .then(data => {
         const { success, listOfCategories, count } = data;
 
         if (success)
@@ -40,8 +37,7 @@ const DashboardAdmin = () =>
 
     fetch(`${URI}Size/v1/get/allSizes`)
       .then(response => response.json())
-      .then(data =>
-      {
+      .then(data => {
         const { success, sizes, nrsizes } = data;
 
         if (success)
@@ -50,23 +46,20 @@ const DashboardAdmin = () =>
       .catch(err => setMsg(err.toString()))
   }, [])
 
-  const handleClickCreateButton = async (e) =>
-  {
+  const handleClickCreateButton = async (e) => {
     console.log('create');
-   
+
   }
 
 
-  const handleClickCloseBtnProductAdded = (e) =>
-  {
+  const handleClickCloseBtnProductAdded = (e) => {
     e.preventDefault();
     let idTarget = e.target.id;
 
     dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
   };
 
-  const showAllNewProductAdded = (products = Array) =>
-  {
+  const showAllNewProductAdded = (products = Array) => {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', width: '100%', margin: '0px' }}>
 
@@ -78,8 +71,7 @@ const DashboardAdmin = () =>
 
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '40px auto' }}>
 
-          {products.length > 0 && products.map((product, index) =>
-          {
+          {products.length > 0 && products.map((product, index) => {
             return (
               <div className="box-added-new-product" id={product.id} key={index}>
                 <div className="wrapper-btns-product-added">
@@ -142,19 +134,31 @@ const DashboardAdmin = () =>
         </div>
 
         <div className="container-btns">
+          <h3 className="text-center text-lg font-bold"> Product </h3>
           <button
             className="menu-btn-add-new-project"
-            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false) ;setGoToSectionCategory(false)}}
+            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false); setGoToSectionCategory(false) }}
           >Add new product</button>
           <button
             className="menu-btn-remove-project"
-            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false);setGoToSectionCategory(false) }}
+            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false); setGoToSectionCategory(false) }}
           >Remove product</button>
+          <hr className="w-full bg-black my-2" />
+
+          <h3 className="text-center text-lg font-bold"> Category Product</h3>
           <button
             className="menu-btn-remove-project"
             onClick={() => { setGoToSectionCategory(true); setGoToAddProduct(false); setGoToRemoveProduct(false) }}
           >Category Product</button>
+          <hr className="w-full bg-black my-2" />
+
+          <h3 className="text-center text-lg font-bold"> Size Product</h3>
+          
+          <hr className="w-full bg-black my-2" />
+
         </div>
+
+
         <div className="dashboard-admin-info">
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
           <p className="admin"> <span>Admin </span>{admin && <span className="full-name">{` ${admin.firstName} ${admin.lastName}`}</span>}</p>
@@ -162,8 +166,7 @@ const DashboardAdmin = () =>
           <div className="role"> <span>Role </span>
 
             <ul className="role-ul">
-              {admin.role.map((item, index) =>
-              {
+              {admin.role.map((item, index) => {
                 return <li className="role-li" key={index}>{item}</li>
               })}
             </ul>
