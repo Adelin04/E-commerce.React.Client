@@ -3,12 +3,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logoIcon from '../icons/logoIcon.svg'
+import Button from "../components/Button";
 import styledComponents from "styled-components";
 import { selectProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
 
 
-const AddProducts = ({ close }) => {
+const AddNewSize_ExistProduct = ({ close }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -19,14 +20,13 @@ const AddProducts = ({ close }) => {
     //Local variable
     const [idToRemove, setIdToRemove] = useState();
     const [productToRemove, setProductToRemove] = useState();
+    const [msgButton, setMsgButton] = useState('Add new sizes and stock')
     const [msg, setMsg] = useState('Select Product By Id')
-
 
     const handleClickCloseButton = (e) => {
         e.preventDefault();
         // resetFields();
         close();
-        setMsg('Create New Product')
     }
 
     const handleOnChange = (idSelected) => {
@@ -36,14 +36,10 @@ const AddProducts = ({ close }) => {
         setProductToRemove(TMP_productToRemove);
     }
 
-    const handleClickAddToDeleteListButton = () => {
-        // logic
 
-    }
-
-    const handleClickDeleteButton = async () => {
+    const handleAddNewSizeToExistProduct = async () => {
         //logic delete button
-        await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
+      /*   await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
@@ -62,13 +58,11 @@ const AddProducts = ({ close }) => {
                 console.log(error.toString())
                 setMsg(error.toString())
             })
-        setIdToRemove('')
+        setIdToRemove('') */
 
     }
 
-    setTimeout(() => {
-        setMsg('Remove Product By Id')
-    }, 5000);
+
 
     return (
         <Wrapper>
@@ -77,8 +71,12 @@ const AddProducts = ({ close }) => {
 
                     <div className="container-btn-close-remove-product">
                         <div className="wrapper-btn-add-remove-list-delete">
-                            <button className="btn-add-remove-list" onClick={handleClickAddToDeleteListButton}>Add to delete list</button>
-                            <button className="btn-delete" onClick={handleClickDeleteButton}>Delete</button>
+                            <Button
+                                onClick={handleAddNewSizeToExistProduct}
+                                textBtn={msgButton}
+                                className={'btn-add-new-size flex justify-center items-center w-max p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+
+
                         </div>
 
                         <button className="btn-close-remove-product" onClick={handleClickCloseButton}>X</button>
@@ -110,7 +108,7 @@ const AddProducts = ({ close }) => {
                         <div className="container-product-to-remove-left-side">
 
                             <div className="wrapper-product-to-remove-left-side">
-                                <label>Name </label>
+                                {/* <label>Name </label>
                                 <p>{productToRemove[0].name}</p>
                                 <label>Color </label>
                                 <p>{productToRemove[0].color}</p>
@@ -120,19 +118,19 @@ const AddProducts = ({ close }) => {
                                 <p>{productToRemove[0].price} {productToRemove[0].currency}</p>
                                 <label>Brand</label>
                                 <p>{productToRemove[0].brand}</p>
+                                <label>Category </label>
+                                <p>{productToRemove[0].categoryProduct.name}</p> */}
                                 <label>Size </label>
                                 <p>{productToRemove[0].size}</p>
                                 <label>Stock</label>
                                 <p>{productToRemove[0].stock}</p>
-                                <label>Category </label>
-                                <p>{productToRemove[0].categoryProduct.name}</p>
                             </div>
 
                         </div>
 
-                        <div className="wrapper-imgs">
+                        <div className="wrapper-imgs w-[50%]">
                             <div className="up-side-imgs">
-                                <div className="img-1"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 0 && productToRemove[0].productImages[0].path || logoIcon} alt="img 1" /></div>
+                                <div className="img-1 "><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 0 && productToRemove[0].productImages[0].path || logoIcon} alt="img 1" /></div>
                                 <div className="img-2"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 1 && productToRemove[0].productImages[1].path || logoIcon} alt="img 2" /></div>
                             </div>
 
@@ -154,7 +152,7 @@ const AddProducts = ({ close }) => {
     )
 };
 
-export default AddProducts;
+export default AddNewSize_ExistProduct;
 
 const Wrapper = styledComponents.div`
     display: flex;

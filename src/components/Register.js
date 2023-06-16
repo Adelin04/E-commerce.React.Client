@@ -124,7 +124,7 @@ const Register = () => {
 
 
         <div className="wrapper-btn-login flex justify-center items-center m-1 p-1 w-max mx-auto ">
-          <Button textBtn={msgButton} className={'btn-login  className="flex justify-center items-center w-[100px] h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+          <Button textBtn={msgButton} className={'btn-login flex justify-center items-center w-[100px] h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
         </div>
 
       </form>

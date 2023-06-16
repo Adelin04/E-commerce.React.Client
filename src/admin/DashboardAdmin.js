@@ -10,47 +10,55 @@ import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
 import CategoryProducts from "./CategoryProducts";
+import AddNewSize_ExistProduct from "./AddNewSize_ExistProduct";
 
 const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
-  const admin = useSelector(selectUser).user;
   const { newProductsAdded } = useSelector(selectProduct);
+  const admin = useSelector(selectUser).user;
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [goToAddProduct, setGoToAddProduct] = useState(false)
-  const [goToSectionCategory, setGoToSectionCategory] = useState(false)
-  const [goToRemoveProduct, setGoToRemoveProduct] = useState(false)
   const [msg, setMsg] = useState('Create New Product')
+  const [btnClicked, setBtnClicked] = useState(null)
 
-  useEffect(() => {
-    fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
-      .then(response => response.json())
-      .then(data => {
-        const { success, listOfCategories, count } = data;
-
-        if (success)
-          dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
-      })
-      .catch(err => setMsg(err.toString()))
-
-    fetch(`${URI}Size/v1/get/allSizes`)
-      .then(response => response.json())
-      .then(data => {
-        const { success, sizes, nrsizes } = data;
-
-        if (success)
-          dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
-      })
-      .catch(err => setMsg(err.toString()))
-  }, [])
-
-  const handleClickCreateButton = async (e) => {
-    console.log('create');
-
+  const Menu = {
+    AddNewProducts: () => <AddProducts close={handleClosePopUp} />,
+    AddNewCategory: () => <CategoryProducts close={handleClosePopUp} />,
+    AddNewSize_ExistProduct: () => <AddNewSize_ExistProduct close={handleClosePopUp} />,
+    RemoveProducts: () => <RemoveProducts close={handleClosePopUp} />
   }
 
+
+  /*   useEffect(() => {
+      fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
+        .then(response => response.json())
+        .then(data => {
+          const { success, listOfCategories, count } = data;
+   
+          if (success)
+            dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
+        })
+        .catch(err => setMsg(err.toString()))
+   
+      fetch(`${URI}Size/v1/get/allSizes`)
+        .then(response => response.json())
+        .then(data => {
+          const { success, sizes, nrsizes } = data;
+   
+          if (success)
+            dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
+        })
+        .catch(err => setMsg(err.toString()))
+    }, [])
+   
+    const handleClickCreateButton = async (e) => {
+      console.log('create');
+   
+    } */
+
+
+  const handleClosePopUp = () => setBtnClicked(null)
 
   const handleClickCloseBtnProductAdded = (e) => {
     e.preventDefault();
@@ -62,7 +70,6 @@ const DashboardAdmin = () => {
   const showAllNewProductAdded = (products = Array) => {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', width: '100%', margin: '0px' }}>
-
         <nav className="header-menu-admin-dashboard">
           <div className="wrapper-btn-create">
             <button className="btn-create" onClick={handleClickCreateButton}> Create </button>
@@ -122,6 +129,7 @@ const DashboardAdmin = () => {
 
       <div className="menu">
 
+        {console.log(btnClicked)}
         <div className="wrapper-title">
           <Link
             className="title"
@@ -137,23 +145,40 @@ const DashboardAdmin = () => {
           <h3 className="text-center text-lg font-bold"> Product </h3>
           <button
             className="menu-btn-add-new-project"
-            onClick={() => { setGoToAddProduct(true); setGoToRemoveProduct(false); setGoToSectionCategory(false) }}
-          >Add new product</button>
+            id="AddNewProducts"
+            onClick={(e) => setBtnClicked(e.target.id)}
+          >Add new product
+          </button>
+
           <button
             className="menu-btn-remove-project"
-            onClick={() => { setGoToRemoveProduct(true); setGoToAddProduct(false); setGoToSectionCategory(false) }}
-          >Remove product</button>
+            id="RemoveProducts"
+            onClick={(e) => setBtnClicked(e.target.id)}
+          >Remove product
+          </button>
+
+          <button
+            className="menu-btn-remove-project"
+            id="AddNewSize_ExistProduct"
+            onClick={(e) => setBtnClicked(e.target.id)}
+          >Add New Size And Stock
+          </button>
+
           <hr className="w-full bg-black my-2" />
 
           <h3 className="text-center text-lg font-bold"> Category Product</h3>
+
           <button
             className="menu-btn-remove-project"
-            onClick={() => { setGoToSectionCategory(true); setGoToAddProduct(false); setGoToRemoveProduct(false) }}
-          >Category Product</button>
+            id="AddNewCategory"
+            onClick={(e) => setBtnClicked(e.target.id)}
+          >Category Product
+          </button>
+
           <hr className="w-full bg-black my-2" />
 
           <h3 className="text-center text-lg font-bold"> Size Product</h3>
-          
+
           <hr className="w-full bg-black my-2" />
 
         </div>
@@ -178,10 +203,8 @@ const DashboardAdmin = () => {
         </div>
       </div>
 
-      <div className="main-page" onClick={() => setGoToAddProduct(false)}>
-        {goToAddProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
-        {goToRemoveProduct && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
-        {goToSectionCategory && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
+      <div className="main-page" onClick={() => setBtnClicked(null)}>
+        {btnClicked && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
 
         <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
           {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
@@ -189,9 +212,7 @@ const DashboardAdmin = () => {
       </div>
 
       <div style={{ zIndex: '2' }}>
-        {goToAddProduct && < AddProducts close={() => { setGoToAddProduct(false) }} />}
-        {goToRemoveProduct && <RemoveProducts close={() => { setGoToRemoveProduct(false) }} />}
-        {goToSectionCategory && < CategoryProducts close={() => { setGoToSectionCategory(false) }} />}
+        {btnClicked && Menu[btnClicked]()}
       </div>
 
 
