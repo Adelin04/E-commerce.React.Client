@@ -30,32 +30,32 @@ const DashboardAdmin = () => {
   }
 
 
-  /*   useEffect(() => {
-      fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
-        .then(response => response.json())
-        .then(data => {
-          const { success, listOfCategories, count } = data;
-   
-          if (success)
-            dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
-        })
-        .catch(err => setMsg(err.toString()))
-   
-      fetch(`${URI}Size/v1/get/allSizes`)
-        .then(response => response.json())
-        .then(data => {
-          const { success, sizes, nrsizes } = data;
-   
-          if (success)
-            dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
-        })
-        .catch(err => setMsg(err.toString()))
-    }, [])
-   
-    const handleClickCreateButton = async (e) => {
-      console.log('create');
-   
-    } */
+  useEffect(() => {
+    fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
+      .then(response => response.json())
+      .then(data => {
+        const { success, listOfCategories, count } = data;
+
+        if (success)
+          dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
+      })
+      .catch(err => setMsg(err.toString()))
+
+    fetch(`${URI}Size/v1/get/allSizes`)
+      .then(response => response.json())
+      .then(data => {
+        const { success, sizes, nrsizes } = data;
+
+        if (success)
+          dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
+      })
+      .catch(err => setMsg(err.toString()))
+  }, [])
+
+  const handleClickCreateButton = async (e) => {
+    console.log('create');
+
+  }
 
 
   const handleClosePopUp = () => setBtnClicked(null)
@@ -129,7 +129,6 @@ const DashboardAdmin = () => {
 
       <div className="menu">
 
-        {console.log(btnClicked)}
         <div className="wrapper-title">
           <Link
             className="title"

@@ -8,6 +8,7 @@ import { selectProduct, addListOfNewProduct, addNewProduct } from "../Features/P
 import { URI } from "../_Utils/Dependency";
 import UploadImage from "../components/UploadImage";
 import LoadingSpin from "react-loading-spin";
+import Button from "../components/Button";
 // import axios from "axios";
 
 const AddProducts = ({ close }) => {
@@ -16,7 +17,6 @@ const AddProducts = ({ close }) => {
   const { categoriesProductAvailable } = useSelector(selectProduct);
   const { sizesProductAvailable } = useSelector(selectProduct);
   const [listOfProductAdded, setListOfProductAdded] = useState([]);
-
 
 
   const [msg, setMsg] = useState('Create New Product')
@@ -28,6 +28,7 @@ const AddProducts = ({ close }) => {
   const [priceProduct, setPriceProduct] = useState('');
   const [selectedPictures, setSelectedPictures] = useState(null);
   const [brandProduct, setBrandProduct] = useState('');
+  const [productCode, setProductCode] = useState('');
   const [sizeProduct, setSizeProduct] = useState('');
   const [stockProduct, setStockProduct] = useState(1);
   const [categoryProduct, setCategoryProduct] = useState('');
@@ -41,6 +42,7 @@ const AddProducts = ({ close }) => {
     setStockProduct(1);
     setSizeProduct('');
     setCategoryProduct('');
+    setProductCode('');
     setSelectedPictures(null)
   }
 
@@ -63,7 +65,7 @@ const AddProducts = ({ close }) => {
 
   const handleClickSaveButton = (e) => {
     e.preventDefault();
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures, productCode)) {
 
       let linksToSelectedImages = selectedPictures.blobs;
       const addNewProductToList = {
@@ -76,6 +78,7 @@ const AddProducts = ({ close }) => {
         sizeProduct: sizeProduct,
         stockProduct: stockProduct,
         categoryProduct: categoryProduct,
+        productCode: productCode,
         selectedPictures: linksToSelectedImages
       }
 
@@ -94,19 +97,22 @@ const AddProducts = ({ close }) => {
     setLoadind(true)
     let formData = new FormData();
 
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures, productCode)) {
 
       formData.append("name", nameProduct)
       formData.append("brand", brandProduct)
       formData.append("color", colorProduct)
       formData.append("description", descriptionProduct)
       formData.append("price", priceProduct)
-      formData.append("sizes", [
-        {
-          "stock": stockProduct,
-          "size": sizeProduct
-        }
-      ])
+      formData.append("productCode", productCode)
+      formData.append("stock", stockProduct)
+      formData.append("size", sizeProduct)
+      // formData.append("sizes", [
+      //   {
+      //     "stock": stockProduct,
+      //     "size": sizeProduct
+      //   }
+      // ])
       formData.append("categoryName", categoryProduct)
 
       // append all images to formData
@@ -125,7 +131,7 @@ const AddProducts = ({ close }) => {
         .then(response => response.json())
         .then(data => {
           const { success, newProductCreated } = data
-
+          console.log('data', data);
           if (success) {
             dispatch(addNewProduct({
               newProduct: {
@@ -137,6 +143,7 @@ const AddProducts = ({ close }) => {
                 brand: newProductCreated.brand,
                 sizeStock: newProductCreated.sizeStock,
                 stock: newProductCreated.stock,
+                productCode: productCode,
                 categoryProduct: newProductCreated.categoryProduct,
                 productImages: newProductCreated.productImages
               }
@@ -169,13 +176,23 @@ const AddProducts = ({ close }) => {
 
         <div className="container-btn-box-add-new-product">
 
-          <div className="wrapper-btn-save-create">
-            <button className="btn-save-add-new-product" onClick={handleClickSaveButton}> Save Multiple Products </button>
-            <button className="btn-create-add-new-product" onClick={handleClickCreateButton}> Create </button>
+          <div className="wrapper-btn-save-create flex">
+            <Button
+              onClick={handleClickSaveButton}
+              textBtn={'Save Multiple Products'}
+              className={'btn-add-new-size flex justify-center items-center w-max m-1 p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+            <Button
+              onClick={handleClickCreateButton}
+              textBtn={'Create'}
+              className={'btn-add-new-size flex justify-center items-center w-max m-1 p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-red-600 hover:bg-[var(--baseColor)]'} />
           </div>
 
           <div className="wrapper-btn-close-add-new-product">
-            <button className="btn-close-add-new-product" onClick={handleClickCloseButton}>X</button>
+            <Button
+              onClick={() => { close(); resetFields() }}
+              textBtn={'X'}
+              className={'btn-add-new-size flex justify-center items-center w-max m-1 p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-red-600 hover:bg-[var(--baseColor)]'} />
+
           </div>
 
         </div>
@@ -196,6 +213,8 @@ const AddProducts = ({ close }) => {
             <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
             <label>Stock Product</label>
             <input type={'number'} value={stockProduct} id={'stockProduct'} onChange={(e) => { setStockProduct(e.target.value) }} />
+            <label>Code Product</label>
+            <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
             <label>Size Product</label>
             <select className="select-size" value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
               < option value={'None'} > None</option>
@@ -331,14 +350,14 @@ s
       width: 50%;  
     }
 
-    .wrapper-btn-save-create {
+/*     .wrapper-btn-save-create {
       display: flex;
       justify-content: flex-start;
       margin: 5px;
       padding: 5px;
       float: left;
       width: 50%;
-    }
+    } */
 
     .btn-create-add-new-product,
     .btn-save-add-new-product,
@@ -365,7 +384,7 @@ s
       align-items: center;
       margin: 10px;
       width: 90%;
-      max-height: 450px;
+      height: 445px;
       overflow: auto;
     }
     

@@ -46,9 +46,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
-
+        console.log('data', data);
         if (success) {
-          
           dispatch(
             getAllProducts({
               products: products,
@@ -101,33 +100,6 @@ function App() {
 
       })
       .catch((error) => console.log(error))
-    // .finally(() => {
-    //   if ("TOKEN_ACCES" in localStorage) {
-    //     const token = localStorage.getItem("TOKEN_ACCES");
-    //     let TMP_USER = [];
-
-    //     const decoded_user = jwt_decode(token); // decode token
-
-    //     for (const claim in decoded_user) {
-    //       if (Object.hasOwnProperty.call(decoded_user, claim)) {
-    //         TMP_USER.push(decoded_user[claim]);
-    //       }
-    //     }
-
-    //     dispatch(
-    //       login({
-    //         user: {
-    //           email: TMP_USER[2],
-    //           firstName: TMP_USER[0],
-    //           lastName: TMP_USER[1],
-    //           role: [TMP_USER[3]],
-    //           timeExpirationsToken: TMP_USER[4],
-    //         },
-    //       })
-    //     );
-
-    //   }
-    // });
 
     setLoading(false);
 

@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import styledComponents from "styled-components";
 import { selectProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
+import { type } from "@testing-library/user-event/dist/type";
 
 
 const AddNewSize_ExistProduct = ({ close }) => {
@@ -18,10 +19,13 @@ const AddNewSize_ExistProduct = ({ close }) => {
     const { sizesProductAvailable } = useSelector(selectProduct);
 
     //Local variable
-    const [idToRemove, setIdToRemove] = useState();
-    const [productToRemove, setProductToRemove] = useState();
+    const [selectedProduct, setSelectedProduct] = useState();
+    const [selectedSize, setSelecedtSize] = useState('');
+    const [selectedStock, setSelectedStock] = useState(0)
+    const [listOfNewSizeStock, setListOfNewSizeStock] = useState([])
     const [msgButton, setMsgButton] = useState('Add new sizes and stock')
-    const [msg, setMsg] = useState('Select Product By Id')
+    const [msg, setMsg] = useState('')
+    const [tmp_SizeAdded, setTmp_SizeAdded] = useState([])
 
     const handleClickCloseButton = (e) => {
         e.preventDefault();
@@ -29,114 +33,189 @@ const AddNewSize_ExistProduct = ({ close }) => {
         close();
     }
 
-    const handleOnChange = (idSelected) => {
-        setIdToRemove(idSelected);
-        const TMP_productToRemove = products.filter(product => product.id.toString() === idSelected.toString());
-
-        setProductToRemove(TMP_productToRemove);
+    const handleOnChangeProductSelected = (idSelected) => {
+        setSelectedProduct(products.filter(product => product.id.toString() === idSelected.toString()));
+    }
+    const handleOnChangeSizeSelected = (SizeSelected) => {
+        setSelecedtSize(sizesProductAvailable.filter(size => size.name.toString() === SizeSelected.toString()));
     }
 
+    const saveNewSizeAndStock = () => {
+
+        if (!tmp_SizeAdded.includes(selectedSize[0].name.toString())) {
+            selectedProduct && selectedSize && setListOfNewSizeStock(prev => {
+                return [...prev, { id: selectedProduct[0].id, size: selectedSize[0].name, stock: parseInt(selectedStock) }]
+            })
+            setTmp_SizeAdded(prev => [...prev, selectedSize[0].name])
+        }
+
+    }
 
     const handleAddNewSizeToExistProduct = async () => {
-        //logic delete button
-      /*   await fetch(`${URI}Product/v1/delete/productById/${idToRemove}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                const { success } = data
 
-                if (success) {
-                    dispatch(deleteProductById({ idTarget: idToRemove }))
-                    setMsg(`The product with id ${idToRemove} has been removed successfully`)
-                }
-            })
-            .catch(error => {
-                console.log(error.toString())
-                setMsg(error.toString())
-            })
-        setIdToRemove('') */
+        // await fetch(`${URI}Product/v1/add/new/size/existProduct/${selectProduct.id}/${stock}/${selectedSize.name}`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+        //     }
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const { success } = data
+
+        //         if (success) {
+        //             dispatch(deleteProductById({ idTarget: idToRemove }))
+        //             setMsg(`The product with id ${idToRemove} has been removed successfully`)
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.log(error.toString())
+        //         setMsg(error.toString())
+        //     })
+        // setIdToRemove('')
+
 
     }
-
-
 
     return (
         <Wrapper>
-            <div className="box-remove-product">
-                <div className="container-btn-box-remove-product">
+            <div className="container-add-new-size">
 
-                    <div className="container-btn-close-remove-product">
-                        <div className="wrapper-btn-add-remove-list-delete">
-                            <Button
-                                onClick={handleAddNewSizeToExistProduct}
-                                textBtn={msgButton}
-                                className={'btn-add-new-size flex justify-center items-center w-max p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+                <div className="header-add-new-size flex justify-between items-center w-full p-2">
 
-
-                        </div>
-
-                        <button className="btn-close-remove-product" onClick={handleClickCloseButton}>X</button>
-                    </div>
+                    <Button
+                        onClick={handleAddNewSizeToExistProduct}
+                        textBtn={msgButton}
+                        className={'btn-add-new-size flex justify-center items-center w-max p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+                    <Button
+                        onClick={() => close()}
+                        textBtn={'X'}
+                        className={'btn-add-new-size flex justify-center items-center w-max p-2 h-8 font-bold bg-[var(--sliderColor)] rounded-md hover:text-red-600 hover:bg-[var(--baseColor)]'} />
 
                 </div>
+
                 <div className="msg">{msg}</div>
 
-                <div className="wrapper-form-select-product-to-remove">
+                <div className="wrapper-form-select-product flex flex-col justify-center items-center w-full">
 
-                    <label>Select Id Product</label>
-                    <select className="select-size" value={idToRemove} onChange={(e) => handleOnChange(e.target.value)} >
-                        < option value={'None'} > None</option>
-                        {
-                            products && products.map((product, index) => {
+                    {/* Select Id Product */}
+                    <div className="wrapper-select-product flex justify-between items-center w-full">
+                        <label className="select-product-label flex justify-center items-center w-[250px] p-2 font-bold ">Select Id Product</label>
+                        <select className="select-product flex justify-center items-center w-[20%] m-2 text-center outline-none bg-[var(--sliderColor)] rounded-md"
+                            value={selectedProduct && selectedProduct.id}
+                            onChange={(e) => handleOnChangeProductSelected(e.target.value)} >
+
+                            < option value={'Id'} > Id </option>
+                            {products && products.map((product, index) => {
                                 return (
                                     < option key={index} value={product.id} > {product.id}</option>
                                 )
-                            })
-                        }
-                    </select>
+                            })}
+                        </select>
+                    </div>
+
+                    {/* Add New Size */}
+                    <div className="wrapper-select-product flex justify-between items-center w-full">
+                        <Button
+                            onClick={saveNewSizeAndStock}
+                            textBtn={'Add'}
+                            className={'btn-add-new-size flex justify-center items-center w-max p-2 h-6 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
+
+                        <input onChange={(e) => setSelectedStock(e.target.value)} value={selectedStock} placeholder="stock" className="input-stock  flex w-[100px] h-6 text-center outline-none border-b-2 border-[var(--sliderColor)] bg-transparent rounded-md" />
+                        <select className="select-size flex justify-center items-center w-[20%] m-2 text-center outline-none bg-[var(--sliderColor)] rounded-md"
+                            value={selectedSize && selectedSize.name}
+                            onChange={(e) => handleOnChangeSizeSelected(e.target.value)} >
+
+                            < option value={'Size'} > Size </option>
+                            {sizesProductAvailable && sizesProductAvailable.map((size, index) => {
+                                return (
+                                    < option key={index} value={size.name} > {size.name}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
 
 
                 </div>
 
-                {productToRemove &&
-                    <div className="container-product-to-remove">
+                {selectedProduct &&
+                    <div className="container-product-selected flex justify-between items-start w-full h-full">
 
-                        <div className="container-product-to-remove-left-side">
 
-                            <div className="wrapper-product-to-remove-left-side">
-                                {/* <label>Name </label>
-                                <p>{productToRemove[0].name}</p>
-                                <label>Color </label>
-                                <p>{productToRemove[0].color}</p>
-                                <label>Description </label>
-                                <p>{productToRemove[0].description}</p>
-                                <label>Price </label>
-                                <p>{productToRemove[0].price} {productToRemove[0].currency}</p>
-                                <label>Brand</label>
-                                <p>{productToRemove[0].brand}</p>
-                                <label>Category </label>
-                                <p>{productToRemove[0].categoryProduct.name}</p> */}
-                                <label>Size </label>
-                                <p>{productToRemove[0].size}</p>
-                                <label>Stock</label>
-                                <p>{productToRemove[0].stock}</p>
-                            </div>
+                        {/* EXIST SIZE */}
+                        <div className="left-side flex flex-col justify-center items-center w-[30%] h-full mx-auto ">
+                            <label className="size-label flex justify-start items-center w-full font-bold mt-2 ">EXISTING </label>
+                            {selectedProduct.map(size => {
+                                return (
+                                    size.sizeStocks.map((item, index) => {
+                                        return (
+                                            <div key={index} className="flex justify-center items-center w-full ">
+                                                <div className="size flex flex-col justify-center items-center w-full p-2 ">
+                                                    <label className="size-label flex justify-center items-center w-full font-bold ">Size </label>
+                                                    <p className="size flex justify-center items-center text-center m-auto w-full">{item.size.name}</p>
+                                                </div>
 
+                                                <div className="stock flex flex-col justify-center items-center w-full ">
+                                                    <label className="size-label flex justify-center items-center w-full font-bold">Stock </label>
+                                                    <p className="stock flex justify-center items-center text-center  w-full">{item.stock}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                )
+                            })
+                            }
+
+                            {/* NEW SIZE ADDED */}
+                            <label className="size-label flex justify-start items-center w-full font-bold ">NEW </label>
+                            {
+                                listOfNewSizeStock.map((item, index) => {
+                                    return (
+                                        <div key={index} className="flex justify-center items-center w-full ">
+                                            <div className="size flex flex-col justify-center items-center w-full p-2 ">
+                                                <p className="size flex justify-center items-center text-center m-auto w-full">{item.size}</p>
+                                            </div>
+                                            <div className="wrapper-counter flex justify-center items-center m-1">
+                                                <Button className={' flex justify-center items-center w-5 h-5 p-2  font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'}
+                                                    textBtn={"-"}
+                                                    id={selectedProduct[0].id}
+                                                    onClick={() => {
+                                                        listOfNewSizeStock.map(obj => {
+                                                            if (obj.size === item.size)
+                                                                return item.stock -= 1
+                                                        })
+                                                    }
+                                                    }
+                                                />
+
+                                                <p className="stock flex justify-center items-center text-center  w-full p-2">{item.stock}</p>
+
+                                                <Button className={' flex justify-center items-center w-5 h-5 p-2  font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'}
+                                                    textBtn={"+"}
+                                                    onClick={() => listOfNewSizeStock.map(obj => {
+                                                        if (obj.size === item.size)
+                                                            return item.stock += 1
+                                                    })}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
 
-                        <div className="wrapper-imgs w-[50%]">
-                            <div className="up-side-imgs">
-                                <div className="img-1 "><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 0 && productToRemove[0].productImages[0].path || logoIcon} alt="img 1" /></div>
-                                <div className="img-2"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 1 && productToRemove[0].productImages[1].path || logoIcon} alt="img 2" /></div>
-                            </div>
 
-                            <div className="down-side-imgs">
-                                <div className="img-3"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 2 && productToRemove[0].productImages[2].path || logoIcon} alt="img 3" /></div>
-                                <div className="img-4"><img width={'100px'} height={'auto'} src={productToRemove[0].productImages.length > 3 && productToRemove[0].productImages[3].path || logoIcon} alt="img 4" /></div>
+                        <div className="right-side w-[60%]">
+                            <div className="wrapper-imgs w-[70%]">
+                                <div className="up-side-imgs">
+                                    <div className="img-1 "><img width={'100px'} height={'auto'} src={selectedProduct[0].productImages.length > 0 && selectedProduct[0].productImages[0].path || logoIcon} alt="img 1" /></div>
+                                    <div className="img-2"><img width={'100px'} height={'auto'} src={selectedProduct[0].productImages.length > 1 && selectedProduct[0].productImages[1].path || logoIcon} alt="img 2" /></div>
+                                </div>
+
+                                <div className="down-side-imgs">
+                                    <div className="img-3"><img width={'100px'} height={'auto'} src={selectedProduct[0].productImages.length > 2 && selectedProduct[0].productImages[2].path || logoIcon} alt="img 3" /></div>
+                                    <div className="img-4"><img width={'100px'} height={'auto'} src={selectedProduct[0].productImages.length > 3 && selectedProduct[0].productImages[3].path || logoIcon} alt="img 4" /></div>
+                                </div>
                             </div>
 
                         </div>
@@ -162,41 +241,8 @@ const Wrapper = styledComponents.div`
     width: 100%;
     height: 100%;
 
-    label {
-        display: flex;
-        flex-direction: row;
-        justify-content : flex-start;
-        align-items: center;
-        width: 100%;
-        height: 100%;    
-        font-size: 15px;
-        font-weight: bold;
-    }
-     
-    p {
-        display: flex;
-        flex-direction: row;
-        justify-content : flex-start;
-        align-items: center;
-        width: 100%;
-        height: 100%;    
-        font-size: 12px;
-        font-weight: bold;
-    }
 
-    .box-add-new-product input , .select-category, .select-size{
-        width: 100%;
-        height: 25px;
-        margin: 2px;
-        text-align: center;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        background: var(--buttonColor);
-    }
-
-
-    .box-remove-product {
+    .container-add-new-size {
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -215,55 +261,7 @@ const Wrapper = styledComponents.div`
         background: var(--baseColor);
     }
 
-    .container-btn-box-remove-product {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-    }
-    
-    .btn-delete,
-    .btn-add-remove-list,
-    .btn-close-remove-product {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        min-height: 30px;
-        border: none;
-        border-radius: 5px;
-        margin: 5px;
-        font-size: 15px;
-        outline: none;
-        cursor: pointer;
-        color: var(--baseColor);
-        background: var(--buttonColor);
-    }
 
-    .container-btn-close-remove-product {
-        display: flex;
-        justify-content: space-between;
-        margin: 5px;
-        padding: 5px;
-        float: left;
-        width: 100%;  
-  }
-
-  
-    .btn-delete:hover,
-    .btn-add-remove-list:hover {
-        color: white;
-    }
-    
-    .btn-delete:hover,
-    .btn-close-remove-product:hover{
-        background: red;
-    }
-
-    .wrapper-btn-add-remove-list-delete {
-        display: flex;
-        // padding: 5px;
-    }
 
 
     .msg {
@@ -275,61 +273,6 @@ const Wrapper = styledComponents.div`
         font-size: 15px;
         font-weight: bold;
         color: red;
-    }
-
-
-
-    .wrapper-form-select-product-to-remove {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin: 10px;
-        width: 90%;
-        height: auto
-    }
-    
-    .container-product-to-remove {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin: 20px 5px;
-        padding: 5px;
-        width: 90%;
-        max-height: 450px;
-    }
-
-
-    .container-product-to-remove-left-side {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 10px;
-        padding: 5px;
-        width: 100%;
-        height: 300px;
-        overflow: auto;
-    }
-    
-    .wrapper-product-to-remove-left-side {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        height: inherit;
-    }
-
-      .container-product-to-remove-right-side {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 10px;
-        width: 100%;
-        height: auto;
     }
 
      .wrapper-imgs {
