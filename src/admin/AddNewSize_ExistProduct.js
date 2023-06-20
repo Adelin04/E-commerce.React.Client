@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import Button from "../components/Button";
 import styledComponents from "styled-components";
 import { selectProduct, deleteProductById } from "../Features/ProductSlice";
 import { URI } from "../_Utils/Dependency";
-import { type } from "@testing-library/user-event/dist/type";
 
 
 const AddNewSize_ExistProduct = ({ close }) => {
@@ -21,24 +20,49 @@ const AddNewSize_ExistProduct = ({ close }) => {
     //Local variable
     const [selectedProduct, setSelectedProduct] = useState();
     const [selectedSize, setSelecedtSize] = useState('');
-    const [selectedStock, setSelectedStock] = useState(0)
+    const [selectedStock, setSelectedStock] = useState('')
     const [listOfNewSizeStock, setListOfNewSizeStock] = useState([])
     const [msgButton, setMsgButton] = useState('Add new sizes and stock')
     const [msg, setMsg] = useState('')
     const [tmp_SizeAdded, setTmp_SizeAdded] = useState([])
-
     const handleClickCloseButton = (e) => {
         e.preventDefault();
         // resetFields();
         close();
     }
 
-    const handleOnChangeProductSelected = (idSelected) => {
-        setSelectedProduct(products.filter(product => product.id.toString() === idSelected.toString()));
+    useEffect(() => {
+        console.log('render');
+    }, [listOfNewSizeStock])
+
+
+    const handleOnChangeProductSelected = (selectedId) => {
+        setSelectedProduct(products.filter(product => product.id.toString() === selectedId.toString()));
     }
-    const handleOnChangeSizeSelected = (SizeSelected) => {
-        setSelecedtSize(sizesProductAvailable.filter(size => size.name.toString() === SizeSelected.toString()));
+
+    const handleOnChangeSizeSelected = (selectedSize) => {
+        setSelecedtSize(sizesProductAvailable.filter(size => size.name.toString() === selectedSize.toString()));
     }
+
+    const decrementtCounter = () => {
+        listOfNewSizeStock.map(item => {
+            if (item.size === selectedSize[0].name)
+                setListOfNewSizeStock(prev => [...prev, { stock: item.stock - 1 }])
+
+        })
+    }
+
+    const incrementCounter = () => {
+        console.log('listOfNewSizeStock', listOfNewSizeStock);
+        listOfNewSizeStock.map(item => {
+            if (item.size === selectedSize[0].name) {
+                console.log(item.size === selectedSize[0].name);
+                item.stock += 1
+                // setListOfNewSizeStock({ id: item.id, size: item.size, stock: item.stock + 1 })
+            }
+        })
+    }
+
 
     const saveNewSizeAndStock = () => {
 
@@ -53,7 +77,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
 
     const handleAddNewSizeToExistProduct = async () => {
 
-        // await fetch(`${URI}Product/v1/add/new/size/existProduct/${selectProduct.id}/${stock}/${selectedSize.name}`, {
+        // await fetch(`${URI}Product/v1/add/new/size/existProduct/${selectedProduct[0].id}/${parseInt(selectedStock)}/${selectedSize[0].name}`, {
         //     method: 'POST',
         //     headers: {
         //         'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
@@ -64,15 +88,14 @@ const AddNewSize_ExistProduct = ({ close }) => {
         //         const { success } = data
 
         //         if (success) {
-        //             dispatch(deleteProductById({ idTarget: idToRemove }))
-        //             setMsg(`The product with id ${idToRemove} has been removed successfully`)
+        //          ...
         //         }
         //     })
         //     .catch(error => {
         //         console.log(error.toString())
         //         setMsg(error.toString())
         //     })
-        // setIdToRemove('')
+
 
 
     }
@@ -152,12 +175,12 @@ const AddNewSize_ExistProduct = ({ close }) => {
                                             <div key={index} className="flex justify-center items-center w-full ">
                                                 <div className="size flex flex-col justify-center items-center w-full p-2 ">
                                                     <label className="size-label flex justify-center items-center w-full font-bold ">Size </label>
-                                                    <p className="size flex justify-center items-center text-center m-auto w-full">{item.size.name}</p>
+                                                    <p className="size flex justify-center items-center text-center m-auto w-full">{item.size.name || '-'}</p>
                                                 </div>
 
                                                 <div className="stock flex flex-col justify-center items-center w-full ">
                                                     <label className="size-label flex justify-center items-center w-full font-bold">Stock </label>
-                                                    <p className="stock flex justify-center items-center text-center  w-full">{item.stock}</p>
+                                                    <p className="stock flex justify-center items-center text-center  w-full">{item.stock || '-'}</p>
                                                 </div>
                                             </div>
                                         )
@@ -179,23 +202,14 @@ const AddNewSize_ExistProduct = ({ close }) => {
                                                 <Button className={' flex justify-center items-center w-5 h-5 p-2  font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'}
                                                     textBtn={"-"}
                                                     id={selectedProduct[0].id}
-                                                    onClick={() => {
-                                                        listOfNewSizeStock.map(obj => {
-                                                            if (obj.size === item.size)
-                                                                return item.stock -= 1
-                                                        })
-                                                    }
-                                                    }
+                                                    onClick={decrementtCounter}
                                                 />
 
                                                 <p className="stock flex justify-center items-center text-center  w-full p-2">{item.stock}</p>
 
                                                 <Button className={' flex justify-center items-center w-5 h-5 p-2  font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'}
                                                     textBtn={"+"}
-                                                    onClick={() => listOfNewSizeStock.map(obj => {
-                                                        if (obj.size === item.size)
-                                                            return item.stock += 1
-                                                    })}
+                                                    onClick={incrementCounter}
                                                 />
                                             </div>
                                         </div>
