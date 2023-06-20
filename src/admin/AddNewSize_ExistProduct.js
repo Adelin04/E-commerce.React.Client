@@ -20,7 +20,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
     //Local variable
     const [selectedProduct, setSelectedProduct] = useState();
     const [selectedSize, setSelecedtSize] = useState('');
-    const [selectedStock, setSelectedStock] = useState('')
+    const [stock, setStock] = useState('')
     const [listOfNewSizeStock, setListOfNewSizeStock] = useState([])
     const [msgButton, setMsgButton] = useState('Add new sizes and stock')
     const [msg, setMsg] = useState('')
@@ -30,11 +30,6 @@ const AddNewSize_ExistProduct = ({ close }) => {
         // resetFields();
         close();
     }
-
-    useEffect(() => {
-        console.log('render');
-    }, [listOfNewSizeStock])
-
 
     const handleOnChangeProductSelected = (selectedId) => {
         setSelectedProduct(products.filter(product => product.id.toString() === selectedId.toString()));
@@ -63,12 +58,11 @@ const AddNewSize_ExistProduct = ({ close }) => {
         })
     }
 
-
     const saveNewSizeAndStock = () => {
 
         if (!tmp_SizeAdded.includes(selectedSize[0].name.toString())) {
             selectedProduct && selectedSize && setListOfNewSizeStock(prev => {
-                return [...prev, { id: selectedProduct[0].id, size: selectedSize[0].name, stock: parseInt(selectedStock) }]
+                return [...prev, { id: selectedProduct[0].id, size: selectedSize[0].name, stock: parseInt(stock) }]
             })
             setTmp_SizeAdded(prev => [...prev, selectedSize[0].name])
         }
@@ -144,7 +138,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
                             textBtn={'Add'}
                             className={'btn-add-new-size flex justify-center items-center w-max p-2 h-6 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
 
-                        <input onChange={(e) => setSelectedStock(e.target.value)} value={selectedStock} placeholder="stock" className="input-stock  flex w-[100px] h-6 text-center outline-none border-b-2 border-[var(--sliderColor)] bg-transparent rounded-md" />
+                        <input onChange={(e) => setStock(e.target.value)} value={stock} placeholder="stock" className="input-stock  flex w-[100px] h-6 text-center outline-none border-b-2 border-[var(--sliderColor)] bg-transparent rounded-md" />
                         <select className="select-size flex justify-center items-center w-[20%] m-2 text-center outline-none bg-[var(--sliderColor)] rounded-md"
                             value={selectedSize && selectedSize.name}
                             onChange={(e) => handleOnChangeSizeSelected(e.target.value)} >
