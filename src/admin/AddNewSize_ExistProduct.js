@@ -22,7 +22,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
     const [selectedSize, setSelecedtSize] = useState('');
     const [stock, setStock] = useState('')
     const [listOfNewSizeStock, setListOfNewSizeStock] = useState([])
-    const [msgButton, setMsgButton] = useState('Add new sizes and stock')
+    const [msgButton, setMsgButton] = useState('Save')
     const [msg, setMsg] = useState('')
     const [tmp_SizeAdded, setTmp_SizeAdded] = useState([])
     const handleClickCloseButton = (e) => {
@@ -60,9 +60,9 @@ const AddNewSize_ExistProduct = ({ close }) => {
 
     const saveNewSizeAndStock = () => {
 
-        if (!tmp_SizeAdded.includes(selectedSize[0].name.toString())) {
+        if (!tmp_SizeAdded.includes(selectedSize[0].name)) {
             selectedProduct && selectedSize && setListOfNewSizeStock(prev => {
-                return [...prev, { id: selectedProduct[0].id, size: selectedSize[0].name, stock: parseInt(stock) }]
+                return [...prev, { size: selectedSize[0].name, stock: parseInt(stock) }]
             })
             setTmp_SizeAdded(prev => [...prev, selectedSize[0].name])
         }
@@ -70,25 +70,29 @@ const AddNewSize_ExistProduct = ({ close }) => {
     }
 
     const handleAddNewSizeToExistProduct = async () => {
+        let payload = { id: selectedProduct[0].id, listOfNewSizeStock: listOfNewSizeStock }
 
-        // await fetch(`${URI}Product/v1/add/new/size/existProduct/${selectedProduct[0].id}/${parseInt(selectedStock)}/${selectedSize[0].name}`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
-        //     }
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const { success } = data
+        await fetch(`${URI}SizeStock/v1/add/newSize/existProduct`, {
+            method: 'POST',
+            body: JSON.stringify(payload),
 
-        //         if (success) {
-        //          ...
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.log(error.toString())
-        //         setMsg(error.toString())
-        //     })
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const { success } = data
+                console.log('data-size', data);
+                // if (success) {
+
+                // }
+            })
+            .catch(error => {
+                console.log(error)
+                setMsg(error)
+            })
 
 
 
@@ -134,7 +138,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
                     {/* Add New Size */}
                     <div className="wrapper-select-product flex justify-between items-center w-full">
                         <Button
-                            onClick={saveNewSizeAndStock}
+                            onClick={() => { saveNewSizeAndStock(); setStock('') }}
                             textBtn={'Add'}
                             className={'btn-add-new-size flex justify-center items-center w-max p-2 h-6 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]'} />
 
@@ -162,18 +166,22 @@ const AddNewSize_ExistProduct = ({ close }) => {
                         {/* EXIST SIZE */}
                         <div className="left-side flex flex-col justify-center items-center w-[30%] h-full mx-auto ">
                             <label className="size-label flex justify-start items-center w-full font-bold mt-2 ">EXISTING </label>
+
+                            <div className="flex justify-around w-full">
+                                <label className="size-label flex justify-center items-center w-full font-bold ">Size </label>
+                                <label className="size-label flex justify-center items-center w-full font-bold">Stock </label>
+                            </div>
+
                             {selectedProduct.map(size => {
                                 return (
                                     size.sizeStocks.map((item, index) => {
                                         return (
                                             <div key={index} className="flex justify-center items-center w-full ">
                                                 <div className="size flex flex-col justify-center items-center w-full p-2 ">
-                                                    <label className="size-label flex justify-center items-center w-full font-bold ">Size </label>
                                                     <p className="size flex justify-center items-center text-center m-auto w-full">{item.size.name || '-'}</p>
                                                 </div>
 
                                                 <div className="stock flex flex-col justify-center items-center w-full ">
-                                                    <label className="size-label flex justify-center items-center w-full font-bold">Stock </label>
                                                     <p className="stock flex justify-center items-center text-center  w-full">{item.stock || '-'}</p>
                                                 </div>
                                             </div>
