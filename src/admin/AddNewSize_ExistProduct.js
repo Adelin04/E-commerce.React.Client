@@ -70,7 +70,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
     }
 
     const handleAddNewSizeToExistProduct = async () => {
-        let payload = { id: selectedProduct[0].id, listOfNewSizeStock: listOfNewSizeStock }
+        let payload = { idProduct: selectedProduct[0].id, listOfNewSizeStock: listOfNewSizeStock }
 
         await fetch(`${URI}SizeStock/v1/add/newSize/existProduct`, {
             method: 'POST',
@@ -84,7 +84,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
             .then(response => response.json())
             .then(data => {
                 const { success } = data
-                console.log('data-size', data);
+                // console.log('data-size', data);
                 // if (success) {
 
                 // }
@@ -124,7 +124,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
                         <label className="select-product-label flex justify-center items-center w-[250px] p-2 font-bold ">Select Id Product</label>
                         <select className="select-product flex justify-center items-center w-[20%] m-2 text-center outline-none bg-[var(--sliderColor)] rounded-md"
                             value={selectedProduct && selectedProduct.id}
-                            onChange={(e) => handleOnChangeProductSelected(e.target.value)} >
+                            onChange={(e) => { handleOnChangeProductSelected(e.target.value); setListOfNewSizeStock([]) }} >
 
                             < option value={'Id'} > Id </option>
                             {products && products.map((product, index) => {

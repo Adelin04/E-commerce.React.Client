@@ -46,7 +46,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
-        console.log('data', data);
+        // console.log('data', data);
         if (success) {
           dispatch(
             getAllProducts({

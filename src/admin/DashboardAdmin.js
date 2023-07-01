@@ -11,6 +11,7 @@ import { URI } from "../_Utils/Dependency";
 import RemoveProducts from "./RemoveProducts";
 import CategoryProducts from "./CategoryProducts";
 import AddNewSize_ExistProduct from "./AddNewSize_ExistProduct";
+import Size from "./Szie";
 
 const DashboardAdmin = () => {
   const { products } = useSelector(selectProduct);
@@ -26,7 +27,8 @@ const DashboardAdmin = () => {
     AddNewProducts: () => <AddProducts close={handleClosePopUp} />,
     AddNewCategory: () => <CategoryProducts close={handleClosePopUp} />,
     AddNewSize_ExistProduct: () => <AddNewSize_ExistProduct close={handleClosePopUp} />,
-    RemoveProducts: () => <RemoveProducts close={handleClosePopUp} />
+    RemoveProducts: () => <RemoveProducts close={handleClosePopUp} />,
+    CreateNewSize: () => <Size close={handleClosePopUp} />
   }
 
 
@@ -177,6 +179,12 @@ const DashboardAdmin = () => {
           <hr className="w-full bg-black my-2" />
 
           <h3 className="text-center text-lg font-bold"> Size Product</h3>
+          <button
+            className="menu-btn-remove-project"
+            id="CreateNewSize"
+            onClick={(e) => setBtnClicked(e.target.id)}
+          >Create New Size
+          </button>
 
           <hr className="w-full bg-black my-2" />
 

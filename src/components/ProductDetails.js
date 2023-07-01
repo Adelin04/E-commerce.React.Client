@@ -227,11 +227,11 @@ const ProductDetails = () => {
                   onChange={(e) => setSize(e.target.value)}
                 >
                   <option value={"Size"}>Size</option>
-                  <option value={"S"}>S</option>
-                  <option value={"M"}>M</option>
-                  <option value={"L"}>L</option>
-                  <option value={"XL"}>XL</option>
-                  <option value={"XXL"}>XXL</option>
+                  {productById[0].sizeStocks.map(sizeStock => {
+                    return (
+                      <option key={sizeStock.id} value={sizeStock.size.name}>{sizeStock.size.name}</option>
+                    )
+                  })}
                 </select>
               </div>
 
