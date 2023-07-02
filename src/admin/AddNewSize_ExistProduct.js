@@ -25,10 +25,14 @@ const AddNewSize_ExistProduct = ({ close }) => {
     const [msgButton, setMsgButton] = useState('Save')
     const [msg, setMsg] = useState('')
     const [tmp_SizeAdded, setTmp_SizeAdded] = useState([])
-    const handleClickCloseButton = (e) => {
-        e.preventDefault();
-        // resetFields();
-        close();
+
+
+    const resetFields = () => {
+        setSelectedProduct('')
+        setSelecedtSize('')
+        setStock('')
+        setListOfNewSizeStock([])
+        setTmp_SizeAdded([])
     }
 
     const handleOnChangeProductSelected = (selectedId) => {
@@ -67,6 +71,7 @@ const AddNewSize_ExistProduct = ({ close }) => {
             setTmp_SizeAdded(prev => [...prev, selectedSize[0].name])
         }
 
+        setSelecedtSize('')
     }
 
     const handleAddNewSizeToExistProduct = async () => {
@@ -85,9 +90,9 @@ const AddNewSize_ExistProduct = ({ close }) => {
             .then(data => {
                 const { success } = data
                 // console.log('data-size', data);
-                // if (success) {
-
-                // }
+                if (success) {
+                    resetFields()
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -164,10 +169,10 @@ const AddNewSize_ExistProduct = ({ close }) => {
 
 
                         {/* EXIST SIZE */}
-                        <div className="left-side flex flex-col justify-center items-center w-[30%] h-full mx-auto ">
+                        <div className="left-side flex flex-col justify-center items-center w-[40%] h-[350px] mx-auto overflow-scroll">
                             <label className="size-label flex justify-start items-center w-full font-bold mt-2 ">EXISTING </label>
 
-                            <div className="flex justify-around w-full">
+                            <div className="flex justify-around w-full ">
                                 <label className="size-label flex justify-center items-center w-full font-bold ">Size </label>
                                 <label className="size-label flex justify-center items-center w-full font-bold">Stock </label>
                             </div>
