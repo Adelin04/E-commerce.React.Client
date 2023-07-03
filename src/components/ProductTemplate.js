@@ -14,7 +14,7 @@ const ProductTemplate = ({ product }) => {
 
   return (
 
-    <div className="productTemplate flex flex-col justify-between items-center p-2 m-2 rounded-xl">
+    <div className="productTemplate flex flex-col justify-between items-center p-2 m-2 rounded-xl ">
 
       <h3 className="productTemplate-title flex justify-center items-center text-[20px] font-bold p-1 m-1 text-textDescriptionAndPrice">{product.name}</h3>
 
