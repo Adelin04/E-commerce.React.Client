@@ -3,7 +3,7 @@ import ProductTemplate from "./ProductTemplate";
 
 const ProductsList = ({ products }) => {
   return (
-    <div className="product-list flex flex-wrap justify-center items-center w-[80%]  h-full m-auto">
+    <div className="product-list flex flex-wrap justify-center items-center w-[80%]  h-full m-auto lg:w-[60%]">
       {products &&
         products.map((product, index) => {
           return (
