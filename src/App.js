@@ -29,11 +29,7 @@ function App() {
   const dispatch = useDispatch();
   let userLogged = useSelector(selectUser).user;
 
-
   const [loading, setLoading] = useState(true);
-
-
-
 
   useEffect(async () => {
 
@@ -58,10 +54,10 @@ function App() {
           if ('BASKET' in localStorage) {
             const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
 
-            basketByUser && basketByUser.map(productBasket => {
+            basketByUser?.map(productBasket => {
               dispatch(
                 addProductToShoppingCart({
-                  newProduct: SerializeProduct(products.filter(product => product.id === productBasket.productId)[0]),
+                  newProduct: SerializeProduct(products?.filter(product => product.id === productBasket.productId)[0]),
                   quantity: productBasket.quantity,
                   size: productBasket.size,
                 })
