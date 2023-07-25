@@ -9,21 +9,42 @@ import { useSelector } from "react-redux";
 import { selectShoppingCart } from "../Features/ShoppingCartSlice";
 import { Link } from "react-router-dom";
 import { URI } from "../_Utils/Dependency";
+import exclamation from "../icons/exclamation.png";
 
 const AddressForm = () => {
   const { shoppingCartList, nrProducts, totalPrice, currency } =
     useSelector(selectShoppingCart);
 
-  const [validated, setValidated] = useState(false);
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [country, setCountry] = useState(null);
-  const [city, setCity] = useState(null);
-  const [zipCode, setZipCode] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [notes, setNotes] = useState(null);
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [phone, setPhone] = useState("");
+  const [notes, setNotes] = useState("");
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState(false);
+
+  const resetField = () => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setCountry("");
+    setCity("");
+    setZipCode("");
+    setPhone("");
+    setNotes("");
+  };
+
+  const existEmptyFields = (...fields) => {
+    let emptyField = false;
+    fields.map((element) => {
+      if (element === "" || element === null || element === false) {
+        emptyField = true;
+      }
+    });
+    return emptyField;
+  };
 
   const handleOnClick = async () => {
     const dataCustomer = {
@@ -37,38 +58,42 @@ const AddressForm = () => {
       notes,
     };
 
-    if (validated) {
+    if (
+      !existEmptyFields(
+        firstName,
+        lastName,
+        email,
+        country,
+        city,
+        zipCode,
+        phone,
+        notes,
+        checkTermsAndConditions
+      )
+    ) {
       await fetch(`${URI}Invoice/v1/datainvoice`, {
         method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        body: JSON.stringify(dataCustomer),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dataAddress: dataCustomer }),
       })
         .then((res) => res.json())
-        .then((data) => console.log("data", data))
+        .then((data) => {
+          const { success } = data;
+
+          console.log("data", success);
+          if (success) {
+            resetField();
+          }
+        })
         .catch((error) => console.error(error));
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
-
   return (
     <div className=" flex justify-center items-center w-full h-full m-2">
-      <Form
-        className="flex flex-col justify-between items-center w-full h-full p-1"
-        noValidate
-        validated={validated}
-        onSubmit={handleSubmit}
-      >
+      <div className="flex flex-col justify-between items-center w-full h-full p-1">
         <div className="flex flex-col w-[80%]">
           <h3 className="flex justify-center items-center  w-full p-1   font-bold text-[20px]">
             Delivery Address
@@ -76,155 +101,211 @@ const AddressForm = () => {
           <hr className="hr-address m-4 w-full" />
         </div>
 
-        <Row className="flex flex-col justify-center items-center mb-4 w-full m-3">
-          <Form.Group
-            as={Col}
-            md="4"
-            controlId="validationCustom01"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            <Form.Control.Feedback> Looks good!</Form.Control.Feedback>
-            <Form.Control
+        <div className="flex flex-col justify-center items-center mb-4 w-full m-3">
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
               required
               type="text"
               placeholder="First name"
-              className="flex justify-center items-center  w-full my-auto mx-2 p-1"
+              className={
+                "flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              }
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
             />
-          </Form.Group>
+            {firstName.length < 1 ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
 
-          <Form.Group
-            as={Col}
-            md="4"
-            controlId="validationCustom02"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Looks good!</Form.Control.Feedback> */}
-            <Form.Control
-              required
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={lastName}
               type="text"
               placeholder="Last name"
-              className="flex justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setLastName(e.target.value)}
+              className={
+                "flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              }
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
             />
-          </Form.Group>
+            {lastName.length < 1 ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
 
-          <Form.Group
-            as={Col}
-            md="4"
-            controlId="validationCustom03"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Looks good!</Form.Control.Feedback> */}
-            <Form.Control
-              required
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={email}
               type="email"
               placeholder="Email"
-              className="flex justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setEmail(e.target.value)}
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
-          </Form.Group>
+            {email.length < 1 ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
 
-          <Form.Group
-            as={Col}
-            md="6"
-            controlId="validationCustom03"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'> Please provide a valid city.</Form.Control.Feedback> */}
-            <Form.Control
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={city}
               type="text"
               placeholder="City"
               required
-              className="flex justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setCity(e.target.value)}
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
             />
-          </Form.Group>
-
-          <Form.Group
-            as={Col}
-            md="3"
-            controlId="validationCustom04"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'> Please provide a valid state.</Form.Control.Feedback> */}
-            <Form.Control
-              type="text"
-              placeholder="State"
-              required
-              className="flex flex-col justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setCountry(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group
-            as={Col}
-            md="3"
-            controlId="validationCustom05"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Label>Zip</Form.Label> */}
-            {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Please provide a valid zip.</Form.Control.Feedback> */}
-            <Form.Control
-              type="text"
-              placeholder="Zip"
-              required
-              className="flex flex-col justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setZipCode(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group
-            as={Col}
-            md="3"
-            controlId="validationCustom06"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Please provide a valid zip.</Form.Control.Feedback> */}
-            <Form.Control
-              type="number"
-              placeholder="Phone"
-              required
-              className="flex flex-col justify-center items-center  w-full my-auto mx-2 p-1"
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group
-            as={Col}
-            md="3"
-            controlId="validationCustom07"
-            className="flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1"
-          >
-            {/* <Form.Control.Feedback type="invalid" className='flex justify-center items-center  w-full my-auto mx-2 p-1'>Please provide a valid zip.</Form.Control.Feedback> */}
-            <textarea
-              type="text"
-              placeholder="Notes"
-              required
-              className="flex flex-col justify-center items-center  w-full my-auto mx-2 p-1  border-gray-200 border-[1px] rounded-lg outline-none"
-              onChange={(e) => setNotes(e.target.value)}
-            />
-          </Form.Group>
-
-          <div className="acord-terms-footer flex flex-col justify-center items-start text-center h-10 w-[50%] m-auto p-1">
-            <Link
-              to={"/termsAndCondition"}
-              className="flex justify-center items-center text-red-400 w-max h-max hover:border-b-2 hover:border-red-400"
-            >
-              Read the terms and conditions
-            </Link>
+            {city === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
           </div>
 
-          <Form.Group className="mb-3 flex flex-col justify-center items-start w-[50%] h-max  mx-2 p-1 ">
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={country}
+              type="text"
+              placeholder="State"
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setCountry(e.target.value);
+              }}
             />
-          </Form.Group>
-        </Row>
+            {country === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={zipCode}
+              type="text"
+              placeholder="Zip"
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setZipCode(e.target.value);
+              }}
+            />
+            {zipCode === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={phone}
+              type="string"
+              placeholder="Phone"
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            />
+            {phone === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <textarea
+              value={notes}
+              type="text"
+              placeholder="Notes"
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setNotes(e.target.value);
+              }}
+            />
+            {notes === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative mb-3 flex flex-col justify-cecnter items-center w-[50%] h-max  mx-2 p-1 ">
+
+            <div className="acord-terms-footer flex justify-center items-start text-center h-10 w-full m-auto p-1">
+              <Link
+                to={"/termsAndCondition"}
+                className="flex justify-center items-center text-red-400 w-max h-max mx-0 hover:border-b-2 hover:border-red-400"
+              >
+                Read the terms and conditions
+              </Link>
+            </div>
+
+            <div className="relative mb-3 flex flex-row-reverse justify-center items-center w-full h-[40px]  mx-auto p-1">
+              <p className="flex flex-col justify-cecnter items-center mx-3">Agree to terms and conditions</p>
+              <input
+                className="flex flex-col justify-center items-center w-7 h-7 rounded-lg cursor-pointer"
+                value={checkTermsAndConditions}
+                type="checkbox"
+                // feedback="You must agree before submitting."
+                // feedbackType="invalid"
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  setCheckTermsAndConditions(e.target.checked);
+                }}
+              />
+
+              {!checkTermsAndConditions && (
+                <img
+                  width={35}
+                  height={35}
+                  src={exclamation}
+                  className="absolute right-0"
+                />
+              )}
+            </div>
+
+          </div>
+        </div>
+
         <Button
           className="flex justify-center items-center w-[150px] h-10 font-bold text-textBlack bg-[var(--sliderColor)]  border-none rounded-md  hover:bg-[var(--baseColor)] hover:text-white "
           type="submit"
@@ -232,7 +313,7 @@ const AddressForm = () => {
         >
           Next step
         </Button>
-      </Form>
+      </div>
     </div>
   );
 };
