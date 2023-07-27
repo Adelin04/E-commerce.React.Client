@@ -70,7 +70,7 @@ const AddressForm = () => {
         checkTermsAndConditions
       )
     ) {
-      await fetch(`${URI}Invoice/v1/datainvoice`, {
+      await fetch(`${URI}Order/v1/dataOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
