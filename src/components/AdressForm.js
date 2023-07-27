@@ -67,7 +67,6 @@ const AddressForm = () => {
         city,
         zipCode,
         phone,
-        notes,
         checkTermsAndConditions
       )
     ) {
@@ -82,7 +81,7 @@ const AddressForm = () => {
         .then((data) => {
           const { success } = data;
 
-          console.log("data", success);
+          console.log("data", data);
           if (success) {
             resetField();
           }
@@ -258,14 +257,6 @@ const AddressForm = () => {
                 setNotes(e.target.value);
               }}
             />
-            {notes === "" ? (
-              <img
-                width={35}
-                height={35}
-                src={exclamation}
-                className="absolute right-0"
-              />
-            ) : null}
           </div>
 
           <div className="relative mb-3 flex flex-col justify-cecnter items-center w-[50%] h-max  mx-2 p-1 ">
@@ -285,10 +276,7 @@ const AddressForm = () => {
                 className="flex flex-col justify-center items-center w-7 h-7 rounded-lg cursor-pointer"
                 value={checkTermsAndConditions}
                 type="checkbox"
-                // feedback="You must agree before submitting."
-                // feedbackType="invalid"
                 onChange={(e) => {
-                  console.log(e.target.checked);
                   setCheckTermsAndConditions(e.target.checked);
                 }}
               />
