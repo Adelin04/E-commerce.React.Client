@@ -6,6 +6,7 @@ import ClothesPage from "./pages/ClothesPage";
 import AccesoryPage from "./pages/AccesoryPage";
 import CollectionsPage from "./pages/CollectionsPage";
 import AuthPage from "./pages/AuthPage";
+import _404 from "./pages/_404";
 import { URI } from "./_Utils/Dependency";
 
 //Redux
@@ -22,6 +23,7 @@ import UserSetting from "./components/UserSetting";
 import AddressPage from "./pages/AddressPage";
 import { addProductToShoppingCart } from "./Features/ShoppingCartSlice";
 import { SerializeProduct } from "./_Utils/SerializeProduct";
+import Payment from "./pages/Payment";
 
 
 function App() {
@@ -119,6 +121,8 @@ function App() {
             path="/admin/dashboard"
             element={userLogged && <DashboardAdmin />}
           />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/*" element={<_404 />} />
         </Routes>
       ) : (
         <div

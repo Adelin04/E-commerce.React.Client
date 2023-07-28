@@ -7,29 +7,35 @@ import Row from "react-bootstrap/Row";
 import CardTotalPay from "./CardTotalPay";
 import { useSelector } from "react-redux";
 import { selectShoppingCart } from "../Features/ShoppingCartSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URI } from "../_Utils/Dependency";
 import exclamation from "../icons/exclamation.png";
+import { selectUser } from "../Features/UserSlice";
 
 const AddressForm = () => {
   const { shoppingCartList, nrProducts, totalPrice, currency } =
     useSelector(selectShoppingCart);
+  const { user } = useSelector(selectUser);
+
+  const navigate = useNavigate()
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
   const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [saveAddress, setSaveAddress] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState(false);
 
   const resetField = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
-    setCountry("");
+    setState("");
     setCity("");
     setZipCode("");
     setPhone("");
@@ -51,11 +57,13 @@ const AddressForm = () => {
       firstName,
       lastName,
       email,
-      country,
+      state: state,
       city,
+      street,
       zipCode,
       phone,
       notes,
+      saveAddress
     };
 
     if (
@@ -63,8 +71,9 @@ const AddressForm = () => {
         firstName,
         lastName,
         email,
-        country,
+        state,
         city,
+        street,
         zipCode,
         phone,
         checkTermsAndConditions
@@ -83,10 +92,11 @@ const AddressForm = () => {
 
           console.log("data", data);
           if (success) {
-            resetField();
+            navigate('payment')
           }
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+        .finally(() => resetField());
     }
   };
 
@@ -94,13 +104,14 @@ const AddressForm = () => {
     <div className=" flex justify-center items-center w-full h-full m-2">
       <div className="flex flex-col justify-between items-center w-full h-full p-1">
         <div className="flex flex-col w-[80%]">
-          <h3 className="flex justify-center items-center  w-full p-1   font-bold text-[20px]">
+          <h3 className="flex justify-center items-center w-full p-1 font-bold text-[20px]">
             Delivery Address
           </h3>
           <hr className="hr-address m-4 w-full" />
         </div>
 
         <div className="flex flex-col justify-center items-center mb-4 w-full m-3">
+
           <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
             <input
               required
@@ -189,15 +200,36 @@ const AddressForm = () => {
 
           <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
             <input
-              value={country}
+              value={street}
+              type="text"
+              placeholder="Street"
+              required
+              className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
+              onChange={(e) => {
+                setStreet(e.target.value);
+              }}
+            />
+            {street === "" ? (
+              <img
+                width={35}
+                height={35}
+                src={exclamation}
+                className="absolute right-0"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
+            <input
+              value={state}
               type="text"
               placeholder="State"
               className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
               onChange={(e) => {
-                setCountry(e.target.value);
+                setState(e.target.value);
               }}
             />
-            {country === "" ? (
+            {state === "" ? (
               <img
                 width={35}
                 height={35}
@@ -270,10 +302,10 @@ const AddressForm = () => {
               </Link>
             </div>
 
-            <div className="relative mb-3 flex flex-row-reverse justify-center items-center w-full h-[40px]  mx-auto p-1">
+            <div className="relative mb-3 flex flex-row-reverse justify-end items-center w-full h-[40px]  mx-auto p-1">
               <p className="flex flex-col justify-cecnter items-center mx-3">Agree to terms and conditions</p>
               <input
-                className="flex flex-col justify-center items-center w-7 h-7 rounded-lg cursor-pointer"
+                className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
                 value={checkTermsAndConditions}
                 type="checkbox"
                 onChange={(e) => {
@@ -291,6 +323,19 @@ const AddressForm = () => {
               )}
             </div>
 
+            {user && < div className="relative mb-3 flex flex-row-reverse justify-end items-center w-full h-[40px]  mx-auto p-1">
+              <p className="flex flex-col justify-cecnter items-center mx-3">Save address</p>
+              <input
+                className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
+                value={checkTermsAndConditions}
+                type="checkbox"
+                onChange={(e) => {
+                  setSaveAddress(e.target.checked);
+                }}
+              />
+
+            </div>
+            }
           </div>
         </div>
 
@@ -302,7 +347,7 @@ const AddressForm = () => {
           Next step
         </Button>
       </div>
-    </div>
+    </div >
   );
 };
 
