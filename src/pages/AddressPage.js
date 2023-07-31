@@ -12,7 +12,9 @@ import UserAddressCard from "../components/UserAddressCard";
 
 const AddressPage = () => {
   const { user, userAddress } = useSelector(selectUser);
+  const { shoppingCartList } = useSelector(selectShoppingCart);
   const dispatch = useDispatch();
+
   const [error, setError] = useState(null);
   const [currentIdClicked, setCurrentIdClicked] = useState(null);
 
@@ -29,10 +31,11 @@ const AddressPage = () => {
         .catch((error) => setError(error.message)));
   }, []);
 
+  
   return (
     <div className="AddressPage flex flex-col justify-between items-center h-full w-full">
       <Header />
-
+      
       <div>{error && error}</div>
 
       <div className="wrapper-address flex flex-col justify-center items-center w-full h-max mx-auto">

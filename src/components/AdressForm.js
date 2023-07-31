@@ -5,19 +5,19 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import CardTotalPay from "./CardTotalPay";
-import { useSelector } from "react-redux";
-import { selectShoppingCart } from "../Features/ShoppingCartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectShoppingCart, resetBasket } from "../Features/ShoppingCartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { URI } from "../_Utils/Dependency";
 import exclamation from "../icons/exclamation.png";
 import { selectUser } from "../Features/UserSlice";
 
 const AddressForm = ({ selectedAddress }) => {
+  const dispatch = useDispatch();
   const { user, userAddress } = useSelector(selectUser);
+  const { shoppingCartList } = useSelector(selectShoppingCart);
+
   const navigate = useNavigate();
-  const userAddressFiltered = userAddress.userAddresses.filter(
-    (address) => address.id === selectedAddress
-  );
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,6 +30,7 @@ const AddressForm = ({ selectedAddress }) => {
   const [notes, setNotes] = useState("");
   const [saveAddress, setSaveAddress] = useState(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState(false);
+  const [error, setError] = useState('');
 
   const resetField = () => {
     setFirstName("");
@@ -90,15 +91,30 @@ const AddressForm = ({ selectedAddress }) => {
         .then((data) => {
           const { success } = data;
 
-          console.log("data", data);
           if (success) {
+            user && deletedBasket()
             navigate("payment");
           }
         })
         .catch((error) => console.error(error))
-        .finally(() => resetField());
+        .finally(() => { resetField(); dispatch(resetBasket()); localStorage.getItem("BASKET") && localStorage.removeItem("BASKET") });
     }
   };
+
+  const deletedBasket = async () => {
+    let response = false;
+    await fetch(`${URI}Basket/v1/delete/basketByUserEmail/${user && user.email}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        const { success } = data
+        response = success
+      })
+      .catch(error => setError(error.message))
+
+    return response;
+  }
 
   const selectedUserAddress = () => {
     const userAddressFiltered = userAddress.userAddresses.filter(
@@ -118,7 +134,8 @@ const AddressForm = ({ selectedAddress }) => {
   // selectedAddress !== null && selectedUserAddress();
 
   return (
-    <div className=" flex justify-center items-center w-full h-full m-2">
+    <div className=" flex flex-col justify-center items-center w-full h-full m-2">
+      {error && error}
       <div className="flex flex-col justify-between items-center w-full h-full p-1">
         <div className="flex flex-col justify-center items-center mb-4 w-full m-3">
           <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
@@ -356,7 +373,7 @@ const AddressForm = ({ selectedAddress }) => {
           type="submit"
           onClick={handleOnClick}
         >
-          Next step
+          go to pay
         </Button>
       </div>
     </div>
