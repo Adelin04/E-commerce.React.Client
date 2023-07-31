@@ -100,7 +100,7 @@ export const ProductSlice = createSlice({
 
     deleteCategoryProductByName: (state, action) => {
       const currentState = current(state);
-      console.log('-> ', action.payload.categoryRemoved);
+      // console.log('-> ', action.payload.categoryRemoved);
       const filteredCategoryProduct = currentState.categoriesProductAvailable.filter(category => category.name !== action.payload.categoryRemoved)
 
       state.categoriesProductAvailable = filteredCategoryProduct;

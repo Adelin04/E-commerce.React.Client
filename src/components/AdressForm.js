@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -12,17 +12,17 @@ import { URI } from "../_Utils/Dependency";
 import exclamation from "../icons/exclamation.png";
 import { selectUser } from "../Features/UserSlice";
 
-const AddressForm = () => {
-  const { shoppingCartList, nrProducts, totalPrice, currency } =
-    useSelector(selectShoppingCart);
-  const { user } = useSelector(selectUser);
-
-  const navigate = useNavigate()
+const AddressForm = ({ selectedAddress }) => {
+  const { user, userAddress } = useSelector(selectUser);
+  const navigate = useNavigate();
+  const userAddressFiltered = userAddress.userAddresses.filter(
+    (address) => address.id === selectedAddress
+  );
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -35,7 +35,7 @@ const AddressForm = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
-    setState("");
+    setCountry("");
     setCity("");
     setZipCode("");
     setPhone("");
@@ -57,13 +57,13 @@ const AddressForm = () => {
       firstName,
       lastName,
       email,
-      state: state,
+      state: country,
       city,
       street,
       zipCode,
       phone,
       notes,
-      saveAddress
+      saveAddress,
     };
 
     if (
@@ -71,7 +71,7 @@ const AddressForm = () => {
         firstName,
         lastName,
         email,
-        state,
+        country,
         city,
         street,
         zipCode,
@@ -92,7 +92,7 @@ const AddressForm = () => {
 
           console.log("data", data);
           if (success) {
-            navigate('payment')
+            navigate("payment");
           }
         })
         .catch((error) => console.error(error))
@@ -100,18 +100,27 @@ const AddressForm = () => {
     }
   };
 
+  const selectedUserAddress = () => {
+    const userAddressFiltered = userAddress.userAddresses.filter(
+      (address) => address.id === selectedAddress
+    );
+
+    console.log(userAddressFiltered[0].email);
+    // setFirstName(user.firstName);
+    // setLastName(user.lastName);
+    // setEmail(userAddressFiltered[0].email);
+    /*     setCountry(userAddressFiltered[0].state);
+    setCity(userAddressFiltered[0].city);
+    setZipCode(userAddressFiltered[0].zipCode);
+    setPhone(userAddressFiltered[0].phone); */
+  };
+
+  // selectedAddress !== null && selectedUserAddress();
+
   return (
     <div className=" flex justify-center items-center w-full h-full m-2">
       <div className="flex flex-col justify-between items-center w-full h-full p-1">
-        <div className="flex flex-col w-[80%]">
-          <h3 className="flex justify-center items-center w-full p-1 font-bold text-[20px]">
-            Delivery Address
-          </h3>
-          <hr className="hr-address m-4 w-full" />
-        </div>
-
         <div className="flex flex-col justify-center items-center mb-4 w-full m-3">
-
           <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
             <input
               required
@@ -125,7 +134,7 @@ const AddressForm = () => {
                 setFirstName(e.target.value);
               }}
             />
-            {firstName.length < 1 ? (
+            {firstName === "" ? (
               <img
                 width={35}
                 height={35}
@@ -147,7 +156,7 @@ const AddressForm = () => {
                 setLastName(e.target.value);
               }}
             />
-            {lastName.length < 1 ? (
+            {lastName === "" ? (
               <img
                 width={35}
                 height={35}
@@ -167,7 +176,7 @@ const AddressForm = () => {
                 setEmail(e.target.value);
               }}
             />
-            {email.length < 1 ? (
+            {email === "" ? (
               <img
                 width={35}
                 height={35}
@@ -221,15 +230,15 @@ const AddressForm = () => {
 
           <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
             <input
-              value={state}
+              value={country}
               type="text"
-              placeholder="State"
+              placeholder="Country"
               className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
               onChange={(e) => {
-                setState(e.target.value);
+                setCountry(e.target.value);
               }}
             />
-            {state === "" ? (
+            {country === "" ? (
               <img
                 width={35}
                 height={35}
@@ -292,7 +301,6 @@ const AddressForm = () => {
           </div>
 
           <div className="relative mb-3 flex flex-col justify-cecnter items-center w-[50%] h-max  mx-2 p-1 ">
-
             <div className="acord-terms-footer flex justify-center items-start text-center h-10 w-full m-auto p-1">
               <Link
                 to={"/termsAndCondition"}
@@ -303,7 +311,9 @@ const AddressForm = () => {
             </div>
 
             <div className="relative mb-3 flex flex-row-reverse justify-end items-center w-full h-[40px]  mx-auto p-1">
-              <p className="flex flex-col justify-cecnter items-center mx-3">Agree to terms and conditions</p>
+              <p className="flex flex-col justify-cecnter items-center mx-3">
+                Agree to terms and conditions
+              </p>
               <input
                 className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
                 value={checkTermsAndConditions}
@@ -323,19 +333,21 @@ const AddressForm = () => {
               )}
             </div>
 
-            {user && < div className="relative mb-3 flex flex-row-reverse justify-end items-center w-full h-[40px]  mx-auto p-1">
-              <p className="flex flex-col justify-cecnter items-center mx-3">Save address</p>
-              <input
-                className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
-                value={checkTermsAndConditions}
-                type="checkbox"
-                onChange={(e) => {
-                  setSaveAddress(e.target.checked);
-                }}
-              />
-
-            </div>
-            }
+            {user && (
+              <div className="relative mb-3 flex flex-row-reverse justify-end items-center w-full h-[40px]  mx-auto p-1">
+                <p className="flex flex-col justify-cecnter items-center mx-3">
+                  Save address
+                </p>
+                <input
+                  className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
+                  value={checkTermsAndConditions}
+                  type="checkbox"
+                  onChange={(e) => {
+                    setSaveAddress(e.target.checked);
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -347,7 +359,7 @@ const AddressForm = () => {
           Next step
         </Button>
       </div>
-    </div >
+    </div>
   );
 };
 
