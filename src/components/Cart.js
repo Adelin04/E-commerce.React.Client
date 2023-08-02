@@ -26,7 +26,7 @@ const Cart = () => {
   let TMP_BASKET = []
 
   const handleDeleteProduct = async (productId, decrementQuantity, size) => {
-
+    console.log(productId, " ", decrementQuantity, " ", size);
     const basketByUser = JSON.parse(localStorage.getItem("BASKET"))
     TMP_BASKET.push(basketByUser.filter(item => item.productId !== productId))
 
@@ -74,7 +74,7 @@ const Cart = () => {
 
       {error && error.toString()}
 
-      <div className="flex flex-col w-full h-max justify-between items-center">
+      <div className="flex flex-col w-full h-full justify-between items-center">
 
         <div className="wrpper-title min-[450px]:flex w-full m-auto justify-center items-center text-center">
           <h3 className="title-1st-child text-[35px] font-semibold my-1" >Shopping Cart </h3>
@@ -88,7 +88,7 @@ const Cart = () => {
           {shoppingCartList &&
             shoppingCartList.map((product, index) => {
               return (
-                <div className="product flex flex-col w-full h-full" key={index}>
+                <div className="product flex flex-col w-full h-max" key={index}>
 
                   <ul className="flex flex-col w-11/12 h-full p-1 mx-auto my-2">
                     {product &&
@@ -97,7 +97,7 @@ const Cart = () => {
                           <div key={indexItem} className="wrapper-product flex flex-row justify-center items-center w-full h-full m-1 p-1">
 
                             {item.quantity > 0 &&
-                              <li className="list list-none flex flex-row justify-between items-center w-11/12 h-full my-3">
+                              <li className="list list-none flex flex-row justify-between items-center w-11/12 h-max my-3">
 
                                 <Link to={`/product-details/${product.id}`} >
                                   <img className="object-cover w-20 cursor-pointer" src={product.productImages && product.productImages[0].path} />
@@ -172,7 +172,7 @@ const Cart = () => {
 
 
         <div className="wrapper-cardToPlay-cart flex flex-col justify-end w-full" >
-          <div className="nextStep-link-cart flex h-full w-auto mr-10 my-2 p-1 justify-end items-center " >
+          <div className=" flex h-full w-auto mx-10 my-2 p-1 justify-end items-center " >
             <CardTotalPay totalPrice={totalPrice} nrProducts={nrProducts} currency={currency} />
           </div>
 

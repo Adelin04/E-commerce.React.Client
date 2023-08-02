@@ -1,6 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import { URI } from "../_Utils/Dependency";
 
+let currentValue = ''
 const ShoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState: {
@@ -12,12 +13,16 @@ const ShoppingCartSlice = createSlice({
   reducers: {
     addProductToShoppingCart: (state, action) => {
 
+
       const currentState = current(state);
+
+      //  SAVE THE NEW PRODUCT ADDED
       let newProduct = action.payload.newProduct;
 
-
+      //  INCREASE THE COUNTER WITH NEW QUANTITY ADDED
       state.nrProducts += action.payload.quantity;
 
+      //  SAVE THE NEW QUANTITY AND SIZE OF THE CURRENT ADDED PRODUCT
       let productQtySize = {
         quantity: action.payload.quantity,
         size: action.payload.size,
@@ -27,59 +32,60 @@ const ShoppingCartSlice = createSlice({
         (product) => product.id === newProduct.id
       );
 
-      if (existProduct.length === 0) {
+      //  CHECK IF THE 'EXISTPRODUCT' IS AN ARRAY AND IF IT IS GREATER THEN 0...
+      //  IF CONDITION IS TRUE THIS MEANS IT IS THE FIRST PRODUCT ADDED
+      if (Array.isArray(existProduct) && existProduct.length === 0) {
         newProduct.quantityPerSize = [productQtySize];
         state.shoppingCartList = [...state.shoppingCartList, newProduct];
+        currentValue = state.shoppingCartList
       } else {
-        let TMP_PRODUCT = {};
 
-        let restOfList = currentState.shoppingCartList.filter(
-          (product) => product.id !== newProduct.id
-        );
 
-        existProduct[0].quantityPerSize.map((existProductQtySize) => {
-          let restOfQtySize = existProduct[0].quantityPerSize.filter(
-            (item) => item.size !== existProductQtySize.size
-          );
 
-          TMP_PRODUCT = {
-            id: existProduct[0].id,
-            color: existProduct[0].color,
-            createdAt: existProduct[0].createdAt,
-            updatedAt: existProduct[0].updateAt,
-            currency: existProduct[0].currency,
-            description: existProduct[0].description,
-            name: existProduct[0].name,
-            productImages: existProduct[0].productImages,
-            price: existProduct[0].price,
-            quantityPerSize:
-              existProductQtySize.size === productQtySize.size
-                ? [
-                  ...restOfQtySize,
-                  {
-                    quantity:
-                      existProductQtySize.quantity + productQtySize.quantity,
-                    size: productQtySize.size,
-                  },
-                ]
-                :
-                [
-                  ...existProduct[0].quantityPerSize,
-                  {
-                    quantity: productQtySize.quantity,
-                    size: productQtySize.size,
-                  },
-                ],
-            stock: existProduct[0].stock,
-          };
-        });
-        state.shoppingCartList = [...restOfList, TMP_PRODUCT];
+        //  REST OF PRODUCT LIST
+        let restOfProductsFromList = currentState.shoppingCartList.filter((product) => product.id !== newProduct.id);
+
+        //  COPY THE PRODUCT QUANTITY AND SIZE TO UPDATE THE PRODUCT QUANTITY REQUESTED BY THE CUSTOMER
+        let productQtySizeUpdated = {}
+
+        //  UPDATE THE QUANTITY SIZE
+        existProduct[0].quantityPerSize.map(qtySize => {
+          if (qtySize.size === action.payload.size) {
+            productQtySizeUpdated.quantity = qtySize.quantity + action.payload.quantity;
+            productQtySizeUpdated.size = qtySize.size
+            return
+          }
+        })
+
+        let restOfQtySize = existProduct[0].quantityPerSize.filter((existProductQtySize) => {
+          return action.payload.size !== existProductQtySize.size
+        })
+
+        //  TMP_PRODUCT
+        const TMP_PRODUCT = {
+          id: existProduct[0].id,
+          color: existProduct[0].color,
+          createdAt: existProduct[0].createdAt,
+          updatedAt: existProduct[0].updateAt,
+          currency: existProduct[0].currency,
+          description: existProduct[0].description,
+          name: existProduct[0].name,
+          productImages: existProduct[0].productImages,
+          price: existProduct[0].price,
+          quantityPerSize: [...restOfQtySize, Object.keys(productQtySizeUpdated).length > 0 ? productQtySizeUpdated : productQtySize],
+          stock: existProduct[0].stock,
+        };
+        state.shoppingCartList = [...restOfProductsFromList, TMP_PRODUCT];
       }
 
       const totalPrice = (state.shoppingCartList !== null || state.shoppingCartList !== null) && calculateTotalPrice(current(state).shoppingCartList);
 
       state.totalPrice = totalPrice;
       state.currency = state.shoppingCartList[0].currency;
+
+
+
+
     },
 
     resetBasket: (state) => {
@@ -178,6 +184,7 @@ const calculateTotalPrice = (shoppingCartList) => {
   let totalPrice = 0;
 
   shoppingCartList && shoppingCartList.map((product) => {
+    console.log('product---', product);
     product &&
       product.quantityPerSize.map((detailProduct) => {
         totalPrice += product.price * detailProduct.quantity;
