@@ -102,22 +102,25 @@ const ProductDetails = () => {
                 })
               );
 
-          // localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
         })
         .catch((error) => setError(error.toString())));
   };
 
   //  Add new product to basket
   const AddNewItemToCart = () => {
+    // GET THE LOCALSTORAGE BASKET
     let localStorage_BASKET =
       (localStorage.getItem("BASKET") &&
         JSON.parse(localStorage.getItem("BASKET"))) ||
       [];
 
+    //  FILTERED LOCALSTORAGE
     let filterLocalStorage = localStorage_BASKET.filter(
       (item) => item.productId === productById[0].id && item.size === size
     );
 
+    //  CHECK IF THE 'EXISTPRODUCT' IS AN ARRAY AND IF IT IS GREATER THEN 0...
+    //  IF CONDITION IS TRUE THIS MEANS IT IS THE FIRST PRODUCT ADDED
     if (Object.keys(filterLocalStorage).length > 0) {
       filterLocalStorage[0].quantity += quantity;
     } else {
@@ -128,6 +131,7 @@ const ProductDetails = () => {
       });
     }
 
+    //  REDUX shoppingCartSlice - ADD THE NEW PRODUCT IN SHOPPING CART LIST 
     dispatch(
       addProductToShoppingCart({
         newProduct: SerializeProduct(productById[0]),
@@ -136,7 +140,9 @@ const ProductDetails = () => {
       })
     );
 
+    //  SET THE LOCALSTORAGE AFTER UPDATE THE BASKET
     localStorage.setItem("BASKET", JSON.stringify(localStorage_BASKET));
+    
     AddNewBasket();
   };
 

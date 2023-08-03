@@ -31,7 +31,8 @@ const Cart = () => {
   let TMP_BASKET = [];
 
   const handleDeleteProduct = async (productId, decrementQuantity, size) => {
-    const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
+    const basketByUser = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem("BASKET"));
+
     TMP_BASKET.push(
       basketByUser.filter((item) => item.productId !== productId)
     );
