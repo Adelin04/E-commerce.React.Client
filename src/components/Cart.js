@@ -28,48 +28,60 @@ const Cart = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState();
-  let TMP_BASKET = [];
 
-  const handleDeleteProduct = async (productId, decrementQuantity, size) => {
-    const basketByUser = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem("BASKET"));
+  const handleDeleteProduct = async (productId, quantity, size) => {
+    let localStorage_BASKET = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem("BASKET")) || [];
 
-    TMP_BASKET.push(
-      basketByUser.filter((item) => item.productId !== productId)
-    );
+    //  THE PRODUCT THAT WAS CLICKED 
+    let filteredLocalStorage = localStorage_BASKET.filter((item) => item.productId === productId)
 
-    user &&
-      (await fetch(`${URI}BasketItem/v1/delete/basketItemById/${productId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    //  THE REST OF PRODUCTS WITHOUT PRODUCT CLICKED
+    let restOfProductsFromLocalStorage = localStorage_BASKET.filter((item) => item.productId !== productId)
+
+    //  REMOVE JUST SIZE OF PRODUCT CLICKED AND KEEP THE REST OF SIZES IN A TEMPORARY LIST
+    let tmpListQtySizes = []
+    if (Object.keys(filteredLocalStorage).length > 0) {
+      filteredLocalStorage.map(item => {
+        if (item.size !== size) {
+          tmpListQtySizes.push(item)
+        }
       })
-        .then((response) => response.json())
-        .then((data) => {
-          const { success } = data;
+    }
 
-          if (success) {
-          }
-        })
-        .catch((error) => setError(error.message)));
+    //  PUSH EVERY ITEM FROM THE TEMPORARY LIST IN LIST WITH REST OF THE SIZES
+    tmpListQtySizes.map(item => {
+      restOfProductsFromLocalStorage.push(item)
+    })
+
+    //  UPDATE THE LOCAL STORAGE
+    localStorage.setItem("BASKET", JSON.stringify(restOfProductsFromLocalStorage))
+
+    user && (await fetch(`${URI}BasketItem/v1/delete/basketItemById/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { success } = data;
+      })
+      .catch((error) => setError(error.message)));
 
     dispatch(
       removeProductFromCart({
         productId: productId,
-        decrementQuantity: decrementQuantity,
+        quantity: quantity,
         size: size,
       })
     );
 
-    if (basketByUser.length === 1) {
-      localStorage.removeItem("BASKET");
-    } else localStorage.setItem("BASKET", JSON.stringify(TMP_BASKET));
   };
 
   const handleDecrementItemQuantity = async (productId, size) => {
     user &&
       (await fetch(
-        `${URI}BasketItem/v1/decrement/quntity/basketItemById/${productId}/${size}`,
+        `${URI}BasketItem/v1/decrement/quantity/basketItemById/${productId}/${size}`,
         {
           method: "POST",
           headers: {

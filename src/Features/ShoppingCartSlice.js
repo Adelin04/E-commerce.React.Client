@@ -1,7 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import { URI } from "../_Utils/Dependency";
 
-let currentValue = ''
 const ShoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState: {
@@ -12,8 +11,6 @@ const ShoppingCartSlice = createSlice({
   },
   reducers: {
     addProductToShoppingCart: (state, action) => {
-
-
       const currentState = current(state);
 
       //  SAVE THE NEW PRODUCT ADDED
@@ -37,7 +34,6 @@ const ShoppingCartSlice = createSlice({
       if (Array.isArray(existProduct) && existProduct.length === 0) {
         newProduct.quantityPerSize = [productQtySize];
         state.shoppingCartList = [...state.shoppingCartList, newProduct];
-        currentValue = state.shoppingCartList
       } else {
 
 
@@ -61,7 +57,7 @@ const ShoppingCartSlice = createSlice({
           return action.payload.size !== existProductQtySize.size
         })
 
-        //  TMP_PRODUCT
+        //  USE A TEMPORARY OBJECT FOR UPDATE THE TARGET PRODUCT
         const TMP_PRODUCT = {
           id: existProduct[0].id,
           color: existProduct[0].color,
@@ -78,9 +74,13 @@ const ShoppingCartSlice = createSlice({
         state.shoppingCartList = [...restOfProductsFromList, TMP_PRODUCT];
       }
 
+      //  CALCULATE THE TOTAL PRICE
       const totalPrice = (state.shoppingCartList !== null || state.shoppingCartList !== null) && calculateTotalPrice(current(state).shoppingCartList);
 
+      //  UPDATE THE TOTAL PRICE
       state.totalPrice = totalPrice;
+
+      //  UPDATE THE CURRENCY
       state.currency = state.shoppingCartList[0].currency;
     },
 
@@ -146,36 +146,50 @@ const ShoppingCartSlice = createSlice({
     },
 
     removeProductFromCart: (state, action) => {
+      //  DESTRUCTURING ACTION PAYLOAD
+      const { productId, quantity, size } = action.payload
 
-      let TMP_BASKET = [];
+      //  FILTERED CURRENT STATE FOR TARGET PRODUCT
+      let filteredCurrentState = current(state).shoppingCartList.filter(product => product.id === action.payload.productId)[0]
+      //  FILTERED CURRENT STATE FOR PRODUCTS WITHOUT TARGET PRODUCT
+      let restOfProductsFromList = current(state).shoppingCartList.filter(product => product.id !== action.payload.productId)
 
-      current(state).shoppingCartList.filter(product =>
-        product.quantityPerSize.map(
-          sizeQuantity => {
-            if (sizeQuantity.size !== action.payload.size) {
-              TMP_BASKET.push(sizeQuantity)
-            }
-          }
-        )
-      )
-
-      state.shoppingCartList.map(
-        product => {
-          if (product.id === action.payload.productId) {
-            product.quantityPerSize = TMP_BASKET
-          }
+      // USE A TEMPORARY LIST WHERE YOU PUSH ALL DIMENSIONS OTHER THAN THE ONE SELECTED TO REMOVE
+      let tmpListQtySizes = []
+      filteredCurrentState.quantityPerSize.map(qtySize => {
+        if (qtySize.size !== size) {
+          tmpListQtySizes.push(qtySize)
         }
-      )
+      })
 
-      state.nrProducts -= action.payload.decrementQuantity;
+      //   USE A TEMPORARY OBJECT FOR UPDATE THE TARGET PRODUCT
+      const TMP_PRODUCT = {
+        id: filteredCurrentState.id,
+        color: filteredCurrentState.color,
+        createdAt: filteredCurrentState.createdAt,
+        updatedAt: filteredCurrentState.updateAt,
+        currency: filteredCurrentState.currency,
+        description: filteredCurrentState.description,
+        name: filteredCurrentState.name,
+        productImages: filteredCurrentState.productImages,
+        price: filteredCurrentState.price,
+        quantityPerSize: tmpListQtySizes,
+        stock: filteredCurrentState.stock,
+      };
+      state.shoppingCartList = [...restOfProductsFromList, TMP_PRODUCT];
+
+      // UPDATE THE COUNTER PRODUCTS
+      state.nrProducts -= action.payload.quantity;
+
+      // UPDATE THE TOTAL PRICE
       state.totalPrice = calculateTotalPrice(current(state).shoppingCartList);
-
     }
 
 
   },
 });
 
+//  METHOD FOR CALCULATE THE TOTAL PRICE
 const calculateTotalPrice = (shoppingCartList) => {
   let totalPrice = 0;
 
