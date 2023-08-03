@@ -82,10 +82,6 @@ const ShoppingCartSlice = createSlice({
 
       state.totalPrice = totalPrice;
       state.currency = state.shoppingCartList[0].currency;
-
-
-
-
     },
 
     resetBasket: (state) => {
@@ -184,7 +180,6 @@ const calculateTotalPrice = (shoppingCartList) => {
   let totalPrice = 0;
 
   shoppingCartList && shoppingCartList.map((product) => {
-    console.log('product---', product);
     product &&
       product.quantityPerSize.map((detailProduct) => {
         totalPrice += product.price * detailProduct.quantity;
