@@ -22,11 +22,14 @@ export const ProductSlice = createSlice({
     getProductsByCategory: (state, action) => {
       const currentState = current(state);
 
-      const productsByCategory = currentState.products.filter(
-        (product) => product.categoryProduct.name.toLowerCase() === action.payload.category.toLowerCase()
-      )
 
-      state.filteredProducts = productsByCategory;
+      let regexResultByName = new RegExp(`${action.payload.category.toString().toLowerCase()}`);
+
+      const filteredRegexResultByName = currentState.products && currentState.products.filter((product) => regexResultByName.exec(product.categoryProduct.name.toString().toLowerCase()) )
+
+      state.filteredProducts = filteredRegexResultByName;
+
+
     },
 
     getProductById: (state, action) => {
@@ -34,31 +37,28 @@ export const ProductSlice = createSlice({
       const productById = currentState.products.filter(
         (product) => product.id.toString() === action.payload.toString()
       );
+
       state.productById = productById
     },
 
     getProductByName: (state, action) => {
+
       const currentState = current(state);
-      const productByName = currentState.products.products.filter(
+      const productByName = currentState.products.filter(
         (product) => product.name === action.payload
       );
-      console.log(productByName);
       state.productByName = productByName
     },
 
     getProductByValueSearched: (state, action) => {
       const currentState = current(state);
-      let regexIdProduct_forAdmin = new RegExp(`${action.payload}`);
-      let regexNameProduct = new RegExp(`${action.payload.toString().toLowerCase()}`);
 
-      const tmp_getProductById = currentState.products && currentState.products.filter((product) => regexIdProduct_forAdmin.exec(product.id))
-      const tmp_getProductByName = currentState.products && currentState.products.filter((product) => regexNameProduct.exec(product.name.toString().toLowerCase()))
+      let regexResultByName = new RegExp(`${action.payload.toString().toLowerCase()}`);
 
-      if (tmp_getProductById !== null && tmp_getProductById !== undefined)
-        state.filteredProducts = tmp_getProductById;
+      const filteredRegexResultByName = currentState.products && currentState.products.filter((product) => regexResultByName.exec(product.name.toString().toLowerCase()))
 
-      if (tmp_getProductByName !== null && tmp_getProductByName !== undefined)
-        state.filteredProducts = tmp_getProductByName;
+      if (filteredRegexResultByName !== null && filteredRegexResultByName !== undefined)
+        state.filteredProducts = filteredRegexResultByName;
       else
         state.filteredProducts = null;
 

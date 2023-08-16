@@ -13,15 +13,13 @@ import './HomePage.css'
 
 const HomePage = () => {
   const state = useSelector(selectProduct);
-  const pathImagesCarousel_2nd = state && state.products.slice(0, 6).map(product => product.productImages)
-
 
   return (
 
     <div className="homepage flex flex-col justify-between items-center w-full h-full">
 
       <Header />
-
+{console.log(state.products)}
 
       <div className="wrapperCarousel_1st flex justify-center items-center">
         <ResponsiveCarousel pathImages={[
@@ -35,65 +33,56 @@ const HomePage = () => {
         {state && state.filteredProducts !== null && <ProductsList products={state.filteredProducts} />}
       </div>
 
-      {/* <div className="wrapperCarousel_2nd">
-        <ResponsiveCarousel pathImages={pathImagesCarousel_2nd.map(element => {return element[0].path})} width={20}/>
-      </div>
+      {state && (state.filteredProducts === null || state.filteredProducts.length === 0) &&
+        <div className="wrapper-carousels flex flex-col justify-around items-center w-full mx-auto m-10">
 
-      <div className="wrapperCarousel_3th">
-        <ResponsiveCarousel pathImages={pathImagesCarousel_2nd.map(element => {return element[0].path})} width={20} />
-      </div> */}
+          {state.products && <div
+            className="multipleCarousel flex flex-col justify-start items-center w-[80%] h-max m-[50px]"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+              width: "80%",
+              height: "auto",
+              margin: "50px",
+            }}
+          >
+            <CarouselMultiple
+              products={state.products.slice(0, 6)}
+              slidesToShow={4}
+              slidesToScroll={1}
+            />
+          </div>}
 
-    
-        {state && (state.filteredProducts === null || state.filteredProducts.length === 0) &&
-          <div className="wrapper-carousels flex flex-col justify-around items-center w-full mx-auto m-10">
+          {state.products && <div
+            className="multipleCarousel"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+              width: "80%",
+              height: "auto",
+              margin: "auto",
+            }}
+          >
+            <CarouselMultiple
+              products={state.products.slice(0, 6)}
+              slidesToShow={4}
+              slidesToScroll={1}
+            />
+          </div>}
 
-            {state.products && <div
-              className="multipleCarousel flex flex-col justify-start items-center w-[80%] h-max m-[50px]"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "start",
-                alignItems: "center",
-                width: "80%",
-                height: "auto",
-                margin: "50px",
-              }}
-            >
-              <CarouselMultiple
-                products={state.products.slice(0, 6)}
-                slidesToShow={4}
-                slidesToScroll={1}
-              />
+          {!state.products &&
+            <div className="spiner-home flex justify-center items-center h-full m-[50px]">
+              <LoadingSpin />
             </div>}
 
-            {state.products && <div
-              className="multipleCarousel"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "start",
-                alignItems: "center",
-                width: "80%",
-                height: "auto",
-                margin: "auto",
-              }}
-            >
-              <CarouselMultiple
-                products={state.products.slice(0, 6)}
-                slidesToShow={4}
-                slidesToScroll={1}
-              />
-            </div>}
+        </div>
 
-            {!state.products &&
-              <div className="spiner-home flex justify-center items-center h-full m-[50px]">
-                <LoadingSpin />
-              </div>}
+      }
 
-          </div>
-
-        }
-      
 
       <div className="wrapper-footer-homepage flex justify-center items-center w-full mt-10">
         <Footer />

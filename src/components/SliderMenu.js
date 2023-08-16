@@ -3,7 +3,7 @@ import styledComponents from "styled-components";
 
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getProductsByCategory } from "../Features/ProductSlice";
+import { getProductByName, getProductsByCategory } from "../Features/ProductSlice";
 import { LinksMenu } from '../components/LinksMenu'
 
 const SliderMenu = ({
@@ -13,7 +13,6 @@ const SliderMenu = ({
   const dispatch = useDispatch();
 
   const handleDispatch_ProductByCategory = (category) => {
-    // console.log('category --> ',category);
     dispatch(
       getProductsByCategory({ category })
     )

@@ -5,12 +5,10 @@ import { getProductByValueSearched, resetFilterCategory, selectProduct } from ".
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const state = useSelector(selectProduct);
   const [searchBar, setSearchBar] = useState('')
 
   useEffect(() => {
 
-    if (searchBar !== '')
       dispatch(getProductByValueSearched(searchBar))
 
   }, [searchBar])
