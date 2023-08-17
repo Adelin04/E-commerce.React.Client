@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import ProductsList from "./ProductsList";
 
-const FilteredProduct = ({ filtereProduct }) => {
+const FilteredProduct = ({ filteredProduct }) => {
     return (
         <Wrapper>
-            {filtereProduct && <ProductsList products={filtereProduct} />}
+            {filteredProduct && <ProductsList products={filteredProduct} />}
         </Wrapper>
     )
 }

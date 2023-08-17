@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import ClothesPage from "./pages/ClothesPage";
-import AccesoryPage from "./pages/AccesoryPage";
+import AccessoryPage from "./pages/AccessoryPage";
 import CollectionsPage from "./pages/CollectionsPage";
 import AuthPage from "./pages/AuthPage";
 import _404 from "./pages/_404";
@@ -112,7 +112,7 @@ function App() {
           <Route path="/auth" element={!userLogged ? <AuthPage /> : <HomePage />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/Clothes" element={<ClothesPage />} />
-          <Route path="/Accessory" element={<AccesoryPage />} />
+          <Route path="/Accessory" element={<AccessoryPage />} />
           <Route path="/Collections" element={<CollectionsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/address" element={<AddressPage />} />

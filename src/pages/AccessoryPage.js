@@ -6,24 +6,20 @@ import ProductsList from "../components/ProductsList";
 import { selectProduct } from "../Features/ProductSlice";
 
 
-const AccesoryPage = () => {
+const AccessoryPage = () => {
   let state = useSelector(selectProduct);
   return (
     <div className="accessoryPage flex flex-col justify-between items-center w-full h-full">
       <Header />
 
       <div className="wrapper-products-list flex flex-wrap justify-center items-center w-[90%]">
-        {state && state.filteredProducts !== null && <ProductsList products={state.filteredProducts || null} />}
+        {state && < ProductsList products={state.filteredProducts} />}
       </div>
-
-{/*       <div className="wrapper-products-list flex flex-wrap justify-center items-center w-[90%]">
-        {state && state.filteredProducts === null && <ProductsList products={state.products && state.products.filter(product => product.categoryProduct.name === "BROOCHES")} />}
-      </div> */}
 
       <Footer />
     </div>
   );
 };
 
-export default AccesoryPage;
+export default AccessoryPage;
 

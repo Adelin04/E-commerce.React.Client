@@ -19,7 +19,6 @@ const HomePage = () => {
     <div className="homepage flex flex-col justify-between items-center w-full h-full">
 
       <Header />
-{console.log(state.products)}
 
       <div className="wrapperCarousel_1st flex justify-center items-center">
         <ResponsiveCarousel pathImages={[

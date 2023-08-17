@@ -7,7 +7,6 @@ export const ProductSlice = createSlice({
     filteredProducts: null,
     productById: null,
     productByName: null,
-    searchedValue: null,
     categoriesProductAvailable: null,
     sizesProductAvailable: null,
     newProductsAdded: []
@@ -23,13 +22,18 @@ export const ProductSlice = createSlice({
       const currentState = current(state);
 
 
-      let regexResultByName = new RegExp(`${action.payload.category.toString().toLowerCase()}`);
+      const filteredProductsByCategory = currentState.products && currentState.products.filter((product) => action.payload.category.toString().toLowerCase() === product.categoryProduct.name.toString().toLowerCase())
 
-      const filteredRegexResultByName = currentState.products && currentState.products.filter((product) => regexResultByName.exec(product.categoryProduct.name.toString().toLowerCase()) )
+      state.filteredProducts = filteredProductsByCategory;
 
-      state.filteredProducts = filteredRegexResultByName;
+    },
 
+    getProductsBySuperCategory: (state, action) => {
+      const currentState = current(state);
 
+      const filteredProductsBySuperCategory = currentState.products && currentState.products.filter((product) => action.payload.superCategory.toString().toLowerCase() === product.superCategoryProduct.name.toString().toLowerCase())
+
+      state.filteredProducts = filteredProductsBySuperCategory;
     },
 
     getProductById: (state, action) => {
@@ -116,6 +120,6 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById, deleteProductByName, deleteCategoryProductByName } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable,getProductsBySuperCategory, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById, deleteProductByName, deleteCategoryProductByName } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;
