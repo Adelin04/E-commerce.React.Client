@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import styledComponents from "styled-components";
 import SliderMenu from "./SliderMenu";
 import { useDispatch } from "react-redux";
-import {  getProductsBySuperCategory } from "../Features/ProductSlice";
+import { getProductsBySuperCategory } from "../Features/ProductSlice";
 
 //  NavBar component
 const NavBar = ({ links }) => {
@@ -15,24 +15,25 @@ const NavBar = ({ links }) => {
   const [dynamicHeight, setDynamicHeight] = useState(0);
   const [toggle, setToggle] = useState(close);
 
-  
-  const handleGetProductsBySuperCategory = (superCategory) => {
-    dispatch(getProductsBySuperCategory({ superCategory: superCategory }))
-  }
-  
-  return (
-    
-    <Wrapper onMouseLeave={() => setToggle(close)} onMouseOver={() => setDynamicHeight(70)}>
-      <div className='wrapperLink'>
 
+  const handleGetProductsBySuperCategory = (superCategory) => {
+    dispatch(getProductsBySuperCategory({ superCategory }))
+  }
+
+  return (
+
+    <Wrapper onMouseLeave={() => setToggle(close)} onMouseOver={() => setDynamicHeight(70)}>
+
+      <div className='wrapperLink'>
         {links.map((link, index) => {
           return (
-            <Link className='link' to={link.to} key={index} onClick={(e)=>{handleGetProductsBySuperCategory(link.name)}} onMouseLeave={() => setDynamicHeight(0)} onMouseOver={() => { setIndexOfLinkTouched(index), setDynamicHeight(70), setToggle(open) }}> {link.name} </Link>
+            <Link className='link' to={link.to} key={index} onClick={(e) => { handleGetProductsBySuperCategory(link.name) }} onMouseLeave={() => setDynamicHeight(0)} onMouseOver={() => { setIndexOfLinkTouched(index), setDynamicHeight(70), setToggle(open) }}> {link.name} </Link>
           )
         })}
-
       </div>
+
       <SliderMenu indexOfLinkTouched={indexOfLinkTouched} dynamicHeight={dynamicHeight} toggle={toggle} />
+
     </Wrapper>
 
   );

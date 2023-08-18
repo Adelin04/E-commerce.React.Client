@@ -50,7 +50,7 @@ const Login = () => {
         let TMP_BASKET = [];
 
         if (success) {
-          token && localStorage.setItem("TOKEN_ACCES", `Bearer ${token}`);
+          token && localStorage.setItem("TOKEN_ACCESS", `Bearer ${token}`);
 
           basketByUser && JSON.stringify(basketByUser.items.map(product => {
             TMP_BASKET.push({ productId: product.productId, quantity: product.quantity, size: product.size })

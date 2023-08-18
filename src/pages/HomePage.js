@@ -12,7 +12,7 @@ import ResponsiveCarousel from "../components/ResponsiveCarousel";
 import './HomePage.css'
 
 const HomePage = () => {
-  const state = useSelector(selectProduct);
+  const { products, filteredProducts } = useSelector(selectProduct);
 
   return (
 
@@ -29,58 +29,51 @@ const HomePage = () => {
       </div>
 
       <div className="wrapper-products-list flex flex-wrap justify-center items-center w-[90%]">
-        {state && state.filteredProducts !== null && <ProductsList products={state.filteredProducts} />}
+        {filteredProducts !== null && <ProductsList products={filteredProducts} />}
       </div>
 
-      {state && (state.filteredProducts === null || state.filteredProducts.length === 0) &&
-        <div className="wrapper-carousels flex flex-col justify-around items-center w-full mx-auto m-10">
+      {products && filteredProducts === null && <div
+        className="multipleCarousel flex flex-col justify-start items-center w-[80%] h-max m-[50px]"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          alignItems: "center",
+          width: "80%",
+          height: "auto",
+          margin: "50px",
+        }}
+      >
+        <CarouselMultiple
+          products={products.slice(0, 6)}
+          slidesToShow={4}
+          slidesToScroll={1}
+        />
+      </div>}
 
-          {state.products && <div
-            className="multipleCarousel flex flex-col justify-start items-center w-[80%] h-max m-[50px]"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
-              width: "80%",
-              height: "auto",
-              margin: "50px",
-            }}
-          >
-            <CarouselMultiple
-              products={state.products.slice(0, 6)}
-              slidesToShow={4}
-              slidesToScroll={1}
-            />
-          </div>}
+      {products && filteredProducts === null && <div
+        className="multipleCarousel"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          alignItems: "center",
+          width: "80%",
+          height: "auto",
+          margin: "auto",
+        }}
+      >
+        <CarouselMultiple
+          products={products.slice(0, 6)}
+          slidesToShow={4}
+          slidesToScroll={1}
+        />
+      </div>}
 
-          {state.products && <div
-            className="multipleCarousel"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
-              width: "80%",
-              height: "auto",
-              margin: "auto",
-            }}
-          >
-            <CarouselMultiple
-              products={state.products.slice(0, 6)}
-              slidesToShow={4}
-              slidesToScroll={1}
-            />
-          </div>}
-
-          {!state.products &&
-            <div className="spiner-home flex justify-center items-center h-full m-[50px]">
-              <LoadingSpin />
-            </div>}
-
-        </div>
-
-      }
+      {!products &&
+        <div className="spinner-home flex justify-center items-center h-full m-[50px]">
+          <LoadingSpin />
+        </div>}
 
 
       <div className="wrapper-footer-homepage flex justify-center items-center w-full mt-10">

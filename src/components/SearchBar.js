@@ -9,7 +9,7 @@ const SearchBar = () => {
 
   useEffect(() => {
 
-      dispatch(getProductByValueSearched(searchBar))
+    dispatch(getProductByValueSearched(searchBar))
 
   }, [searchBar])
 

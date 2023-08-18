@@ -16,7 +16,7 @@ import DashboardAdmin from "./admin/DashboardAdmin";
 
 import Cart from "./components/Cart";
 import jwt_decode from "jwt-decode";
-import { getAllProducts, selectProduct } from "./Features/ProductSlice";
+import { getAllProducts, resetFilterCategory, selectProduct } from "./Features/ProductSlice";
 import ProductDetails from "./components/ProductDetails";
 import LoadingSpin from "react-loading-spin";
 import UserSetting from "./components/UserSetting";
@@ -30,7 +30,6 @@ function App() {
   //user state
   const dispatch = useDispatch();
   let userLogged = useSelector(selectUser).user;
-
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
@@ -44,14 +43,13 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const { success, products } = data;
-        // console.log('data', data);
+
         if (success) {
           dispatch(
             getAllProducts({
               products: products,
             })
           );
-
 
           if ('BASKET' in localStorage) {
             const basketByUser = JSON.parse(localStorage.getItem("BASKET"));
@@ -69,8 +67,8 @@ function App() {
 
         }
 
-        if ("TOKEN_ACCES" in localStorage) {
-          const token = localStorage.getItem("TOKEN_ACCES");
+        if ("TOKEN_ACCESS" in localStorage) {
+          const token = localStorage.getItem("TOKEN_ACCESS");
           let TMP_USER = [];
 
           const decoded_user = jwt_decode(token); // decode token
@@ -101,7 +99,7 @@ function App() {
 
     setLoading(false);
 
-  }, [localStorage.getItem('TOKEN_ACCES') || localStorage.getItem('BASKET')]);
+  }, [localStorage.getItem('TOKEN_ACCESS') || localStorage.getItem('BASKET')]);
 
 
   return (

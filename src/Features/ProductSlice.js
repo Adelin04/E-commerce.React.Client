@@ -25,7 +25,6 @@ export const ProductSlice = createSlice({
       const filteredProductsByCategory = currentState.products && currentState.products.filter((product) => action.payload.category.toString().toLowerCase() === product.categoryProduct.name.toString().toLowerCase())
 
       state.filteredProducts = filteredProductsByCategory;
-
     },
 
     getProductsBySuperCategory: (state, action) => {
@@ -61,11 +60,10 @@ export const ProductSlice = createSlice({
 
       const filteredRegexResultByName = currentState.products && currentState.products.filter((product) => regexResultByName.exec(product.name.toString().toLowerCase()))
 
-      if (filteredRegexResultByName !== null && filteredRegexResultByName !== undefined)
+      if (filteredRegexResultByName !== null && filteredRegexResultByName !== undefined && action.payload !== '')
         state.filteredProducts = filteredRegexResultByName;
       else
         state.filteredProducts = null;
-
     },
 
     resetFilterCategory: (state, action) => {

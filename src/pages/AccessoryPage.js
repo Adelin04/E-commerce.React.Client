@@ -7,13 +7,17 @@ import { selectProduct } from "../Features/ProductSlice";
 
 
 const AccessoryPage = () => {
-  let state = useSelector(selectProduct);
+  let { products, filteredProducts } = useSelector(selectProduct);
+
   return (
     <div className="accessoryPage flex flex-col justify-between items-center w-full h-full">
       <Header />
 
-      <div className="wrapper-products-list flex flex-wrap justify-center items-center w-[90%]">
-        {state && < ProductsList products={state.filteredProducts} />}
+      <div className="wrapper-products-list flex justify-around items-center w-full my-10 mx-auto">
+
+        {filteredProducts === null ? < ProductsList products={products.filter(product => product.superCategoryProduct.name.toString().toLowerCase() === "ACCESSORY".toLowerCase())} />
+          :
+          < ProductsList products={filteredProducts} />}
       </div>
 
       <Footer />
