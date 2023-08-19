@@ -14,13 +14,12 @@ import Button from "../components/Button";
 const AddProducts = ({ close }) => {
   const dispatch = useDispatch();
 
-  const { categoriesProductAvailable } = useSelector(selectProduct);
-  const { sizesProductAvailable } = useSelector(selectProduct);
+  const { sizesProductAvailable,categoriesProductAvailable,superCategoriesProductAvailable } = useSelector(selectProduct);
   const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
 
   const [msg, setMsg] = useState('Create New Product')
-  const [loading, setLoadind] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [nameProduct, setNameProduct] = useState('');
   const [colorProduct, setColorProduct] = useState('');
@@ -32,6 +31,7 @@ const AddProducts = ({ close }) => {
   const [sizeProduct, setSizeProduct] = useState('');
   const [stockProduct, setStockProduct] = useState(1);
   const [categoryProduct, setCategoryProduct] = useState('');
+  const [superCategoryProduct, setSuperCategoryProduct] = useState('');
 
   const resetFields = () => {
     setNameProduct('');
@@ -42,6 +42,7 @@ const AddProducts = ({ close }) => {
     setStockProduct(1);
     setSizeProduct('');
     setCategoryProduct('');
+    setSuperCategoryProduct('');
     setProductCode('');
     setSelectedPictures(null)
   }
@@ -65,7 +66,7 @@ const AddProducts = ({ close }) => {
 
   const handleClickSaveButton = (e) => {
     e.preventDefault();
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures, productCode)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct,superCategoryProduct, stockProduct, selectedPictures, productCode)) {
 
       let linksToSelectedImages = selectedPictures.blobs;
       const addNewProductToList = {
@@ -78,6 +79,7 @@ const AddProducts = ({ close }) => {
         sizeProduct: sizeProduct,
         stockProduct: stockProduct,
         categoryProduct: categoryProduct,
+        superCategoryProduct:superCategoryProduct,
         productCode: productCode,
         selectedPictures: linksToSelectedImages
       }
@@ -94,10 +96,10 @@ const AddProducts = ({ close }) => {
 
 
   const handleClickCreateButton = async () => {
-    setLoadind(true)
+    setLoading(true)
     let formData = new FormData();
 
-    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct, stockProduct, selectedPictures, productCode)) {
+    if (!existEmptyFields(nameProduct, colorProduct, descriptionProduct, priceProduct, brandProduct, categoryProduct,superCategoryProduct, stockProduct, selectedPictures, productCode)) {
 
       formData.append("name", nameProduct)
       formData.append("brand", brandProduct)
@@ -107,13 +109,8 @@ const AddProducts = ({ close }) => {
       formData.append("productCode", productCode)
       formData.append("stock", stockProduct)
       formData.append("size", sizeProduct)
-      // formData.append("sizes", [
-      //   {
-      //     "stock": stockProduct,
-      //     "size": sizeProduct
-      //   }
-      // ])
       formData.append("categoryName", categoryProduct)
+      formData.append("superCategoryName", superCategoryProduct)
 
       // append all images to formData
       for (let index = 0; index < selectedPictures.files.length; index++) {
@@ -125,13 +122,13 @@ const AddProducts = ({ close }) => {
         method: "POST",
         body: formData,
         headers: {
-          'Authorization': `${localStorage.getItem('TOKEN_ACCES') && localStorage.getItem('TOKEN_ACCES')}`
+          'Authorization': `${localStorage.getItem('TOKEN_ACCESS') && localStorage.getItem('TOKEN_ACCESS')}`
         }
       })
         .then(response => response.json())
         .then(data => {
           const { success, newProductCreated } = data
-          console.log('data', data);
+
           if (success) {
             dispatch(addNewProduct({
               newProduct: {
@@ -145,6 +142,7 @@ const AddProducts = ({ close }) => {
                 stock: newProductCreated.stock,
                 productCode: productCode,
                 categoryProduct: newProductCreated.categoryProduct,
+                superCategoryProduct:newProductCreated.superCategoryProduct,
                 productImages: newProductCreated.productImages
               }
             }))
@@ -152,7 +150,7 @@ const AddProducts = ({ close }) => {
         })
         .catch(error => setMsg(error.toString()))
 
-      setLoadind(false)
+      setLoading(false)
       setMsg('The product was successfully created')
       resetFields()
 
@@ -234,6 +232,18 @@ const AddProducts = ({ close }) => {
                 categoriesProductAvailable && categoriesProductAvailable.map((category, index) => {
                   return (
                     < option key={index} value={category.name} > {category.name}</option>
+                  )
+                })
+              }
+            </select>
+
+            <label>Super Category Product</label>
+            <select className="select-superCategoryProduct" value={superCategoryProduct} onChange={(e) => setSuperCategoryProduct(e.target.value)}>
+              < option value={'None'} > None</option>
+              {
+                superCategoriesProductAvailable && superCategoriesProductAvailable.map((superCategory, index) => {
+                  return (
+                    < option key={index} value={superCategory.name} > {superCategory.name}</option>
                   )
                 })
               }
@@ -435,7 +445,7 @@ s
       margin: 5px;
     }
 
-    .box-add-new-product input , .select-category, .select-size{
+    .box-add-new-product input , .select-category, .select-superCategoryProduct, .select-size{
       width: 100%;
       height: 25px;
       margin: 2px;

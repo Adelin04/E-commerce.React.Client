@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import styledComponents from "styled-components";
 import AddProducts from "./AddProducts";
-import logoIcon from '../icons/logoIcon.svg'
+import logoIcon from "../icons/logoIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getAllCategoiesProductAvailable, getAllSizesProductAvailable, removeFromListOfNewProduct, selectProduct } from "../Features/ProductSlice";
+import {
+  getAllCategoriesProductAvailable,
+  getAllSizesProductAvailable,
+  getAllSuperCategoriesProductAvailable,
+  removeFromListOfNewProduct,
+  selectProduct,
+} from "../Features/ProductSlice";
 import { selectUser } from "../Features/UserSlice";
 import { useEffect } from "react";
 import { URI } from "../_Utils/Dependency";
@@ -20,117 +26,197 @@ const DashboardAdmin = () => {
 
   const dispatch = useDispatch();
 
-  const [msg, setMsg] = useState('Create New Product')
-  const [btnClicked, setBtnClicked] = useState(null)
+  const [msg, setMsg] = useState("Create New Product");
+  const [btnClicked, setBtnClicked] = useState(null);
 
   const Menu = {
     AddNewProducts: () => <AddProducts close={handleClosePopUp} />,
     AddNewCategory: () => <CategoryProducts close={handleClosePopUp} />,
-    AddNewSize_ExistProduct: () => <AddNewSize_ExistProduct close={handleClosePopUp} />,
+    AddNewSize_ExistProduct: () => (
+      <AddNewSize_ExistProduct close={handleClosePopUp} />
+    ),
     RemoveProducts: () => <RemoveProducts close={handleClosePopUp} />,
-    CreateNewSize: () => <Size close={handleClosePopUp} />
-  }
-
+    CreateNewSize: () => <Size close={handleClosePopUp} />,
+  };
 
   useEffect(() => {
     fetch(`${URI}CategoryProduct/v1/get/allCategoriesProduct`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const { success, listOfCategories, count } = data;
 
         if (success)
-          dispatch(getAllCategoiesProductAvailable({ allCategoriesProduct: listOfCategories }))
+          dispatch(
+            getAllCategoriesProductAvailable({
+              allCategoriesProduct: listOfCategories,
+            })
+          );
       })
-      .catch(err => setMsg(err.toString()))
+      .catch((err) => setMsg(err.toString()));
+
+    fetch(`${URI}SuperCategoryProduct/v1/get/allSuperCategoriesProduct`)
+      .then((response) => response.json())
+      .then((data) => {
+        const { success, listOfSuperCategories, count } = data;
+
+        if (success)
+          dispatch(
+            getAllSuperCategoriesProductAvailable({
+              allSuperCategoriesProduct: listOfSuperCategories,
+            })
+          );
+      })
+      .catch((err) => setMsg(err.toString()));
 
     fetch(`${URI}Size/v1/get/allSizes`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const { success, sizes, nrsizes } = data;
 
         if (success)
-          dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }))
+          dispatch(getAllSizesProductAvailable({ allSizesProduct: sizes }));
       })
-      .catch(err => setMsg(err.toString()))
-  }, [])
+      .catch((err) => setMsg(err.toString()));
+
+  }, []);
 
   const handleClickCreateButton = async (e) => {
-    console.log('create');
+    console.log("create");
+  };
 
-  }
-
-
-  const handleClosePopUp = () => setBtnClicked(null)
+  const handleClosePopUp = () => setBtnClicked(null);
 
   const handleClickCloseBtnProductAdded = (e) => {
     e.preventDefault();
     let idTarget = e.target.id;
 
-    dispatch(removeFromListOfNewProduct({ removeId: idTarget }))
+    dispatch(removeFromListOfNewProduct({ removeId: idTarget }));
   };
 
   const showAllNewProductAdded = (products = Array) => {
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', width: '100%', margin: '0px' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+          margin: "0px",
+        }}
+      >
         <nav className="header-menu-admin-dashboard">
           <div className="wrapper-btn-create">
-            <button className="btn-create" onClick={handleClickCreateButton}> Create </button>
+            <button className="btn-create" onClick={handleClickCreateButton}>
+              {" "}
+              Create{" "}
+            </button>
           </div>
         </nav>
 
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', margin: '40px auto' }}>
-
-          {products.length > 0 && products.map((product, index) => {
-            return (
-              <div className="box-added-new-product" id={product.id} key={index}>
-                <div className="wrapper-btns-product-added">
-                  <button id={product.id} className="btn-edit-product-added">Edit</button>
-                  <button id={product.id} className="btn-close-product-added" onClick={handleClickCloseBtnProductAdded}> X </button>
-                </div>
-                <label>Name Product</label>
-                <input defaultValue={product.nameProduct} />
-                <label>Color Product</label>
-                <input defaultValue={product.colorProduct} />
-                <label>Description Product</label>
-                <input defaultValue={product.descriptionProduct} />
-                <label>Price Product</label>
-                <input defaultValue={product.priceProduct} />
-                <label>Brand Product</label>
-                <input defaultValue={product.brandProduct} />
-                <label>Sizes Product</label>
-                <input defaultValue={product.sizeProduct} />
-                <label>Category Product</label>
-                <input defaultValue={product.categoryProduct} />
-
-                <div className="wrapper-imgs">
-                  <div className="up-side-imgs">
-                    <div className="img-1"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[0] || logoIcon} alt="img 1" /></div>
-                    <div className="img-2"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[1] || logoIcon} alt="img 2" /></div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+            flexWrap: "wrap",
+            margin: "40px auto",
+          }}
+        >
+          {products.length > 0 &&
+            products.map((product, index) => {
+              return (
+                <div
+                  className="box-added-new-product"
+                  id={product.id}
+                  key={index}
+                >
+                  <div className="wrapper-btns-product-added">
+                    <button id={product.id} className="btn-edit-product-added">
+                      Edit
+                    </button>
+                    <button
+                      id={product.id}
+                      className="btn-close-product-added"
+                      onClick={handleClickCloseBtnProductAdded}
+                    >
+                      {" "}
+                      X{" "}
+                    </button>
                   </div>
+                  <label>Name Product</label>
+                  <input defaultValue={product.nameProduct} />
+                  <label>Color Product</label>
+                  <input defaultValue={product.colorProduct} />
+                  <label>Description Product</label>
+                  <input defaultValue={product.descriptionProduct} />
+                  <label>Price Product</label>
+                  <input defaultValue={product.priceProduct} />
+                  <label>Brand Product</label>
+                  <input defaultValue={product.brandProduct} />
+                  <label>Sizes Product</label>
+                  <input defaultValue={product.sizeProduct} />
+                  <label>Category Product</label>
+                  <input defaultValue={product.categoryProduct} />
 
-                  <div className="down-side-imgs">
-                    <div className="img-3"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[2] || logoIcon} alt="img 3" /></div>
-                    <div className="img-4"><img width={'100px'} height={'auto'} src={product && product.selectedPictures[3] || logoIcon} alt="img 4" /></div>
+                  <div className="wrapper-imgs">
+                    <div className="up-side-imgs">
+                      <div className="img-1">
+                        <img
+                          width={"100px"}
+                          height={"auto"}
+                          src={
+                            (product && product.selectedPictures[0]) || logoIcon
+                          }
+                          alt="img 1"
+                        />
+                      </div>
+                      <div className="img-2">
+                        <img
+                          width={"100px"}
+                          height={"auto"}
+                          src={
+                            (product && product.selectedPictures[1]) || logoIcon
+                          }
+                          alt="img 2"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="down-side-imgs">
+                      <div className="img-3">
+                        <img
+                          width={"100px"}
+                          height={"auto"}
+                          src={
+                            (product && product.selectedPictures[2]) || logoIcon
+                          }
+                          alt="img 3"
+                        />
+                      </div>
+                      <div className="img-4">
+                        <img
+                          width={"100px"}
+                          height={"auto"}
+                          src={
+                            (product && product.selectedPictures[3]) || logoIcon
+                          }
+                          alt="img 4"
+                        />
+                      </div>
+                    </div>
                   </div>
-
                 </div>
-              </div>
-            )
-          })}
-
+              );
+            })}
         </div>
       </div>
-    )
-  }
-
-
-
+    );
+  };
 
   return (
     <Wrapper>
-
       <div className="menu">
-
         <div className="wrapper-title">
           <Link
             className="title"
@@ -148,21 +234,24 @@ const DashboardAdmin = () => {
             className="menu-btn-add-new-project"
             id="AddNewProducts"
             onClick={(e) => setBtnClicked(e.target.id)}
-          >Add new product
+          >
+            Add new product
           </button>
 
           <button
             className="menu-btn-remove-project"
             id="RemoveProducts"
             onClick={(e) => setBtnClicked(e.target.id)}
-          >Remove product
+          >
+            Remove product
           </button>
 
           <button
             className="menu-btn-remove-project"
             id="AddNewSize_ExistProduct"
             onClick={(e) => setBtnClicked(e.target.id)}
-          >Add New Size And Stock
+          >
+            Add New Size And Stock
           </button>
 
           <hr className="w-full bg-black my-2" />
@@ -173,7 +262,8 @@ const DashboardAdmin = () => {
             className="menu-btn-remove-project"
             id="AddNewCategory"
             onClick={(e) => setBtnClicked(e.target.id)}
-          >Category Product
+          >
+            Category Product
           </button>
 
           <hr className="w-full bg-black my-2" />
@@ -183,46 +273,69 @@ const DashboardAdmin = () => {
             className="menu-btn-remove-project"
             id="CreateNewSize"
             onClick={(e) => setBtnClicked(e.target.id)}
-          >Create New Size
+          >
+            Create New Size
           </button>
 
           <hr className="w-full bg-black my-2" />
-
         </div>
-
 
         <div className="dashboard-admin-info">
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
-          <p className="admin"> <span>Admin </span>{admin && <span className="full-name">{` ${admin.firstName} ${admin.lastName}`}</span>}</p>
+          <p className="admin">
+            {" "}
+            <span>Admin </span>
+            {admin && (
+              <span className="full-name">{` ${admin.firstName} ${admin.lastName}`}</span>
+            )}
+          </p>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
-          <div className="role"> <span>Role </span>
-
+          <div className="role">
+            {" "}
+            <span>Role </span>
             <ul className="role-ul">
               {admin.role.map((item, index) => {
-                return <li className="role-li" key={index}>{item}</li>
+                return (
+                  <li className="role-li" key={index}>
+                    {item}
+                  </li>
+                );
               })}
             </ul>
-
           </div>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
-          <p className="nr-prod-online"> <span>Nr. products online </span>{`  ${products && products.length}`}</p>
+          <p className="nr-prod-online">
+            {" "}
+            <span>Nr. products online </span>
+            {`  ${products && products.length}`}
+          </p>
           <hr className="hr-dashboard-admin" style={{ width: "100%" }} />
         </div>
       </div>
 
       <div className="main-page" onClick={() => setBtnClicked(null)}>
-        {btnClicked && <div style={{ position: 'absolute', background: 'hsl(294deg 26% 44% / 70%)', width: '100%', height: '100%', zIndex: '1' }}></div>}
+        {btnClicked && (
+          <div
+            style={{
+              position: "absolute",
+              background: "hsl(294deg 26% 44% / 70%)",
+              width: "100%",
+              height: "100%",
+              zIndex: "1",
+            }}
+          ></div>
+        )}
 
-        <div className="wrapper-box-added-new-product" style={{ position: 'relative' }}>
-          {newProductsAdded.length > 0 && showAllNewProductAdded(newProductsAdded)}
+        <div
+          className="wrapper-box-added-new-product"
+          style={{ position: "relative" }}
+        >
+          {newProductsAdded.length > 0 &&
+            showAllNewProductAdded(newProductsAdded)}
         </div>
       </div>
 
-      <div style={{ zIndex: '2' }}>
-        {btnClicked && Menu[btnClicked]()}
-      </div>
-
-
+      <div style={{ zIndex: "2" }}>{btnClicked && Menu[btnClicked]()}</div>
     </Wrapper>
   );
 };

@@ -58,7 +58,7 @@ class CarouselProductImages extends React.Component {
     const settings = {
       dots: true,
       infinite: true,
-      speed: 500,
+      speed: 3000,
       arrows: false,
       // fade: true,
       cssEase: "linear",

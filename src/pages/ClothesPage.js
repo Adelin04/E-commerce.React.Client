@@ -12,7 +12,7 @@ const ClothesPage = () => {
   return (
     <div className="clothesPage flex flex-col justify-between items-center w-full h-full">
       <Header />
-
+      
       <div className="wrapper-products-list flex justify-around items-center w-full my-10 mx-auto">
 
         {filteredProducts === null ? < ProductsList products={products.filter(product => product.superCategoryProduct.name.toString().toLowerCase() === "CLOTHES".toLowerCase())} />

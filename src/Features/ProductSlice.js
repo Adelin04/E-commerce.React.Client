@@ -8,6 +8,7 @@ export const ProductSlice = createSlice({
     productById: null,
     productByName: null,
     categoriesProductAvailable: null,
+    superCategoriesProductAvailable: null,
     sizesProductAvailable: null,
     newProductsAdded: []
   },
@@ -70,8 +71,12 @@ export const ProductSlice = createSlice({
       state.filteredProducts = action.payload.reset;
     },
 
-    getAllCategoiesProductAvailable: (state, action) => {
+    getAllCategoriesProductAvailable: (state, action) => {
       state.categoriesProductAvailable = action.payload.allCategoriesProduct;
+    },
+
+    getAllSuperCategoriesProductAvailable: (state, action) => {
+      state.superCategoriesProductAvailable = action.payload.allSuperCategoriesProduct;
     },
 
     getAllSizesProductAvailable: (state, action) => {
@@ -118,6 +123,6 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoiesProductAvailable, getAllSizesProductAvailable,getProductsBySuperCategory, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById, deleteProductByName, deleteCategoryProductByName } = ProductSlice.actions;
+export const { getAllProducts, getProductById, getProductByName, getProductsByCategory, getProductByValueSearched, resetFilterCategory, getAllCategoriesProductAvailable,getAllSuperCategoriesProductAvailable, getAllSizesProductAvailable,getProductsBySuperCategory, addListOfNewProduct, addNewProduct, removeFromListOfNewProduct, deleteProductById, deleteProductByName, deleteCategoryProductByName } = ProductSlice.actions;
 export const selectProduct = (state) => state.products;
 export default ProductSlice.reducer;

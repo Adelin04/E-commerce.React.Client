@@ -19,7 +19,7 @@ export default class Carousel extends Component {
       fade: true,
       dots: true,
       infinite: true,
-      speed: 200,
+      speed: 3000,
       slidesToShow: this.slidesToShow,
       slidesToScroll: this.slidesToScroll,
     };
