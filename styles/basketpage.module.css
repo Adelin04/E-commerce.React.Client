@@ -1,0 +1,15 @@
+.wrapperPrice {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin: 5px;
+    height: auto;
+}
+
+.wrapperPrice p:first-child {
+    font-size: 30px;
+    font-weight: bold;
+    height: auto;
+    margin: 0px;
+    color: var(--sliderColor);
+}

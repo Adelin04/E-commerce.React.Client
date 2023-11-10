@@ -1,0 +1,26 @@
+.wrapperImageCarousel1st,
+.wrapperCarousel_2nd,
+.wrapperCarousel_3th {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+}
+
+.imageCarousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.wrapperSpinner {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  margin: auto;
+}

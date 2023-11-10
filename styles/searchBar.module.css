@@ -1,0 +1,17 @@
+.searchWrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.searchWrapper input {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    border: none;
+    border-bottom: 1px solid var(--baseColor);
+    background-color: transparent;
+    text-align: center;
+    outline: none;
+}

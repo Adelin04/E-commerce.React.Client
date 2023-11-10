@@ -1,0 +1,21 @@
+.containerHomepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.wrapperCarousels {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    /* font-size: medium; */
+}
+
+.wrapperCarousel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+}

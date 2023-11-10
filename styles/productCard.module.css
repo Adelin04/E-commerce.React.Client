@@ -1,0 +1,132 @@
+.productContent {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 0px auto;
+  padding: 20px;
+  min-height: 250px;
+  min-width: 200px;
+}
+
+.productImageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* overflow: hidden; */
+  border-radius: 25px;
+}
+
+.productImage {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 15px;
+  width: 250px;
+  min-height: 300px;
+  height: auto;
+  /* max-height: 300px; */
+  cursor: pointer;
+  background: var(--backgroundCard);
+}
+
+/* .productImage:hover {
+    transform: scale(1.2);
+    transition: 2s;
+  } */
+
+.image:hover {
+  transform: scale(1.2);
+  transition: 2s;
+
+}
+
+.productTitle {
+  margin: 25px 0px;
+  color: #5f4d5d;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Description */
+
+.wrapperDescription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 5px;
+  width: 100%;
+  color: #5f4d5d;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  font-size: small;
+}
+
+.wrapperDescription p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 5px auto;
+}
+
+/* Price */
+.wrapperPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: auto;
+  height: auto;
+}
+
+.wrapperPrice p:first-child {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0px;
+  color: var(--sliderColor);
+}
+
+.price-after-dot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0px;
+  height: 30px;
+  font-weight: bold;
+  color: var(--sliderColor);
+}
+
+.wrapperPrice p {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0px 5px;
+  height: 30px;
+  font-weight: bold;
+  color: var(--sliderColor);
+}
+
+/* .product-btn {
+  margin-left: 50%;
+  transform: translate(-50%);
+  width: 60px;
+  justify-content: space-around;
+  border: 1px solid #b08ead;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  color: #d6bbd3;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} */
+
+/*   @media only screen and (min-width: 1000px) {
+    .lg-size-33 {
+      width: 40%;
+    }
+  } */

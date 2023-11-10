@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin: 5px auto;
+  /* background: skyblue; */
+}
+
+.wrapperLink {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 65px;
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: bold;
+  background-color: var(--sliderColor);
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}

@@ -1,0 +1,10 @@
+.wrapperProductsList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    flex-wrap: wrap;
+  }

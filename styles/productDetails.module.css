@@ -1,0 +1,167 @@
+.containerProduct {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+/*     width: 100%;
+    height: 100%; */
+}
+
+.containerProductDetails {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    margin: 20px auto;
+}
+
+.wrapperCarousel {
+    text-align: center;
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 25px;
+    background: var(--backgroundCard);
+}
+
+
+.wrapperProductDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 50%;
+    height: auto;
+    padding: 5px;
+    margin: 5px;
+}
+
+/* Name Price Product */
+.wrapperNamePriceProduct {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: 10px auto;
+    text-align: center;
+    background-color: var(--sliderColor);
+    border-radius: 10px;
+}
+
+.wrapperNamePriceProduct h3 {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    width: auto;
+    max-width: 300px;
+}
+
+.wrapperPrice {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin: 5px;
+    height: auto;
+}
+
+.wrapperPrice p:first-child {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0px;
+    color: var(--sliderColor);
+}
+
+/* Description Product */
+.wrapperProductDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+    padding: 5px;
+    margin: 5px;
+}
+
+/* Container Counter Size */
+.containerQuantityCounterSize {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 5px;
+}
+
+.wrapperButtonsQuantityCounterSize {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: auto;
+    margin: 5px;
+}
+
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 5px;
+    font-weight: bold;
+}
+
+/* Size */
+.wrapperDropdownSizeOption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 40%;
+}
+
+.wrapperDropdownSizeOption select {
+    width: 100%;
+    height: 25px;
+}
+
+.wrapperDropdownSizeOption:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.selector {
+    text-align: center;
+    width: auto;
+    background-color: var(--sliderColor);
+    border-radius: 15px;
+    border: none;
+    outline: none;
+}
+
+/* msg error... */
+.msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+}
+
+@media(max-width: 800px) {
+    .containerProductDetails {
+        flex-direction: column;
+        background-color: 'green';
+    }
+}

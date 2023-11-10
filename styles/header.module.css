@@ -1,0 +1,139 @@
+.containerHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapperElements {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
+}
+
+.containerBasketUserProfile,
+.wrapperSearch,
+.wrapperTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.wrapperTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    height: auto;
+    font-size: 30px;
+    width: 300px;
+}
+
+.wrapperBasketUserProfile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.wrapperBasket,
+.wrapperProfile {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    padding: 2px;
+}
+
+.wrapperIcons {
+    position: relative;
+    width: 100px;
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapperBubbleBasket {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    /* background-color: aqua; */
+    border-radius: 50%;
+}
+
+.wrapperBubbleBasket:hover {
+    color: white;
+}
+
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    height: 100px;
+    font-size: 30px;
+    width: 300px;
+}
+
+.title img {
+    padding: 5px;
+    margin: 5px;
+}
+
+.title p {
+    padding: 5px;
+    margin: 5px;
+}
+
+.title p a {
+    text-decoration: none;
+    color: black;
+}
+
+.wrapperNavBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+    width: 100%;
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    .wrapperElements {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .containerBasketUserProfile {
+        order: 2;
+    }
+
+    .wrapperSearch {
+        order: 2;
+    }
+
+    .wrapperSearch,
+    .wrapperBasketUserProfile,
+    .title {
+        margin: 10px;
+    }
+
+
+}

@@ -1,0 +1,25 @@
+.containerBubbleBasket {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: var(--baseColor);
+}
+
+.containerBubbleBasket:hover {
+    cursor: pointer;
+    color: white;
+}
+
+.numberProductsBubbleBasket {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    height: max-content;
+    font-size: 13px;
+    font-weight: bold;
+}

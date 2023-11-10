@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+:root {
+  --baseColor: #d6bbd3;
+  --sliderColor: #a58aa2d4;
+  --buttonColor: #a58aa2d4;
+  --backgroundCard: #5a335612;
+  --myBorder: #8080801f;
+  --myGreen: #118f5f;
+  --mySalmon: salmon;
+  --myOrange: #dd7130;
+  --error: red;
+  --textBlack: rgb(21, 19, 19);
+  --textWhite: white;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+}
+
+html,
+body {
+  margin: auto;
+  height: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+select,
+textarea,
+input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 25px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  /* background: var(--buttonColor); */
+}
+
+label {
+  margin: 0px 10px;
+  width: 80%;
+}
