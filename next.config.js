@@ -5,10 +5,10 @@ const nextConfig = {
   images: {
     domains: ["e-commerce-photos.s3.amazonaws.com"],
   },
-  /* env: {
+  env: {
     PRODUCTION_URI: "https://am-cloud.eu/api/",
     DEV_URI: "http://localhost:5050/api/",
-  }, */
+  },
 };
 
 module.exports = nextConfig;
