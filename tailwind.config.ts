@@ -16,6 +16,8 @@ const config: Config = {
       'lg': { 'max': '976px' },
       'xl': { 'max': '1440px' },
     },
+    // Target must be serverless
+    target: 'serverless',
     extend: {},
   },
   plugins: [],

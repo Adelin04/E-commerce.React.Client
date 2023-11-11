@@ -1,11 +1,9 @@
 'use client'
-//import style
-// import style from '../../styles/productDetails.module.css'
 
 //import React && NextJs components
 import React, { useEffect } from "react";
 import { useState } from "react";
-
+import { useRouter } from 'next/navigation';
 //import components
 import { SerializeProduct } from "./serializeProduct";
 import Button from "./button";
@@ -20,19 +18,16 @@ import { URI } from '../../utils/globalUri';
 // import icon
 import exclamationIcon from "../../public/exclamation.png";
 import Image from 'next/image';
-import { FaBullseye, FaBuyNLarge, FaBuysellads, FaMinus, FaPlus } from 'react-icons/fa';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 
-interface LOCALSTORAGE {
-    localStorage_BASKET?: Array<string> | null
-}
-
-let customWindow: any = window as any;
+// let customWindow: any = window as Window;
 
 const ProductDetails = ({ product }: any) => {
+    const router = useRouter()
 
     const selectedProduct = useProductsStore(state => state.selectedProduct);
-
     const { basket, counterProduct, totalPrice, currency, addProductToBasket } = useBasketStore();
+
     const user = useUserStore(state => state.user);
     const isAuth = useUserStore(state => state.isAuth);
 
@@ -146,9 +141,10 @@ const ProductDetails = ({ product }: any) => {
         AddNewBasket();
     };
 
-    if (!selectedProduct?.name) return customWindow.location.href = "/clothing"
+    if (!selectedProduct?.name) return window.location.href = "/clothing"
 
     return (
+
         <div className='flex justify-center items-center w-auto sm:flex-col sm:justify-center'>
 
             <div>{msg}</div>
@@ -255,13 +251,9 @@ const ProductDetails = ({ product }: any) => {
 
                 </div>
 
-
             </div>
 
-
         </div>
-
-
     );
 };
 
