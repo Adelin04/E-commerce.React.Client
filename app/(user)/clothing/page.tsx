@@ -1,6 +1,5 @@
 'use client'
 
-import styles from '@/styles/clothing.module.css'
 import { useProductsStore } from '@/zustandStore/productsStore';
 import ProductsList from '../../component/productsList';
 import { FerrisWheelSpinner } from 'react-spinner-overlay'

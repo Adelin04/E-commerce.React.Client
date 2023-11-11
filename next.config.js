@@ -3,15 +3,7 @@ const nextConfig = {
   cssModules: true,
   reactStrictMode: false,
   images: {
-    // domains: ["e-commerce-photos.s3.amazonaws.com"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "s3.amazonaws.com",
-        port: "",
-        pathname: "/e-commerce-photos/**",
-      },
-    ],
+    domains: ["e-commerce-photos.s3.amazonaws.com"],
   },
 
   env: {
