@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import logoIcon from '../icons/logoIcon.svg'
 import { URI } from "@/utils/globalUri";
-//  style
-import style from '@/styles/footer.module.css'
 
 import { useProductsStore } from "@/zustandStore/productsStore";
 import Button from "@/app/component/button";
@@ -31,11 +29,11 @@ const CategoryProduct = ({ close }: PropsCategoryProduct) => {
     }
 
 
-    const handleOnChange = (nameSelected: any) => {
+    /* const handleOnChange = (nameSelected: any) => {
         setNameToRemove(nameSelected);
         const TMP_productToRemove = categoriesProductAvailable.filter((category: any) => category.name.toString() === nameSelected.toString());
         setCategoryToRemove(TMP_productToRemove);
-    }
+    } */
 
     const handleClickSaveNewCategory = async () => {
         //logic to save the new category
@@ -66,10 +64,6 @@ const CategoryProduct = ({ close }: PropsCategoryProduct) => {
         setNameToRemove('')
 
     }
-
-    setTimeout(() => {
-        setMsg('Remove Category By Name')
-    }, 5000);
 
     return (
         <div className="containerAddNewProduct flex flex-col justify-center items-center min-w-[600px] w-max h-max bg-[var(--baseColor)] rounded-lg" >
