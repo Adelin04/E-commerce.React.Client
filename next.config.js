@@ -3,7 +3,7 @@ const nextConfig = {
   cssModules: true,
   reactStrictMode: false,
   images: {
-    domains: ["e-commerce-photos.s3.amazonaws.com"],
+    domains: ["e-commerce-photos.s3.us-east-1.amazonaws.com"],
   },
 
   env: {
