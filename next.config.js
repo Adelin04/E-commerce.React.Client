@@ -2,6 +2,7 @@
 const nextConfig = {
   cssModules: true,
   reactStrictMode: false,
+  
   images: {
     domains: ["e-commerce-photos.s3.amazonaws.com"],
   },
