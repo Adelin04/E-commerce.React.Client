@@ -17,7 +17,7 @@ function ProductImage({ pathImage, width, height, alt }: PropsProductImage) {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {pathImage && pathImage.length > 0 ?
                 <div style={{ display: "flex", justifyContent: "center", alignContent: 'center', padding: '0px' }}>
-                    <img className={style.image} /* priority={true} */ width={width || 250} height={height || 250} src={pathImage.toString() || logoIcon} alt={'no photo'} />
+                    <Image className={style.image} priority={true} width={width || 250} height={height || 250} src={pathImage.toString() || logoIcon} alt={'no photo'} />
                 </div>
                 :
                 <div style={{ display: "flex", justifyContent: "center", alignContent: 'center', height: '100%' }}>
