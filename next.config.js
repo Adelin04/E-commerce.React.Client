@@ -2,7 +2,8 @@
 const nextConfig = {
   cssModules: true,
   reactStrictMode: false,
-  
+  target: "serverless",
+
   images: {
     domains: ["e-commerce-photos.s3.amazonaws.com"],
   },
