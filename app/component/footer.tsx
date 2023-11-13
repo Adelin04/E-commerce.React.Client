@@ -36,7 +36,7 @@ const Footer = () => {
         </div>
 
         <div className={'containerCopyRight flex flex-col justify-center items-center min-w-[50px] w-full h-max m-2 text-center '}>
-          <p className="block text-center w-auto"> Made In Romania by <Link className="flex flex-col justify-center items-center text-blue-500 font-bold" href={'https://adelin-marin-portfolio.netlify.app/'}><span className="flex justify-center items-center w-max px-2">Adelin Marin</span></Link> © {new Date().getFullYear()} </p>
+          <p className="block text-center w-auto"> Made In Romania by <Link className="flex flex-col justify-center items-center text-blue-500 font-bold" target="_blank" href={'https://adelin-marin-portfolio.netlify.app/'}><span className="flex justify-center items-center w-max px-2">Adelin Marin</span></Link> © {new Date().getFullYear()} </p>
         </div>
 
       </div>
