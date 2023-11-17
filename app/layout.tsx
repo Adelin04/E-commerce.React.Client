@@ -38,7 +38,6 @@ interface IResponseGetProducts {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { products, success }: IResponseGetProducts = await getProducts()
-console.log('products',products);
 
   return (
     <html lang="en">

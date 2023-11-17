@@ -20,7 +20,7 @@ import React from 'react';
 const Home = () => {
   const { products, filteredProducts } = useProductsStore(state => state)
   const { hasMounted } = useMounted()
-
+  console.log('products',products);
   if (!hasMounted)
     return <Loading />
   return (
