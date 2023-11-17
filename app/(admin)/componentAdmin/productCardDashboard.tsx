@@ -21,7 +21,7 @@ const ProductCardDashboard = ({ product }: PropsProductCardDashboard) => {
                 <div className="wrapper flex justify-start items-center w-[300px] h-full ">
 
                     <div className="wrapperImage flex justify-center items-center min-w-[60px] h-full bg-blue-400 rounded-lg">
-                        <Image priority style={{width:'auto',height:'auto'}} width={60} height={60} src={product.productImages[0].path} alt="" />
+                        <Image priority style={{width:'auto',height:'auto'}} width={60} height={60} src={product.productImages[0].path.trim()} alt="" />
                     </div>
 
                     <div className="flex flex-col justify-start items-start w-max pl-5">
