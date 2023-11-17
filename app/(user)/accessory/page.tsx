@@ -2,9 +2,6 @@
 
 import { useMounted } from '@/app/component/useMounted ';
 import { useProductsStore } from '@/zustandStore/productsStore';
-import styles from '@/styles/clothing.module.css'
-
-import { useEffect, useState } from 'react';
 import { FerrisWheelSpinner } from 'react-spinner-overlay';
 import ProductsList from '@/app/component/productsList';
 

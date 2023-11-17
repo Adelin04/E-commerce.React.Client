@@ -48,11 +48,10 @@ const SetGlobalState = ({ products, success, children }: PropsSetGlobalState) =>
 
                 basketByUser?.map((productBasket: any) => {
                     let filteredProducts = products.filter((product: any) => product.id === productBasket.productId)[0] as IProduct
-                    // console.log(filteredProducts);
 
                     //Update Zustand Store
                     addProductToBasket(
-                        SerializeProduct(filteredProducts/* products?.filter(product => product.id === productBasket.productId)[0] as IProduct */),
+                        SerializeProduct(filteredProducts),
                         productBasket.quantity,
                         productBasket.size,
                     )

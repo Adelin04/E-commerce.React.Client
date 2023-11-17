@@ -1,6 +1,5 @@
 'use client'
 
-import styles from '@/styles/clothing.module.css'
 import { useMounted } from '@/app/component/useMounted ';
 import { useProductsStore } from '@/zustandStore/productsStore';
 import { FerrisWheelSpinner } from 'react-spinner-overlay';

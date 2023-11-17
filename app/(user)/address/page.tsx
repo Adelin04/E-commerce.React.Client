@@ -2,8 +2,6 @@
 
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import { URI } from '@/utils/globalUri';
 import AddressCard from "../../component/addressCard";
 import { useUserStore } from "@/zustandStore/usersStore";
 import AddressForm from "../../component/addressForm";

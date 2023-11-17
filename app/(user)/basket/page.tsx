@@ -1,20 +1,18 @@
 'use client'
+
 import React, { useState } from "react";
 
 import PriceFormatted from "../../component/priceFormatted";
 import CardTotalPay from "../../component/cardTotalPay ";
 import { URI } from "../../../utils/globalUri";
 import Button from "../../component/button";
-import { IconBase } from "react-icons";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import { useBasketStore } from "@/zustandStore/basketStore";
 import { useUserStore } from "@/zustandStore/usersStore";
 import { useMounted } from "../../component/useMounted ";
 import { useProductsStore } from "@/zustandStore/productsStore";
-import { FerrisWheelSpinner } from "react-spinner-overlay";
 import Loading from "@/app/loading";
-import ProductImage from "../../component/productImage";
 import { IProduct } from '@/interfaces/interfaces';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
