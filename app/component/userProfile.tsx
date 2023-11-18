@@ -24,6 +24,7 @@ const UserProfile = ({ user, toggle, isAuth }: PropsUserProfile) => {
     const open = toggle;
     const logout = useUserStore(state => state.logout)
     const { resetBasket } = useBasketStore(state => state)
+
     return (
         <div className=" absolute right-0 top-10 flex  flex-col justify-around items-center w-max h-full z-10">
 
@@ -44,7 +45,7 @@ const UserProfile = ({ user, toggle, isAuth }: PropsUserProfile) => {
                             {isAuth &&
                                 <Link href={"/user/setting"}>
                                     <div className={style.userProfile}>
-                                        <Image width={20} height={20} src={settingUser} alt='logo Icon' />
+                                        <Image width={20} height={20} src={'/settingUser.ico'} alt='logo Icon' />
                                     </div>
                                 </Link>
                             }
