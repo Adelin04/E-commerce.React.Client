@@ -145,7 +145,7 @@ const Basket = () => {
                             <li className="list flex justify-around items-center w-full h-max sm:flex-col ">
 
                               <div className='wrapperImage flex justify-center items-center cursor-pointer ' onClick={() => handleClickOnImage(product.id)}>
-                                <Image src={product?.productImages[0].path} width={100} height={100} alt='no photo' />
+                                <Image src={product?.productImages[0].path.trim()} width={100} height={100} alt='no photo' />
                               </div>
 
                               <div className='flex justify-center items-center font-bold w-max h-max '  >

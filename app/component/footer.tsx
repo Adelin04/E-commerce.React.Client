@@ -63,7 +63,7 @@ const Footer = () => {
 
           <div className='flex justify-center items-center w-full h-full '>
             <p className={'readTerms w-max border-b-2 border-red-400 '} >
-              <Link href={'/termsAndCondition '} className="text-red-400">Read the terms and conditions</Link>
+              <Link href={'/'} className="text-red-400">Read the terms and conditions</Link>
             </p>
           </div>
 
