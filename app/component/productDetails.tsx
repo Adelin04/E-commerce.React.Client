@@ -106,7 +106,7 @@ const ProductDetails = ({ product }: any) => {
     const AddNewItemToCart = () => {
 
         // GET THE LOCALSTORAGE BASKET
-        let localStorage_BASKET: any = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem("BASKET") || "");
+        let localStorage_BASKET = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem("BASKET") || "") || [];
 
         //  FILTERED LOCALSTORAGE
         let filterLocalStorage: any = localStorage_BASKET && localStorage_BASKET.filter(
