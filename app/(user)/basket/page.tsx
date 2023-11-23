@@ -191,7 +191,7 @@ const Basket = () => {
                                           item.size
                                         );
                                       }}
-                                    >      <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" onClick={() => console.log('clicked')}><FaMinus /></i>
+                                    >      <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white"><FaMinus /></i>
                                     </Button>
 
                                     <span className="quantity flex justify-center items-center min-w-[20px] h-max font-bold border-t-2 border-b-2 border-[var(--baseColor)] rounded-lg">
@@ -214,7 +214,7 @@ const Basket = () => {
                                         )
 
                                       }}>
-                                      <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" onClick={() => console.log('clicked')}><FaPlus /></i>
+                                      <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" ><FaPlus /></i>
                                     </Button>
 
                                     <Button
