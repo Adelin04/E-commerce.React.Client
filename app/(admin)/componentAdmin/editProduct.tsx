@@ -11,10 +11,11 @@ import { useAdminStore } from '@/zustandStore/adminStore';
 
 
 interface PropsEditProduct {
-    product: IProduct | any
+    product: IProduct | any,
+    close: () => void | null,
 }
 
-const EditProduct = ({ product }: PropsEditProduct) => {
+const EditProduct = ({ product, close }: PropsEditProduct) => {
     //Global Zustand State
     const { products, sizesProductAvailable, deleteProductById, categoriesProductAvailable, superCategoriesProductAvailable } = useProductsStore(state => state);
     const { setProductClickedToEdit, cleanProductClickedToEdit } = useAdminStore(state => state);
@@ -99,7 +100,7 @@ const EditProduct = ({ product }: PropsEditProduct) => {
                                 return (
                                     <div key={index} className="flex justify-around items-center w-full h-auto m-1 " style={{ display: `${toggleSizeStockCollapse ? 'flex' : 'none'}` }}>
                                         <p className="flex justify-around items-center w-full ">
-                                            <span className="w-24 text-left "> {sizeStock.size.name} - {sizeStock.stock} </span> <i className="flex justify-center items-center w-max h-[25px] cursor-pointer hover:text-red-600" onClick={() => console.log('clicked')}><FaTrash /></i> </p>
+                                            <span className="w-24 text-left "> {sizeStock.size.name} - {sizeStock.stock} </span> <i className="flex justify-center items-center w-max h-[25px] cursor-pointer hover:text-red-600" onClick={() => console.log('trash clicked')}><FaTrash /></i> </p>
                                     </div>
                                 )
                             })}

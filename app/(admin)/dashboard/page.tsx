@@ -177,7 +177,7 @@ const DashboardAdmin = () => {
           </div>
         }
 
-        {productClickedToEdit && <div className="wrapperEditProduct w-max h-full"> <EditProduct product={productClickedToEdit} /> </div>}
+        {productClickedToEdit && <div className="wrapperEditProduct w-max h-full"> <EditProduct product={productClickedToEdit} close={handleClosePopUp}/> </div>}
 
       </div>
       {/* FINAL MAIN PAGE */}
