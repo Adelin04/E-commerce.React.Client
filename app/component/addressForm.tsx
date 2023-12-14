@@ -140,12 +140,13 @@ const AddressForm = ({ selectedAddress }: any) => {
                 <div className="flex flex-col justify-center items-center mb-4 w-full m-3">
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
+                            className={
+                                "flex justify-center items-center w-full my-auto mx-2 p-1 border-b-2 border-b-[var(--sliderColor)] rounded-md"
+                            }
                             required
                             type="text"
                             placeholder="First name"
-                            className={
-                                "flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
-                            }
                             value={firstName}
                             onChange={(e) => {
                                 setFirstName(e.target.value);
@@ -164,6 +165,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={lastName}
                             type="text"
                             placeholder="Last name"
@@ -187,10 +189,13 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
+                            className={
+                                "flex justify-center items-center w-full my-auto mx-2 p-1 border-b-2 border-[var(--sliderColor)] rounded-md"
+                            }
                             value={email}
                             type="email"
                             placeholder="Email"
-                            className="flex justify-center items-center  w-full my-auto mx-2 p-1 border rounded-md"
                             onChange={(e) => { setEmail(e.target.value); }} />
                         {!email ? (
                             <Image
@@ -205,6 +210,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={city}
                             type="text"
                             placeholder="City"
@@ -225,6 +231,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={street}
                             type="text"
                             placeholder="Street"
@@ -245,6 +252,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={country}
                             type="text"
                             placeholder="Country"
@@ -263,6 +271,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={zipCode}
                             type="text"
                             placeholder="Zip"
@@ -281,6 +290,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <input
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={phone}
                             type="string"
                             placeholder="Phone"
@@ -299,6 +309,7 @@ const AddressForm = ({ selectedAddress }: any) => {
 
                     <div className="relative flex flex-col justify-center items-center  w-[50%] my-2 mx-2 p-1">
                         <textarea
+                            style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                             value={notes}
                             // type="text"
                             placeholder="Notes"
@@ -324,6 +335,7 @@ const AddressForm = ({ selectedAddress }: any) => {
                                 Agree to terms and conditions
                             </p>
                             <input
+                                style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                                 className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
                                 type="checkbox"
                                 onChange={(e) => {
@@ -348,6 +360,7 @@ const AddressForm = ({ selectedAddress }: any) => {
                                     Save address
                                 </p>
                                 <input
+                                    style={{ borderBottom: 'solid var(--sliderColor) 1px' }}
                                     className="flex flex-col justify-center items-center w-5 h-5 rounded-lg cursor-pointer"
                                     type="checkbox"
                                     onChange={(e) => {
@@ -362,7 +375,7 @@ const AddressForm = ({ selectedAddress }: any) => {
                 <Button
                     className="flex justify-center items-center w-[150px] h-10 font-bold text-textBlack bg-[var(--sliderColor)]  border-none rounded-md  hover:bg-[var(--baseColor)] hover:text-white "
                     onClick={handleOnClick}
-                    textButton={"go to pay"}
+                    textButton={"The Payment"}
                 />
             </div>
         </div>
