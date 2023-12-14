@@ -85,8 +85,6 @@ const EditProduct = ({ product }: PropsEditProduct) => {
                     <input type={'text'} value={toggleEdit ? priceProduct : product.price} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
                     <label >Brand </label>
                     <input type={'text'} value={toggleEdit ? brandProduct : product.brand} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
-                    {/* <label>Stock</label>
-                            <input type={'text'} value={toggleEdit ?stockProduct : productToRemove.stock} id={'stockProduct'} onChange={(e) => { setStockProduct(e.target.value) }} /> */}
                     <label >Code </label>
                     <input type={'text'} value={toggleEdit ? productCode : product.productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
 
@@ -160,13 +158,13 @@ const EditProduct = ({ product }: PropsEditProduct) => {
 
                     <div className="wrapperImages flex justify-center items-center">
                         <div className="up-side-images">
-                            <div className="img_1 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[0]?.path || logoIcon} alt="img 1" /></div>
-                            <div className="img_2 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[1]?.path || logoIcon} alt="img 2" /></div>
+                            <div className="img_1 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[0]?.path.toString().trim() || logoIcon} alt="img 1" /></div>
+                            <div className="img_2 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[1]?.path.toString().trim() || logoIcon} alt="img 2" /></div>
                         </div>
 
                         <div className="down-side-images">
-                            <div className="img_3 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[2]?.path || logoIcon} alt="img 3" /></div>
-                            <div className="img_4 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[3]?.path || logoIcon} alt="img 4" /></div>
+                            <div className="img_3 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[2]?.path.toString().trim() || logoIcon} alt="img 3" /></div>
+                            <div className="img_4 flex justify-center items-center m-2 p-1 w-max h-max"><Image width={100} height={100} src={product.productImages[3]?.path.toString().trim() || logoIcon} alt="img 4" /></div>
                         </div>
                     </div>
                 </div>

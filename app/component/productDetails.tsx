@@ -181,7 +181,7 @@ const ProductDetails = ({ product }: any) => {
                 {/* Description */}
                 <div className='flex flex-col justify-center items-center w-full' >
                     {/* <h4 className="description flex justify-center items-center">{`${product.description.split()[0].slice(0, 300)}...`}</h4> */}
-                    <h4 className="text-center w-[90%]">
+                    <h4 className="text-center min-w-[250px] max-w-[60%] ">
                         Lorem Ipsum is simply dummy text of the printing and typesetting
                         industry. Lorem Ipsum has been the industry's standard dummy
                         text ever since the 1500s, when an unknown printer took a galley
@@ -202,7 +202,7 @@ const ProductDetails = ({ product }: any) => {
                             <Button
                                 className='buttonPlusQuantity flex justify-center items-center w-max h-max p-1 rounded-lg bg-[var(--sliderColor)]'
                                 onClick={() => { quantity < 2 ? setQuantity(1) : setQuantity(quantity - 1); }}>
-                                <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" onClick={() => console.log('clicked')}><FaMinus /></i>
+                                <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" ><FaMinus /></i>
                             </Button>
 
                             <span /* className={style.quantity} */ className='text-[20px] m-0 p-2  h-max w-max' >
@@ -212,7 +212,7 @@ const ProductDetails = ({ product }: any) => {
                             <Button
                                 className='buttonPlusQuantity flex justify-center items-center w-max h-max p-1 rounded-lg bg-[var(--sliderColor)]'
                                 onClick={() => { setQuantity(quantity + 1); }}>
-                                <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white" onClick={() => console.log('clicked')}><FaPlus /></i>
+                                <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white"><FaPlus /></i>
                             </Button>
                         </div>
 
