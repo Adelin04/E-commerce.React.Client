@@ -11,7 +11,7 @@ interface IPropsCardImages {
 const CardImages = ({ photos }: IPropsCardImages) => {
     const [size, setSize] = useState()
     const [indexActive, setIndexActive] = useState(1)
-    const tmp_photos = ["https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg", "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg", "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg", "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg"]
+
     return (
 
         <div className=" flex justify-center items-center h-[300px] " >
