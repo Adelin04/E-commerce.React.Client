@@ -19,6 +19,7 @@ import { URI } from '../../utils/globalUri';
 import exclamationIcon from "../../public/exclamation.png";
 import Image from 'next/image';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import CardImages from "./cardImages";
 
 // let customWindow: any = window as Window;
 
@@ -145,29 +146,31 @@ const ProductDetails = ({ product }: any) => {
 
     return (
 
-        <div className='flex justify-center items-center w-auto sm:flex-col sm:justify-center'>
+        <div className='flex flex-col justify-center items-center w-auto'>
 
             <div>{msg}</div>
 
 
             {/* Carousel */}
-            <div className='flex justify-center items-center m-5 rounded-lg border-2 border-[var(--sliderColor)]'>
-                {product && (
-                    <CarouselProductImages
-                        // onclickProductEvent={false}
-                        images={product.productImages}
-                        slidesToShow={1}
-                        slidesToScroll={1}
-                        height={300}
-                        width={300}
-                    />
-                )}
+
+            <div className='flex justify-center items-center m-5 rounded-lg border-[var(--sliderColor)]'>
+                <CardImages photos={product.productImages} />
+                {/* {product && (
+                     <CarouselProductImages
+                         // onclickProductEvent={false}
+                         images={product.productImages}
+                         slidesToShow={1}
+                         slidesToScroll={1}
+                         height={300}
+                         width={300}
+                     />
+                )} */}
             </div>
 
 
-            <div className='wrapperProductDetails flex flex-col justify-center items-center max-w-[40%]'>
+            <div className='wrapperProductDetails flex flex-col justify-center items-center'>
                 {/* Title & Price */}
-                <div className='wrapperNamePriceProduct flex justify-around items-center min-w-max h-max p-2 my-3 mx-auto text-center bg-[var(--sliderColor)] rounded-lg'>
+                <div className='wrapperNamePriceProduct flex justify-around items-center min-w-max h-max p-2 mx-2 my-3 text-center bg-[var(--sliderColor)] rounded-lg'>
                     <h3 className='text-[30px] text-[white] pr-5'>
                         {product.name}{" "}
                     </h3>
@@ -194,7 +197,7 @@ const ProductDetails = ({ product }: any) => {
                 </div>
 
                 {/* Quantity, Size & AddToCart Function */}
-                <div /* className={style.containerQuantityCounterSize} */ className='flex justify-around items-center w-full '>
+                <div /* className={style.containerQuantityCounterSize} */ className='flex justify-center items-center w-full '>
 
                     <div className='wrapperQuantitySize flex justify-center items-center'>
 

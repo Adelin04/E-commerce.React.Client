@@ -111,7 +111,7 @@ const Basket = () => {
     return <><Loading /> </>
   else
     return (
-      <div className="containerBasket flex flex-col w-full h-full justify-between items-center">
+      <div className="containerBasket flex flex-col w-full justify-between items-center">
         {filteredProducts !== null ? <ProductsList products={filteredProducts} /> :
           <div className="wrapperBasket flex flex-col w-full justify-center items-center text-center">
 
