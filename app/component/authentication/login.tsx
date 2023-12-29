@@ -132,8 +132,7 @@ const Login = () => {
                     id="password"
                     name="password"
                 />
-                <button role='button'>login</button>
-                {/* <Button role='button' textButton={"LogIn"} /> */}
+                <Button role='button' textButton={"LogIn"} />
             </form >
 
         </div >
