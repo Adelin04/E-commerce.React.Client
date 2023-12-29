@@ -48,8 +48,8 @@ const Login = () => {
             .then((response) => response.json())
             .then((data) => {
 
-                const { success, token, basketByUser, addressUser } = data;
-                
+                const { success, token, basketByUser, addressUser, message } = data;
+
                 let TMP_USER: Array<any> = [];
                 let TMP_BASKET: Array<any> = [];
 
@@ -93,6 +93,7 @@ const Login = () => {
                     goHome();
                     setMsgButton("Login");
                 }
+                else setError(message.toString().trim())
             })
             .catch((error) => {
                 setError(error);
@@ -106,6 +107,10 @@ const Login = () => {
 
             <form className={style.formLogin} onSubmit={onSubmitLogin}>
 
+                {error && <p role="alert" className='error text-[var(--error)] text-center text-[13px] p-1 m-1'>
+                    {error}
+                </p>}
+
                 <label htmlFor="email" className={style.labelLogin} >Email</label>
                 <input
                     className={style.inputLoginRegister}
@@ -115,6 +120,7 @@ const Login = () => {
                     required
                     type="email"
                     id="email"
+                    name="email"
                 />
 
                 <label htmlFor="password" className={style.labelLogin}>Password</label>
@@ -124,9 +130,10 @@ const Login = () => {
                     value={password}
                     required
                     id="password"
+                    name="password"
                 />
-
-                <Button textButton={"LogIn"} />
+                <button role='button'>login</button>
+                {/* <Button role='button' textButton={"LogIn"} /> */}
             </form >
 
         </div >

@@ -27,11 +27,12 @@ interface IButtonProps {
   style?: any,
   hover?: {},
   disabled?: boolean,
-  id?: string
+  id?: string,
+  role?: string
 }
 
 //  Button component
-const Button: React.FC<IButtonProps> = ({ onClick, onMouseOver, onMouseOut, children, className, textButton, style, disabled, id, hover, ...props }) => {
+const Button: React.FC<IButtonProps> = ({ onClick, onMouseOver, onMouseOut, children, className, textButton, style, disabled, id,role, hover, ...props }) => {
   return (
 
     <React.Fragment>
@@ -77,6 +78,7 @@ const Button: React.FC<IButtonProps> = ({ onClick, onMouseOver, onMouseOut, chil
         onClick={onClick}
         disabled={disabled}
         id={id}
+        role={role}
         {...props}
       >
 
