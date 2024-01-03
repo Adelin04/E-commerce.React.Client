@@ -106,10 +106,10 @@ const Basket = () => {
     setSelectedProduct(products.filter((e: IProduct) => e.id === productIdClicked)[0] as any)
     router.push(`/product?id=${productIdClicked}`)
   };
-
+  
   if (!hasMounted)
     return <><Loading /> </>
-  else
+    else
     return (
       <div className="containerBasket flex flex-col w-full justify-between items-center">
         {filteredProducts !== null ? <ProductsList products={filteredProducts} /> :
