@@ -24,23 +24,17 @@ const SetGlobalState = ({ products, success, children }: PropsSetGlobalState) =>
     let token: string = '';
     let basket: string = '';
 
-    /*     if (typeof localStorage !== 'undefined') {
-            // Access and use localStorage here
-            token = localStorage && localStorage.getItem('TOKEN_ACCESS') || '';
-            basket = localStorage && localStorage.getItem('BASKET') || '';
-        } else {
-            console.log('localStorage is not available.');
-        } */
-
     useEffect(() => {
 
-        // setProducts(products)
+        
         setState()
 
-    }, [ /* localStorage.getItem('TOKEN_ACCESS') || localStorage.getItem('BASKET') */])
+    }, [])
 
     const setState = () => {
         if (success) {
+            console.log(products);
+            
             setProducts(products)
 
             if ('BASKET' in localStorage) {

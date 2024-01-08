@@ -8,6 +8,7 @@ export const SerializeProduct = (product: IProduct) => {
         color: product?.color,
         categoryProduct: product?.categoryProduct,
         categoryProductId: product?.categoryProductId,
+        superCategoryProductId: product?.superCategoryProductId,
         description: product?.description,
         price: Number(product?.price),
         stock: product?.stock,

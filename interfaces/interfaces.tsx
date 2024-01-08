@@ -15,10 +15,11 @@ export interface IProduct {
     createdAt: string,
     updatedAt: string,
     productCode: string,
-    categoryProductId: number,
-    categoryProduct: [],
-    superCategoryProduct: [],
-    sizeStocks: [],
+    categoryProductId: number | null,
+    categoryProduct: [any],
+    superCategoryProductId: number | null,
+    superCategoryProduct: [any],
+    sizeStocks: [any],
     productImages: Array<any>
 }
 

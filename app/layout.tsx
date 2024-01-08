@@ -42,12 +42,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <Suspense fallback={true}> */}
-
+      
         <SetGlobalState products={products} success={success}>
           {children}
         </SetGlobalState>
-        {/* </Suspense> */}
+      
       </body>
     </html>
   )

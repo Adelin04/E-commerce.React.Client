@@ -26,7 +26,7 @@ import CardImages from "./cardImages";
 const ProductDetails = ({ product }: any) => {
     const router = useRouter()
 
-    const selectedProduct = useProductsStore(state => state.selectedProduct);
+    const { selectedProduct } = useProductsStore(state => state);
     const { basket, counterProduct, totalPrice, currency, addProductToBasket } = useBasketStore();
 
     const user = useUserStore(state => state.user);

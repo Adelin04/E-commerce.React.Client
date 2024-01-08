@@ -17,9 +17,7 @@ describe('Login Component', () => {
     expect(inputEmail.value).toBe("")
     expect(inputPassword.value).toBe("")
   })
-})
 
-describe('Login Component', () => {
   it('You should see the message for wrong email or password', () => {
     render(<Login />)
     const user = userEvent.setup()
@@ -46,5 +44,4 @@ describe('Login Component', () => {
 
   })
 })
-
 

@@ -4,7 +4,7 @@ import { create } from 'zustand'
 interface UserState {
     isAuth: boolean,
     isAdmin: boolean,
-    user: IUser,
+    user: IUser | null,
     token: string | null,
     addresses: [] | null,
     selectedAddress: any
@@ -14,7 +14,7 @@ interface UserState {
 const INITIAL_STATE: UserState = {
     isAuth: false,
     isAdmin: false,
-    user: {},
+    user: null,
     token: '',
     addresses: [],
     selectedAddress: []

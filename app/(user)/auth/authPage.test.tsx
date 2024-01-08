@@ -1,9 +1,9 @@
 import { getByText, render, screen, waitFor } from '@testing-library/react'
-import Page from '../auth/page'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
 import userEvent from '@testing-library/user-event'
 
+import Page from '../auth/page'
 
 describe('Auth Page', () => {
     it('Should render the Register component when click the register button', async () => {
@@ -18,11 +18,8 @@ describe('Auth Page', () => {
         //if the text exists, it means the component has been changed
         const textForLoginComponent = screen.getByText("Do you have an account?")
         expect(textForLoginComponent).toBeInTheDocument();
-
     })
-})
 
-describe('Auth Page', () => {
     it('Should render the Login component when click the login button', async () => {
         render(<Page />)
         const user = userEvent.setup()

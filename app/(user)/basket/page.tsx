@@ -123,11 +123,10 @@ const Basket = () => {
               <h3 className="title-1st-child flex justify-center items-center text-[35px] font-semibold my-1">
                 Shopping Cart
               </h3>
-              <span className="text-[35px] sm:hidden md:hidden">|</span>
               <h3
                 className="title-2st-child flex justify-center items-center text-[35px] my-1 mx-5 font-semibold md:text-[25px]"
               >
-                {(hasMounted && user) && `${(user.firstName) || ""} `}
+                {user && `| ${(user.firstName) || ""} `}
               </h3>
             </div>
 
@@ -152,9 +151,9 @@ const Basket = () => {
 
                                 <div className="flex flex-col justify-center items-start w-max pl-5">
                                   <h4 className="name flex justify-center items-center font-bold">{`${product.name.toString().split(",").slice(0, 5)}...`}</h4>
-                                  <h4 className="description flex justify-center items-center sm:text-[12px]">{`${product.description.toString().split(",").slice(0, 15)}...`}</h4>
+                                  <p className="description flex justify-center items-center sm:text-[12px]">{`${product.description.toString().split(",").slice(0, 15)}...`}</p>
                                   <div className="stock flex justify-center items-center sm:text-[12px]">{product.productCode}</div>
-                                  <h3 className="description flex justify-center items-center font-bold sm:text-[12px]">{item.size}</h3>
+                                  <p className="size flex justify-center items-center font-bold sm:text-[12px]">{item.size}</p>
                                 </div>
 
                               </div>
@@ -263,8 +262,7 @@ const Basket = () => {
                   href={basket && basket.length > 0 ? `/address` : `/basket`}
                   className="flex justify-center items-center w-[150px] h-10 font-bold bg-[var(--sliderColor)] rounded-md hover:text-white hover:bg-[var(--baseColor)]"
                 >
-                  {" "}
-                  Next step{" "}
+                  Next Step
                 </Link>
               </div>
             </div>
