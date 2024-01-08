@@ -4,7 +4,7 @@ const nextConfig = {
   reactStrictMode: false,
   
   images: {
-    domains: ["e-commerce-photos.s3.amazonaws.com","buffer.com"],
+    domains: ["e-commerce-photos.s3.amazonaws.com"],
   },
   
   env: {
