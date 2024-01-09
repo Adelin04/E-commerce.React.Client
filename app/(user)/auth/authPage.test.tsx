@@ -1,11 +1,11 @@
 import { getByText, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-// import '@testing-library/jest-dom/jest-globals'
-// import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom/jest-globals'
+import userEvent from '@testing-library/user-event'
 
 import Page from '../auth/page'
 
-/* describe('Auth Page', () => {
+describe('Auth Page', () => {
     it('Should render the Register component when click the register button', async () => {
         render(<Page />)
         const user = userEvent.setup()
@@ -38,12 +38,5 @@ import Page from '../auth/page'
         expect(textForRegisterComponent).toBeInTheDocument();
 
     })
-}) */
-
-describe('...', () => {
-    it('Should...', async () => {
-        render(<Page />)
-
-
-    })
 })
+

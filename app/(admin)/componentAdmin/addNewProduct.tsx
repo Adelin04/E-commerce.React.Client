@@ -9,7 +9,7 @@ import { useProductsStore } from "@/zustandStore/productsStore";
 import { IProduct } from "@/interfaces/interfaces";
 import ProductImage from "@/app/component/productImage";
 import Image from "next/image";
-import { useExistEmptyFields } from "@/utils/hooks";
+import { useExistEmptyFields } from "@/utils/useExistEmptyFields";
 import HeaderCard from "./headerCard";
 
 interface PropsAddNewProduct {

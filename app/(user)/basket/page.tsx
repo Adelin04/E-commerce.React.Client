@@ -248,8 +248,8 @@ const Basket = () => {
               );
             })}
 
-            <div className="wrapper-cardToPlay-cart flex flex-col justify-end w-full">
-              <div className=" flex h-full w-auto mx-10 my-2 p-1 justify-end items-center ">
+            <div className="wrapper-cardToPlay-cart flex flex-col justify-center items-end  w-full ">
+              <div className=" flex h-full w-max mx-10 my-2 p-1 justify-start items-center ">
                 <CardTotalPay
                   totalPrice={totalPrice}
                   nrProducts={counterProduct}

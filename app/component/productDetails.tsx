@@ -154,17 +154,17 @@ const ProductDetails = ({ product }: any) => {
             {/* Carousel */}
 
             <div className='flex justify-center items-center m-5 rounded-lg border-[var(--sliderColor)]'>
-                <CardImages photos={product.productImages} />
-                {/* {product && (
-                     <CarouselProductImages
-                         // onclickProductEvent={false}
-                         images={product.productImages}
-                         slidesToShow={1}
-                         slidesToScroll={1}
-                         height={300}
-                         width={300}
-                     />
-                )} */}
+                {/* <CardImages photos={product.productImages} /> */}
+                {product && (
+                    <CarouselProductImages
+                        // onclickProductEvent={false}
+                        images={product.productImages}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        height={300}
+                        width={300}
+                    />
+                )}
             </div>
 
 
