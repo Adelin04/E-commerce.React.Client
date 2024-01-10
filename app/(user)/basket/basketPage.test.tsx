@@ -131,12 +131,27 @@ describe('Basket Page - Rendering', () => {
         const totalItems = screen.getByText(/Total Items : 1/)
         const buttonNextStep = screen.getByText(/Next Step/, { selector: 'a' });
 
-       //check if the counter is incremented by 1
+        //check if the counter is incremented by 1
         expect(totalItems).toBeInTheDocument()
 
         //click the button to check if the page has changed
         user.click(buttonNextStep)
         expect(buttonNextStep).toHaveAttribute("href", "/address");
+    })
+
+    it('Should increase the number of items when you click the plus button of the counter', async () => {
+        const { addProductToBasket } = originalState
+        const user = userEvent.setup()
+
+        await waitFor(() => {
+            addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
+            render(<Page />)
+        })
+
+
+        //check if the counter is incremented by 1
+        //...implement
+        expect(true)
     })
 
 
