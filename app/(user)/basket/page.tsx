@@ -106,10 +106,10 @@ const Basket = () => {
     setSelectedProduct(products.filter((e: IProduct) => e.id === productIdClicked)[0] as any)
     router.push(`/product?id=${productIdClicked}`)
   };
-  
+
   if (!hasMounted)
     return <><Loading /> </>
-    else
+  else
     return (
       <div className="containerBasket flex flex-col w-full justify-between items-center">
         {filteredProducts !== null ? <ProductsList products={filteredProducts} /> :
@@ -172,6 +172,7 @@ const Basket = () => {
 
                                   <div className="wrapperCounter flex justify-center items-center m-1 h-full">
                                     <Button
+                                      className="buttonMinusCounter"
                                       style={{
                                         display: "flex",
                                         justifyContent: "center",
@@ -193,11 +194,12 @@ const Basket = () => {
                                     >      <i className="flex justify-center items-center w-max h-max cursor-pointer hover:text-white"><FaMinus /></i>
                                     </Button>
 
-                                    <span className="quantity flex justify-center items-center min-w-[20px] h-max font-bold border-t-2 border-b-2 border-[var(--baseColor)] rounded-lg">
+                                    <span data-testid="quantity" className="quantity flex justify-center items-center min-w-[20px] h-max font-bold border-t-2 border-b-2 border-[var(--baseColor)] rounded-lg">
                                       {item.quantity}
                                     </span>
 
                                     <Button
+                                      className="buttonPlusCounter"
                                       style={{
                                         display: "flex",
                                         justifyContent: "center",

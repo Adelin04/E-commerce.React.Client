@@ -145,14 +145,33 @@ describe('Basket Page - Rendering', () => {
 
         await waitFor(() => {
             addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
-            render(<Page />)
         })
 
+        const { container } = render(<Page />)
+        const buttonMinusCounter = container.querySelector('.buttonMinusCounter')
+        const quantityElement = screen.getByTestId(/quantity/i).firstChild
+
+        buttonMinusCounter && user.click(buttonMinusCounter)
+
+        //check if the counter has incremented by 1
+        expect(quantityElement).toMatch('1')
+    })
+
+    /*     it('Should increase the number of items when you click the plus button of the counter', async () => {
+        const { addProductToBasket } = originalState
+        const user = userEvent.setup()
+
+        await waitFor(() => {
+            addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
+        })
+
+        const { container } = render(<Page />)
+        const element = container.querySelector('.buttonPlusCounter')
 
         //check if the counter is incremented by 1
         //...implement
-        expect(true)
-    })
+        expect(element).toBeInTheDocument()
+    }) */
 
 
 })
