@@ -147,18 +147,16 @@ describe('Basket Page - Rendering', () => {
             addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
             addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
         })
-
+        
         const { container } = render(<Page />)
         const buttonMinusCounter = container.querySelector('.buttonMinusCounter')
         const quantityElement: any = screen.getByTestId(/quantity/i).firstChild
-        console.log(JSON.stringify(quantityElement));
-        
+
+        console.log(typeof quantityElement);
+
         buttonMinusCounter && user.click(buttonMinusCounter)
 
         //check if the counter has incremented by 1
-        expect(JSON.stringify(quantityElement)).toEqual(2)
+        expect(quantityElement).toStrictEqual(2)
     })
-
-
-
 })
