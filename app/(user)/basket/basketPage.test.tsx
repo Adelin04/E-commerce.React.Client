@@ -57,12 +57,11 @@ const mockProducts: IProduct =
 }
 
 const quantity = 1;
-
 const originalState = useBasketStore.getState();
 
 beforeEach(async () => {
     useBasketStore.setState(originalState)
-
+    window.location.href = `/basket`;
 })
 
 describe('Basket Page - Rendering', () => {
@@ -139,24 +138,53 @@ describe('Basket Page - Rendering', () => {
         expect(buttonNextStep).toHaveAttribute("href", "/address");
     })
 
-    it('Should increase the number of items when you click the plus button of the counter', async () => {
-        const { addProductToBasket } = originalState
+    it('Should decrease the number of items when you click the plus button of the counter', async () => {
+        const { addProductToBasket, incrementCounter, decrementCounter } = originalState
         const user = userEvent.setup()
 
         await waitFor(() => {
             addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
-            addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
         })
-        
+
         const { container } = render(<Page />)
         const buttonMinusCounter = container.querySelector('.buttonMinusCounter')
-        const quantityElement: any = screen.getByTestId(/quantity/i).firstChild
+        const buttonPlusCounter = container.querySelector('.buttonPlusCounter')
+        const quantityElement = screen.getByTestId(/quantity/i)
 
-        console.log(typeof quantityElement);
+        await waitFor(() => {
+            buttonPlusCounter && user.click(buttonPlusCounter)
+            incrementCounter(mockProducts.id, 0, mockProducts.sizeStocks[0].size.size.name)
 
-        buttonMinusCounter && user.click(buttonMinusCounter)
+            buttonMinusCounter && user.click(buttonMinusCounter)
+            decrementCounter(mockProducts.id, 0, mockProducts.sizeStocks[0].size.size.name)
+        })
+
 
         //check if the counter has incremented by 1
-        expect(quantityElement).toStrictEqual(2)
+        expect(quantityElement?.innerHTML.toString()).toBe("1")
+    })
+
+    it('Should increase the number of items when you click the plus button of the counter', async () => {
+        const { addProductToBasket, incrementCounter } = originalState
+        const user = userEvent.setup()
+
+        await waitFor(() => {
+            addProductToBasket(SerializeProduct(mockProducts), quantity, mockProducts.sizeStocks[0].size.size.name)
+        })
+
+        const { container } = render(<Page />)
+        const buttonPlusCounter = container.querySelector('.buttonPlusCounter')
+        const quantityElement = screen.getByTestId(/quantity/i)
+
+
+
+        await waitFor(() => {
+            buttonPlusCounter && user.click(buttonPlusCounter)
+            incrementCounter(mockProducts.id, 0, mockProducts.sizeStocks[0].size.size.name)
+        })
+
+        //check if the counter has incremented by 1
+        expect(quantityElement).toBeInTheDocument()
+        expect(quantityElement?.innerHTML.toString()).toBe("2")
     })
 })

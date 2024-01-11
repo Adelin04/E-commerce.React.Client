@@ -105,7 +105,7 @@ export const useBasketStore = create((set: any, get: any) => ({
 
     incrementCounter: (productId: number, indexItem: number, size: string) => {
         const updatedProduct = get().basket.filter((productfiltered: IProduct) => productfiltered.id === productId)[0]
-        let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET') || '');
+        let TMP_localStorage = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem('BASKET') || '');
 
         //  update the state
         updatedProduct.quantityPerSize[indexItem]['quantity'] += 1
@@ -113,7 +113,7 @@ export const useBasketStore = create((set: any, get: any) => ({
         set((state: any) => ({ totalPrice: get().totalPrice + updatedProduct.price }))
 
         //  update localStorage BASKET
-        TMP_localStorage.map((item: any) => {
+        TMP_localStorage?.map((item: any) => {
             if (item.productId === productId) {
                 item['quantity'] += 1
             }
@@ -123,7 +123,7 @@ export const useBasketStore = create((set: any, get: any) => ({
 
     decrementCounter: (productId: number, indexItem: number, size: string) => {
         let updatedProduct = get().basket.filter((product: IProduct) => productId === product.id)
-        let TMP_localStorage = JSON.parse(localStorage.getItem('BASKET') || '');
+        let TMP_localStorage = localStorage.getItem("BASKET") && JSON.parse(localStorage.getItem('BASKET') || '');
 
         //  UPDATE THE STATE
         get().basket.map((product: any) => {
@@ -151,7 +151,7 @@ export const useBasketStore = create((set: any, get: any) => ({
         set((state: any) => ({ totalPrice: get().totalPrice - updatedProduct[0].price }))
 
         //  UPDATE LOCALSTORAGE BASKET
-        TMP_localStorage.map((item: any) => {
+        TMP_localStorage?.map((item: any) => {
             if (item.productId === productId && item.size === size) {
                 (item.quantity - 1) === 0 ? TMP_localStorage.splice(TMP_localStorage.indexOf(item), 1) : item.quantity -= 1
             }
