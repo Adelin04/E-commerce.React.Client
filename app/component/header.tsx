@@ -96,7 +96,7 @@ const Header = () => {
             </div>
 
             <div onMouseLeave={handleMouseLeave}>
-              {<UserProfile user={user} isAuth={isAuth} toggle={toggle} />}
+              {user && <UserProfile user={user} isAuth={isAuth} toggle={toggle} />}
             </div>
 
           </div>
