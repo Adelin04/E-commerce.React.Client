@@ -131,7 +131,7 @@ const DashboardAdmin = () => {
             <p className="admin">
               {" "}
               <span>Admin </span>
-              {isAdmin && (
+              {user && isAdmin && (
                 <span className="full-name">{` ${user.firstName} ${user.lastName}`}</span>
               )}
             </p>
@@ -177,7 +177,7 @@ const DashboardAdmin = () => {
           </div>
         }
 
-        {productClickedToEdit && <div className="wrapperEditProduct w-max h-full"> <EditProduct product={productClickedToEdit} close={handleClosePopUp}/> </div>}
+        {productClickedToEdit && <div className="wrapperEditProduct w-max h-full"> <EditProduct product={productClickedToEdit} close={handleClosePopUp} /> </div>}
 
       </div>
       {/* FINAL MAIN PAGE */}

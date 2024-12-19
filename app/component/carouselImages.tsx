@@ -44,20 +44,22 @@ const CarouselImages = ({ products, width, height }: PropsCarousel) => {
         <div className="w-full h-full mx-auto justify-center items-center text-center px-2 ">
             <Slider className="m-2" {...settings}>
 
-                {products?.map((product: IProduct, index: number) => {
+                {products ? products.map((product: IProduct, index: number) => {
                     return (
                         <div key={index} className="wrapperImage relative flex justify-center items-center text-center w-[20px] h-max border-2 rounded-lg outline-none">
-                            <Image onClick={() => handleClick(product)} style={{ margin: 'auto', padding: '5px',cursor:'pointer' }} key={index} width={width || 150} height={height || 150} alt="" src={product.productImages[0].path.trim()} />
+                            <Image onClick={() => handleClick(product)} style={{ margin: 'auto', padding: '5px', cursor: 'pointer' }}
+                                key={index}
+                                width={width || 150}
+                                height={height || 150}
+                                alt=""
+                                src={product.productImages[0]?.path.trim()} />
                         </div>
                     )
-                })}
+                })
+                    : null}
 
             </Slider>
 
-            <style jsx>{`
-                   
-                `
-            }</style>
         </div>
     );
 

@@ -33,7 +33,6 @@ const SetGlobalState = ({ products, success, children }: PropsSetGlobalState) =>
 
     const setState = () => {
         if (success) {
-            console.log(products);
             
             setProducts(products)
 
